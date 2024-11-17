@@ -8,7 +8,6 @@
  * @ Jason B
  */
 
-
 public enum DiceEnum {
     ONE(1),
     TWO(2),
@@ -27,5 +26,4 @@ public enum DiceEnum {
     public int getValue() {
         return value;
     }
-
 }
