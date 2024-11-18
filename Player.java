@@ -1,7 +1,9 @@
+import java.util.ArrayList;
+
 public class Player {
   private String name;
   private int rollCount;
   private Hand myHand;
-  private scoreCard myScoreCard;
+  private ScoreCard myScoreCard;
   private ArrayList<Category> availableCategories;
 }
