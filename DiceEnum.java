@@ -2,13 +2,12 @@
 /*
  * enums for the Dice objects
  *
- * authors:
+ * Authors:
  * @ Garret W
- * @ JOhn I
+ * @ John I
  * @ Dylan C
  * @ Jason B
  */
-
 public enum DiceEnum {
 	ONE(1), TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6);
 
