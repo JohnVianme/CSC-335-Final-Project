@@ -5,7 +5,7 @@ public class Dice {
     private static final ArrayList<DiceEnum> diceList = new ArrayList<DiceEnum>();
 
     static {
-        // Add each unique dice value to arraylist.
+        // Add each unique dice value to ArrayList.
         diceList.add(DiceEnum.ONE);
         diceList.add(DiceEnum.TWO);
         diceList.add(DiceEnum.THREE);
