@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Dice {
-    private static final ArrayList<DiceEnum> diceList = new ArrayList<DiceEnum>();
+	private static final ArrayList<DiceEnum> diceList = new ArrayList<DiceEnum>();
 
     static {
         // Add each unique dice value to ArrayList.
@@ -14,10 +14,10 @@ public class Dice {
         diceList.add(DiceEnum.SIX);
     }
 
-    public static DiceEnum getDice() {
-        // Shuffle the list of unique dice objects.
-        Collections.shuffle(diceList);
-        // Always retrieve random dice from idx 0.
-        return diceList.get(0);
-    }
+	public static DiceEnum getDice() {
+		// Shuffle the list of unique dice objects.
+		Collections.shuffle(diceList);
+		// Always retrieve random dice from idx 0.
+		return diceList.get(0);
+	}
 }
