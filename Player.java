@@ -23,8 +23,8 @@ public class Player {
 	public boolean RollDice() {
 		roll = Hand.getHand();
 		TransferHolds();
-		rolls--;
-		if (rolls == 0) {
+		roll--;
+		if (roll == 0) {
 			return false;
 		}
 		return true;
@@ -43,7 +43,7 @@ public class Player {
 	}
 	
 	public void removeHold(int i) {
-		held.set(i, null);
+		heldDice.set(i, null);
 	}
 	
 	public ArrayList<DiceEnum> getHand() {
