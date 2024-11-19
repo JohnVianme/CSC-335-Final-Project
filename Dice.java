@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Dice {
+public final class Dice {
 	private static final ArrayList<DiceEnum> diceList = new ArrayList<DiceEnum>();
 
 	static {
