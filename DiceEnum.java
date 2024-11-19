@@ -1,6 +1,6 @@
 
 /*
- * enums for the Dice objects
+ * enums for the Dice objects 
  *
  * Authors:
  * @ Garret W
