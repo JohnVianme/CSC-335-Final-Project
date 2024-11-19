@@ -23,8 +23,8 @@ public class Player {
 	public boolean RollDice() {
 		roll = Hand.getHand();
 		TransferHolds();
-		roll--;
-		if (roll == 0) {
+		rollCount--;
+		if (rollCount == 0) {
 			return false;
 		}
 		return true;
@@ -32,7 +32,7 @@ public class Player {
 	
 	private void TransferHolds() {
 		for (int i = 0; i < 5; i++) {
-			if (heldDice.get() != null) {
+			if (heldDice.get(i) != null) {
 				roll.set(i, heldDice.get(i));
 			}
 		}
