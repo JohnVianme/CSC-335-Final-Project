@@ -2,11 +2,7 @@
 /*
  * enums for the Dice objects
  *
- * authors:
- * @ Garret W
- * @ JOhn I
- * @ Dylan C
- * @ Jason B
+ * @authors: Garret W., John I., Dylan C., Jason B.
  */
 
 public enum DiceEnum {
