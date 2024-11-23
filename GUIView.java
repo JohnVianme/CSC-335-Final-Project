@@ -29,6 +29,7 @@ public class GUIView extends JFrame {
 
         // Adding the panel.
         panel = new JPanel();
+        panel.setLayout(null);
         this.add(panel);
 
         // Adding a window listener for closing the app.
@@ -47,27 +48,32 @@ public class GUIView extends JFrame {
         JButton cpuButton = new JButton("CPU");
         cpuButton.setActionCommand("cpu");
         cpuButton.addActionListener(new ButtonClickListener());
+        cpuButton.setBounds(340, 200, 100, 50);
         panel.add(cpuButton);
 
         JButton twoPlayerButton = new JButton("Two Players");
         twoPlayerButton.setActionCommand("twoPlayer");
         twoPlayerButton.addActionListener(new ButtonClickListener());
+        twoPlayerButton.setBounds(340, 300, 100, 50);
         panel.add(twoPlayerButton);
 
         JButton threePlayerButton = new JButton("Three Players");
         threePlayerButton.setActionCommand("threePlayer");
         threePlayerButton.addActionListener(new ButtonClickListener());
+        threePlayerButton.setBounds(340, 400, 100, 50);
         panel.add(threePlayerButton);
 
         JButton fourPlayerButton = new JButton("Four Players");
         fourPlayerButton.setActionCommand("fourPlayer");
         fourPlayerButton.addActionListener(new ButtonClickListener());
+        fourPlayerButton.setBounds(340, 500, 100, 50);
         panel.add(fourPlayerButton);
 
         // Also add an exit button. (In case user changes their mind about playing).
         JButton exitButton = new JButton("Exit");
         exitButton.setActionCommand("exit");
         exitButton.addActionListener(new ButtonClickListener());
+        exitButton.setBounds(650, 25, 100, 50);
         panel.add(exitButton);
     }
 
@@ -98,7 +104,7 @@ public class GUIView extends JFrame {
 
         // Create a panel where the dice will be displayed. Do not need to fill it yet, since user has not rolled.
         dicePanel = new JPanel();
-        dicePanel.setBounds(50, 350, 600, 200);
+        dicePanel.setBounds(100, 350, 600, 100);
         dicePanel.setLayout(new GridLayout(1, 5, 15, 0));
         this.add(dicePanel);
 
@@ -118,8 +124,13 @@ public class GUIView extends JFrame {
         for (int i = 0; i < 5; i++) {
             // For now, add one picture to make sure it is appearing in GUI.
             // Update later with functionality.
-            
+            JLabel diceLabel = new JLabel(new ImageIcon("six.png"));
+            dicePanel.add(diceLabel);
         }
+
+        // Refresh the panel.
+        dicePanel.revalidate();
+        dicePanel.repaint();
 
     }
 
@@ -167,4 +178,5 @@ public class GUIView extends JFrame {
         view.setVisible(true);
     }
 }
+
 
