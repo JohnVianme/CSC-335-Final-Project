@@ -14,6 +14,16 @@ public class Game {
 		this.currentPlayerIdx = 0;
 	}
 
+	public Hand getPlayerHand() {
+		Player currPlayer = players.get(currentPlayerIdx);
+		return currPlayer.getHand();
+	}
+
+	public int getRollCount() {
+		Player currPlayer = players.get(currentPlayerIdx);
+		return currPlayer.getRollCount();
+	}
+
 	/*
 	 * Method return amount of players
 	 * 
@@ -51,6 +61,8 @@ public class Game {
 
 	}
 
+
+
 	/*
 	 * This method adds a player given a name and return true if the player can be
 	 * added
@@ -75,6 +87,10 @@ public class Game {
 		players.add(aPlayer);
 		playerAmount++;
 		return true;
+	}
+
+	public Hand getPlayerHand() {
+		return 
 	}
 
 }
