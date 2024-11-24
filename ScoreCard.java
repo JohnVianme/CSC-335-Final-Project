@@ -35,7 +35,7 @@ public class ScoreCard {
         int score = 0;
 
         // get score from array of dice in hand
-        for (DiceEnum dice : hand.aHand) {
+        for (DiceEnum dice : hand.getHand()) {
             score += dice.getValue();
         }
 
