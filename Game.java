@@ -61,8 +61,6 @@ public class Game {
 
 	}
 
-
-
 	/*
 	 * This method adds a player given a name and return true if the player can be
 	 * added
@@ -87,10 +85,6 @@ public class Game {
 		players.add(aPlayer);
 		playerAmount++;
 		return true;
-	}
-
-	public Hand getPlayerHand() {
-		return 
 	}
 
 }
