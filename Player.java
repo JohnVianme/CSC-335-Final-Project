@@ -21,7 +21,8 @@ public class Player {
 	// Returns boolean - If returns false, then disable the roll button in the view.
 	// Disable held too if wanted.
 	public boolean RollDice() {
-		roll = Hand.getHand();
+		Hand hand = new Hand();
+		roll = hand.getHand();
 		TransferHolds();
 		rollCount--;
 		if (rollCount == 0) {
