@@ -3,27 +3,12 @@ import java.util.ArrayList;
 public class Game {
 	private int playerAmount;
 	private ArrayList<Player> players;
-
+	
 	/*
-	 * Constructor for game with given amount of players
-	 * 
-	 * @param players - number of player
-	 * 
-	 * @pre players >= 2 && players <= 4
-	 * 
-	 * @post the game will have "players" amount of players
-	 */
-	public Game(int players) {
-		assert players >= 2 && players <= 4;
-		this.playerAmount = players;
-		this.players = new ArrayList<Player>();
-	}
-
-	/*
-	 * Constructor for game for 1 playe vs a CPU
+	 * Constructor for game with no players
 	 */
 	public Game() {
-		this.playerAmount = 1;
+		this.playerAmount = 0;
 		this.players = new ArrayList<Player>();
 
 	}
@@ -32,12 +17,13 @@ public class Game {
 	 * This method adds a player given a name and return true if the player can be
 	 * added
 	 * 
-	 * @param 	aName -name of player
+	 * @param aName - name of player
 	 * 
-	 * @pre		aName != null
+	 * @pre aName != null
 	 * 
-	 * @post	player will be added to list of players
+	 * @post player will be created and added to list of players
 	 * 
+	 * @return true if the player was added and false if not
 	 */
 	public boolean addPlayer(String aName) {
 		assert aName != null;
@@ -49,6 +35,7 @@ public class Game {
 		Player aPlayer = new Player(aName);
 		// add them to list of players
 		players.add(aPlayer);
+		playerAmount++;
 		return true;
 	}
 
