@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Game {
 	private int playerAmount;
 	private ArrayList<Player> players;
-
+	
 	/*
 	 * Constructor for game with no players
 	 */
@@ -17,16 +17,15 @@ public class Game {
 	 * This method adds a player given a name and return true if the player can be
 	 * added
 	 * 
-	 * @param aName -name of player
+	 * @param aName - name of player
 	 * 
 	 * @pre aName != null
-	 * @pre playerAmount <= 4
 	 * 
 	 * @post player will be created and added to list of players
 	 * 
+	 * @return true if the player was added and false if not
 	 */
 	public boolean addPlayer(String aName) {
-		assert this.playerAmount <= 4;
 		assert aName != null;
 		// can not add more then 4 players
 		if (players.size() > 4) {
