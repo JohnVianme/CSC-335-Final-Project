@@ -42,8 +42,7 @@ public class GUIView extends JFrame {
     }
 
     private void start() {
-        // Setting up the required buttons.
-
+       
         // Start with buttons that determine how many players in game.
         JButton cpuButton = new JButton("CPU");
         cpuButton.setActionCommand("cpu");
@@ -75,6 +74,11 @@ public class GUIView extends JFrame {
         exitButton.addActionListener(new ButtonClickListener());
         exitButton.setBounds(650, 25, 100, 50);
         panel.add(exitButton);
+
+        this.add(panel);
+
+        this.revalidate();
+        this.repaint();
     }
 
     /**
@@ -114,6 +118,51 @@ public class GUIView extends JFrame {
     }
 
     /**
+     * Method to create the page where scoreboard is displayed after game is completed.
+     */
+    private void scorePage() {
+        // Wipe GUI to start from fresh slate.
+        this.getContentPane().removeAll();
+        this.setLayout(null);
+
+        // Label header to tell the user the game has ended.
+        JLabel overLabel = new JLabel("Game Over!");
+        overLabel.setBounds(350, 25, 200, 100);
+        this.add(overLabel);
+
+        // Label to ask user if they would like to play another game.
+        JLabel playAgainLabel = new JLabel("New Game?");
+        playAgainLabel.setBounds(350, 400, 200, 100);
+        this.add(playAgainLabel);
+
+        // YES/NO buttons for user to decide if they want to play another game.
+        JButton yesButton = new JButton("YES");
+        yesButton.setActionCommand("yes");
+        yesButton.addActionListener(new ButtonClickListener());
+        yesButton.setBounds(336, 480, 50, 50);
+        this.add(yesButton);
+
+        JButton noButton = new JButton("NO");
+        noButton.setActionCommand("no");
+        noButton.addActionListener(new ButtonClickListener());
+        noButton.setBounds(386, 480, 50, 50);
+        this.add(noButton);
+
+        // Text Area to display results for each of the players.
+        JTextArea scoreArea = new JTextArea();
+        scoreArea.setSize(400, 200);
+        scoreArea.setEditable(false);
+        scoreArea.setBounds(150, 100, 500, 200);
+        this.add(scoreArea);
+
+        this.setVisible(true);
+
+        this.revalidate();
+        this.repaint();
+
+    }
+
+    /**
      * When user clicks roll button, display new dice and update rollCountLabel.
      */
     private void rollDice() {
@@ -128,6 +177,9 @@ public class GUIView extends JFrame {
             dicePanel.add(diceLabel);
         }
 
+        JLabel selectLabel = new JLabel("Select a Category");
+        
+
         // Refresh the panel.
         dicePanel.revalidate();
         dicePanel.repaint();
@@ -141,29 +193,40 @@ public class GUIView extends JFrame {
             
             // If statements to handle each game mode that is selected.
 
-            // Create game object with one player.
+            // CPU Button
             if (command.equals("cpu")) {
                 // Set up the page to prepare for the game.
                 playPage();
             }
-            // Create game object with two players.
+            // Two Player Button
             else if (command.equals("twoPlayer")) {
                 // Set up the page to prepare for the game.
                 playPage();
             }
-            // Create game object with three players.
+            // Three Player Button
             else if (command.equals("threePlayer")) {
                 // Set up the page to prepare for the game.
                 playPage();
             }
-            // Create game object with four players.
+            // Four Player Button
             else if (command.equals("fourPlayer")) {
                 // Set up the page to prepare for the game.
-                playPage();
+                scorePage();
             }
-            // Display a new set of dice for the player and update their available rollCount.
+            // Roll Button
             else if (command.equals("roll")) {
+                // Display a new set of dice for the player and update their available rollCount.
                 rollDice();
+            }
+            // YES Button
+            else if (command.equals("yes")) {
+                // Go back to the start page.
+                start();
+            }
+            // NO Button
+            else if (command.equals("no")) {
+                // Exit the program.
+                System.exit(0);
             }
             // Close the program.
             else if (command.equals("exit")) {
