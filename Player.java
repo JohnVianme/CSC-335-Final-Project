@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Player {
 
@@ -7,12 +8,12 @@ public class Player {
 	private ArrayList<DiceEnum> roll;
 	private final ArrayList<DiceEnum> heldDice;
 	private final ScoreCard myScoreCard;
-	private final ArrayList<Category> availableCategories;
+	private final List<Category> availableCategories;
 
 	public Player (String name) {
 	  this.name = name;
 	  myScoreCard = new ScoreCard();
-	  availableCategories = myScoreCard.getCurCategories();
+	  availableCategories = myScoreCard.getUnfilledCategories();
 	  heldDice = new ArrayList<DiceEnum>();
 	  for (int i = 0; i < 5; i++) {
 		  heldDice.add(null);
