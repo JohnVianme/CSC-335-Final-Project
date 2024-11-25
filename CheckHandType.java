@@ -64,7 +64,12 @@ public class CheckHandType {
         }
 
         // full house should only have two kinds of dice
-        return counts.keySet().size() == 2;
+        // one should have a count of 3, other count of 2
+        if (counts.values().size() == 2) {
+            return counts.containsValue(2) && counts.containsValue(3);
+        }
+        
+        return false;
     }
 
     /*
