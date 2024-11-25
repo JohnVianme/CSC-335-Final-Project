@@ -125,7 +125,7 @@ public class ScoreCard {
         }
     }
 
-    private void checkForBonus() {
+    public void checkForBonus() {
         ArrayList<Category> topCategories = new ArrayList<>();
         topCategories.add(Category.ONES);
         topCategories.add(Category.TWOS);
