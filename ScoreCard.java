@@ -5,8 +5,8 @@
  */
 
 import java.util.*;
-
 import static java.util.Collections.unmodifiableList;
+
 
 public class ScoreCard {
 
@@ -19,23 +19,25 @@ public class ScoreCard {
     // constructor
     //
     public ScoreCard() {
-        // fill hashmap with each category of the scorecard and null
+        // fill hashmap with each category of the scorecard and 0
         for (Category cat : Category.values()) {
             scorecard.put(cat, 0);
         }
     }
 
     /*
-     * fill category of the scorecard using a Hand objects content
+     * fill category of the scorecard using an array of DiceEnums
      *
-     * use different methods for each category since they're each scored differently
+     * if-else chain for each category since scored uniquely
      *
-     * @param hand: a Hand object with field aHand -> list of DiceEnum objects
+     * @param dices: an array of DiceEnums
      * @param cat: the scoring category to be filled
      */
     public void fillCategory(ArrayList<DiceEnum> dices, Category cat) {
+        // initialize score variable
         int score = 0;
 
+        // score category is ONES, add up all dice with value of 1 for score
         if (cat == Category.ONES) {
             for (DiceEnum dice : dices) {
                 if (dice.getValue() == 1) {
@@ -45,6 +47,7 @@ public class ScoreCard {
             scorecard.put(cat, score);
         }
 
+        // score category is TWOS, add up all dice with value of 2 for score
         else if (cat == Category.TWOS) {
             for (DiceEnum dice : dices) {
                 if (dice.getValue() == 2) {
@@ -54,6 +57,7 @@ public class ScoreCard {
             scorecard.put(cat, score);
         }
 
+        // score category is THREES, add up all dice with value of 3 for score
         else if (cat == Category.THREES) {
             for (DiceEnum dice : dices) {
                 if (dice.getValue() == 3) {
@@ -63,6 +67,7 @@ public class ScoreCard {
             scorecard.put(cat, score);
         }
 
+        // score category is FOURS, add up all dice with value of 4 for score
         else if (cat == Category.FOURS) {
             for (DiceEnum dice : dices) {
                 if (dice.getValue() == 4) {
@@ -72,6 +77,7 @@ public class ScoreCard {
             scorecard.put(cat, score);
         }
 
+        // score category is FIVES, add up all dice with value of 5 for score
         else if (cat == Category.FIVES) {
             for (DiceEnum dice : dices) {
                 if (dice.getValue() == 5) {
@@ -81,6 +87,7 @@ public class ScoreCard {
             scorecard.put(cat, score);
         }
 
+        // score category is SIXES, add up all dice with value of 6 for score
         else if (cat == Category.SIXES) {
             for (DiceEnum dice : dices) {
                 if (dice.getValue() == 6) {
@@ -90,41 +97,91 @@ public class ScoreCard {
             scorecard.put(cat, score);
         }
 
+        // score category is THREE OF A KIND
+        // call method to check valid three of a kind
+        // if valid, add up all dice for score, else score is 0
         else if (cat == Category.THREEOFKIND) {
-            return;
+            if (CheckHandType.threeOfAKind(dices)) {
+                for (DiceEnum dice : dices) {
+                    score += dice.getValue();
+                }
+                scorecard.put(cat, score);
+            } else {
+                scorecard.put(cat, 0);
+            }
         }
 
+        // score category is FOUR OF A KIND
+        // call method to check valid four of a kind
+        // if valid, add up all dice for score, else score is 0
         else if (cat == Category.FOUROFKIND) {
-
-            return;
+            if (CheckHandType.fourOfAKind(dices)) {
+                for (DiceEnum dice : dices) {
+                    score += dice.getValue();
+                }
+                scorecard.put(cat, score);
+            } else {
+                scorecard.put(cat, 0);
+            }
         }
 
+        // score category is FULL HOUSE
+        // call method to check valid full house
+        // if valid, score is 25, else score is 0
         else if (cat == Category.FULLHOUSE) {
-
-            return;
+            if (CheckHandType.fullHouse(dices)) {
+                scorecard.put(cat, 25);
+            } else {
+                scorecard.put(cat, 0);
+            }
         }
 
+        // score category is SMALL STRAIGHT
+        // call method to check valid small straight
+        // if valid, score is 30, else score is 0
         else if (cat == Category.SMALLSTRAIGHT) {
-
-            return;
+            if (CheckHandType.smallStraight(dices)) {
+                scorecard.put(cat, 30);
+            } else {
+                scorecard.put(cat, 0);
+            }
         }
 
+        // score category is LARGE STRAIGHT
+        // call method to check valid large straight
+        // if valid, score is 40, else score is 0
         else if (cat == Category.LARGESTRAIGHT) {
-
-            return;
+            if (CheckHandType.largeStraight(dices)) {
+                scorecard.put(cat, 40);
+            } else {
+                scorecard.put(cat, 0);
+            }
         }
 
+        // score category is YAHTZEE
+        // call method to check valid Yahtzee
+        // if valid, score is 50, else score is 0
         else if (cat == Category.YAHTZEE) {
-
-            return;
+            if (CheckHandType.yahtzee(dices)) {
+                scorecard.put(cat, 50);
+            } else {
+                scorecard.put(cat, 0);
+            }
         }
 
+        // score category is CHANCE, add up all dice for score
         else if (cat == Category.CHANCE) {
-
-            return;
+            for (DiceEnum dice : dices) {
+                score += dice.getValue();
+            }
+            scorecard.put(cat, score);
         }
     }
 
+    /*
+     * checks to see if a players scoring categories meet the requirements
+     * for the bonus category
+     */
     public void checkForBonus() {
         ArrayList<Category> topCategories = new ArrayList<>();
         topCategories.add(Category.ONES);
@@ -147,6 +204,13 @@ public class ScoreCard {
         }
     }
 
+    /*
+     * returns the score of a category on the scorecard
+     *
+     * @params cat - a category on the scorecard
+     *
+     * @return int - the current value of the scoring category
+     */
     public int getCategoryScore(Category cat) {
         return scorecard.get(cat);
     }
@@ -183,5 +247,4 @@ public class ScoreCard {
 
         return grandTotal;
     }
-
 }
