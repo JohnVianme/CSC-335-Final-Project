@@ -14,7 +14,7 @@ public class Game {
 		this.currentPlayerIdx = 0;
 	}
 
-	public Hand getPlayerHand() {
+	public ArrayList<DiceEnum> getPlayerHand() {
 		Player currPlayer = players.get(currentPlayerIdx);
 		return currPlayer.getHand();
 	}
@@ -37,14 +37,14 @@ public class Game {
 	 * return the current player
 	 * 
 	 */
-	public boolean submitHand() {
+	public boolean submitHand(Category category) {
 		Player curPlayer;
 		// if we are the last player
 		if (currentPlayerIdx == players.size() - 1) {
 			// get the last player
 			curPlayer = players.get(currentPlayerIdx);
 			// try to make make the last player submitHand
-			boolean result = curPlayer.submitHand();
+			boolean result = curPlayer.submitHand(category);
 			// if not possible
 			if (result == false) {
 				// end of game
@@ -55,7 +55,7 @@ public class Game {
 		currentPlayerIdx = ((currentPlayerIdx + 1) % playerAmount);
 		curPlayer = players.get(currentPlayerIdx);
 		// make sure next player restart there roll count to 3 and holds to zero
-		curPlayer.startTurn();
+		curPlayer.startNewTurn();
 		// return true that we were able to submit hand
 		return true;
 

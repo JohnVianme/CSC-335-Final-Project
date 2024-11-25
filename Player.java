@@ -143,4 +143,10 @@ public class Player {
 		}
 		return true;
 	}
+
+	// TODO Auto-generated method stub
+	public ScoreCard getScoreCard() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
