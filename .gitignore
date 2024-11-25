@@ -6,4 +6,9 @@
 /Player.class
 /ScoreCard.class
 /Category.class
+/DiceEnumTest.class
+/DiceTest.class
+/HandTest.class
+/GUIView$ButtonClickListener.class
+/GUIView$1.class
 /PlayerTest.class
