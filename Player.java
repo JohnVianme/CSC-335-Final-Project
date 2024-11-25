@@ -136,6 +136,7 @@ public class Player {
 	 */
 	public boolean submitHand(Category category) {
 		myScoreCard.fillCategory(roll, category);
+		List<Category> remainingCategories = getUnfilledCategories();
 		if (remainingCategories.size() == 0) {
 			myScoreCard.checkForBonus();
 			return false;
