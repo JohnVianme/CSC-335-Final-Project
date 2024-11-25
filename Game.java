@@ -87,4 +87,20 @@ public class Game {
 		return true;
 	}
 
+	public String getCurName() {
+		Player currPlayer = players.get(currentPlayerIdx);
+		return currPlayer.getName();
+	}
+	
+	public ScoreCard getCurCard() {
+		Player currPlayer = players.get(currentPlayerIdx);
+		return currPlayer.getScoreCard();
+	}
+	
+	public int getCategoryScore(Category category) { 
+		Player currPlayer = players.get(currentPlayerIdx);
+		return currPlayer.getCategoryScore(category);
+	}
+
+
 }
