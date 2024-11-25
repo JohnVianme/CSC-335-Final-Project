@@ -148,7 +148,7 @@ public class Player {
 	/*
 	 * return copy of the current plays scoreCard
 	 */
-	public ScoreCard getScoreCard() {
-		return this.myScoreCard.getCopy();
+	public HashMap<Category, Integer> getScoreCard() {
+		return myScoreCard.getCopy();
 	}
 }

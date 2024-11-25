@@ -26,11 +26,6 @@ public class ScoreCard {
 		}
 	}
 
-	private ScoreCard(HashMap<Category, Integer> copyHashMap) {
-		// fill hashmap with each category of the scorecard and null
-		this.scorecard = copyHashMap;
-	}
-
 	/*
 	 * fill category of the scorecard using a Hand objects content
 	 *
@@ -190,16 +185,14 @@ public class ScoreCard {
 
 		return grandTotal;
 	}
+
 	/*
-	 * Method returns a copy of the scoreCard by using 
-	 * a private contructer the passes in a copy of the instance
-	 * varible "scoreCard"
+	 * Method returns a copy of the scoreCard
 	 * 
 	 */
-	public ScoreCard getCopy() {
-		// make a copy with a compy constrcutor   
-		ScoreCard copy = new ScoreCard(new HashMap<>(scorecard));
-		return copy;
+	public HashMap<Category, Integer> getCopy() {
+		// make a copy with a compy constrcutor
+		return new HashMap<Category, Integer>(scorecard);
 	}
 
 }

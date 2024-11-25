@@ -26,8 +26,11 @@ public final class Hand {
 		return aHand;
 	}
 
-	// TODO
+	/*
+	 * return the set the dice at index to the new dice
+	 */
 	public ArrayList<DiceEnum> setHand(int index, DiceEnum dice) {
 		return aHand;
 	}
+
 }
