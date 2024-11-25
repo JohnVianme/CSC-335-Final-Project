@@ -21,26 +21,134 @@ public class ScoreCard {
     public ScoreCard() {
         // fill hashmap with each category of the scorecard and null
         for (Category cat : Category.values()) {
-            scorecard.put(cat, null);
+            scorecard.put(cat, 0);
         }
     }
 
     /*
      * fill category of the scorecard using a Hand objects content
      *
+     * use different methods for each category since they're each scored differently
+     *
      * @param hand: a Hand object with field aHand -> list of DiceEnum objects
      * @param cat: the scoring category to be filled
      */
-    public void fillCategory(Hand hand, Category cat) {
+    public void fillCategory(ArrayList<DiceEnum> dices, Category cat) {
         int score = 0;
 
-        // get score from array of dice in hand
-        for (DiceEnum dice : hand.getHand()) {
-            score += dice.getValue();
+        if (cat == Category.ONES) {
+            for (DiceEnum dice : dices) {
+                if (dice.getValue() == 1) {
+                    score += dice.getValue();
+                }
+            }
+            scorecard.put(cat, score);
         }
 
-        // fill scorecard category with score value
-        scorecard.put(cat, score);
+        else if (cat == Category.TWOS) {
+            for (DiceEnum dice : dices) {
+                if (dice.getValue() == 2) {
+                    score += dice.getValue();
+                }
+            }
+            scorecard.put(cat, score);
+        }
+
+        else if (cat == Category.THREES) {
+            for (DiceEnum dice : dices) {
+                if (dice.getValue() == 3) {
+                    score += dice.getValue();
+                }
+            }
+            scorecard.put(cat, score);
+        }
+
+        else if (cat == Category.FOURS) {
+            for (DiceEnum dice : dices) {
+                if (dice.getValue() == 4) {
+                    score += dice.getValue();
+                }
+            }
+            scorecard.put(cat, score);
+        }
+
+        else if (cat == Category.FIVES) {
+            for (DiceEnum dice : dices) {
+                if (dice.getValue() == 5) {
+                    score += dice.getValue();
+                }
+            }
+            scorecard.put(cat, score);
+        }
+
+        else if (cat == Category.SIXES) {
+            for (DiceEnum dice : dices) {
+                if (dice.getValue() == 6) {
+                    score += dice.getValue();
+                }
+            }
+            scorecard.put(cat, score);
+        }
+
+        else if (cat == Category.THREEOFKIND) {
+            return;
+        }
+
+        else if (cat == Category.FOUROFKIND) {
+
+            return;
+        }
+
+        else if (cat == Category.FULLHOUSE) {
+
+            return;
+        }
+
+        else if (cat == Category.SMALLSTRAIGHT) {
+
+            return;
+        }
+
+        else if (cat == Category.LARGESTRAIGHT) {
+
+            return;
+        }
+
+        else if (cat == Category.YAHTZEE) {
+
+            return;
+        }
+
+        else if (cat == Category.CHANCE) {
+
+            return;
+        }
+    }
+
+
+    private void checkForBonus() {
+        ArrayList<Category> topCategories = new ArrayList<>();
+        topCategories.add(Category.ONES);
+        topCategories.add(Category.TWOS);
+        topCategories.add(Category.THREES);
+        topCategories.add(Category.FOURS);
+        topCategories.add(Category.FIVES);
+        topCategories.add(Category.SIXES);
+
+        int topScore = 0;
+
+        for (Category cat : topCategories) {
+            topScore += scorecard.get(cat);
+        }
+
+        if (topScore >= 63) {
+            scorecard.put(Category.BONUS, 35);
+        }
+
+    }
+
+    public int getCategoryScore(Category cat) {
+        return scorecard.get(cat);
     }
 
     /*
@@ -75,5 +183,5 @@ public class ScoreCard {
 
         return grandTotal;
     }
-    
+
 }

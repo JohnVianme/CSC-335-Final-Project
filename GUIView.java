@@ -4,6 +4,9 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.text.StyledEditorKit.ForegroundAction;
+
+import org.junit.internal.matchers.StacktracePrintingMatcher;
 
 public class GUIView extends JFrame {
     private static Game myGame = new Game();
@@ -95,9 +98,17 @@ public class GUIView extends JFrame {
         this.add(playerNumLabel);
 
         // Will update rollsRemaining count later, for now just declare its position.
-        rollCountLabel = new JLabel("Rolls remaining: ");
+        rollCountLabel = new JLabel("Rolls remaining: " );
         rollCountLabel.setBounds(650, 25, 200, 100);
         this.add(rollCountLabel);
+        
+        // Button user can click to see current scores in all categories.
+        JButton scoresButton = new JButton("Score Card");
+        scoresButton.setActionCommand("scorecard");
+        scoresButton.addActionListener(new ButtonClickListener());
+        scoresButton.setBounds(10, 700, 100, 50);
+        this.add(scoresButton);
+        
 
         // Display the "roll" button, which will indicate we need a new set of dice displayed and decrement rollCount.
         JButton rollButton = new JButton("Roll");
@@ -195,6 +206,8 @@ public class GUIView extends JFrame {
 
             // CPU Button
             if (command.equals("cpu")) {
+            	String name = myGame.getCurName();
+            	int rools = myGame.getRollCount();
                 // Set up the page to prepare for the game.
                 playPage();
             }
@@ -221,18 +234,53 @@ public class GUIView extends JFrame {
             // YES Button
             else if (command.equals("yes")) {
                 // Go back to the start page.
-                start();
+            	dispose();
+            	GUIView.main(null);
             }
             // NO Button
             else if (command.equals("no")) {
                 // Exit the program.
                 System.exit(0);
             }
+            // Score Card Button
+            else if (command.equals("scorecard")) {
+            	// Pop up window for user to view possible Yahtzee scores.
+                String scoresString = getScoresString();
+                JTextArea scoreArea = new JTextArea(scoresString);
+                JOptionPane.showMessageDialog(null, scoreArea);
+            }
             // Close the program.
             else if (command.equals("exit")) {
                 System.exit(0);
             }
         }
+    }
+    
+    private String getScoresString() {
+    	// Create arraylist of all possible categories, IN ORDER.
+    	ArrayList<Category> allCategories = new ArrayList<Category>();
+    	allCategories.add(Category.ONES);
+    	allCategories.add(Category.TWOS);
+    	allCategories.add(Category.THREES);
+    	allCategories.add(Category.FOURS);
+    	allCategories.add(Category.FIVES);
+    	allCategories.add(Category.SIXES);
+    	allCategories.add(Category.THREEOFKIND);
+    	allCategories.add(Category.FOUROFKIND);
+    	allCategories.add(Category.FULLHOUSE);
+    	allCategories.add(Category.SMALLSTRAIGHT);
+    	allCategories.add(Category.LARGESTRAIGHT);
+    	allCategories.add(Category.YAHTZEE);
+    	allCategories.add(Category.CHANCE);
+    	String result = "";
+    	for(Category cat: allCategories) {
+    		// Add each category, followed by current player's score in that category.
+    		result += cat.name() + " : ";
+    		result += myGame.getCategoryScore(cat) + "\n";
+    	}
+    	
+    	return result;
+    	
     }
 
     public static void main(String[] args) {
