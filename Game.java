@@ -1,13 +1,15 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.naming.spi.DirStateFactory.Result;
+
 public class Game {
 	private int playerAmount;
 	private ArrayList<Player> players;
 	private int currentPlayerIdx;
 
 	/*
-	 * Constructor for game with no players
+	 * Constructor for game with no players added yet
 	 */
 	public Game() {
 		this.playerAmount = 0;
@@ -15,11 +17,17 @@ public class Game {
 		this.currentPlayerIdx = 0;
 	}
 
+	/*
+	 * @return the current plays hand of dices
+	 */
 	public ArrayList<DiceEnum> getPlayerHand() {
 		Player currPlayer = players.get(currentPlayerIdx);
 		return currPlayer.getHand();
 	}
 
+	/*
+	 * @return the current players rollCount
+	 */
 	public int getRollCount() {
 		Player currPlayer = players.get(currentPlayerIdx);
 		return currPlayer.getRollCount();
@@ -88,20 +96,50 @@ public class Game {
 		return true;
 	}
 
+	/*
+	 * This method returns the current player's name
+	 * 
+	 * @return player name
+	 */
 	public String getCurName() {
 		Player currPlayer = players.get(currentPlayerIdx);
 		return currPlayer.getName();
 	}
-	
+
+	/*
+	 * This method returns the copy of the current player's ScoreCard
+	 * 
+	 * @return copy of the plays ScoreCard
+	 */
 	public HashMap<Category, Integer> getCurCard() {
 		Player currPlayer = players.get(currentPlayerIdx);
 		return currPlayer.getScoreCard();
 	}
-	
-	public int getCategoryScore(Category category) { 
+
+	/*
+	 * This method return the players for a spacific category
+	 * 
+	 * @param category -a category
+	 * 
+	 * @pre category != null
+	 * 
+	 * @return the score for the current player will be returned for that category
+	 */
+	public int getCategoryScore(Category category) {
 		Player currPlayer = players.get(currentPlayerIdx);
 		return currPlayer.getCategoryScore(category);
 	}
 
+	/*
+	 * This method makes the current player roll the dices
+	 * 
+	 * @return true if was able to roll, false else
+	 */
+	public boolean currRollDice() {
+		// make current player's roll the dices
+		Player currPlayer = players.get(currentPlayerIdx);
+		boolean result = currPlayer.RollDice();
+		return result;
+	}
 
 }
