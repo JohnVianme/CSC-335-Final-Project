@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.*;
 import java.util.ArrayList;
 
@@ -9,304 +10,320 @@ import javax.swing.text.StyledEditorKit.ForegroundAction;
 import org.junit.internal.matchers.StacktracePrintingMatcher;
 
 public class GUIView extends JFrame {
-    private static Game myGame = new Game();
-    private JPanel panel;
-    private JLabel instructionLabel;
-    private JLabel playerNumLabel;
-    private JLabel rollCountLabel;
-    private JLabel scoreLabel;
-    private JPanel dicePanel;
+	private static Game myGame = new Game();
+	private JPanel panel;
+	private JLabel instructionLabel;
+	private JLabel playerNumLabel;
+	private JLabel rollCountLabel;
+	private JLabel scoreLabel;
+	private JPanel dicePanel;
+	private JButton rollButton;
 
-    public GUIView() {
-        setUp();
-    }
+	public GUIView() {
+		setUp();
+	}
 
-    private void setUp() {
-        // Setting the size of the frame.
-        this.setSize(800, 800);
+	private void setUp() {
+		// Setting the size of the frame.
+		this.setSize(800, 800);
 
-        // Adding welcome label for player's first time opening view.
-        instructionLabel = new JLabel("Welcome to Yahtzee! Select game mode below.");
-        instructionLabel.setBounds(250, 100, 600, 100);
-        this.add(instructionLabel);
+		// Adding welcome label for player's first time opening view.
+		instructionLabel = new JLabel("Welcome to Yahtzee! Select game mode below.");
+		instructionLabel.setBounds(250, 100, 600, 100);
+		this.add(instructionLabel);
 
-        // Adding the panel.
-        panel = new JPanel();
-        panel.setLayout(null);
-        this.add(panel);
+		// Adding the panel.
+		panel = new JPanel();
+		panel.setLayout(null);
+		this.add(panel);
 
-        // Adding a window listener for closing the app.
-        this.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent windowEvent) {
-                System.exit(0);
-            }
-        });
+		// Adding a window listener for closing the app.
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent windowEvent) {
+				System.exit(0);
+			}
+		});
 
-    }
+	}
 
-    private void start() {
-       
-        // Start with buttons that determine how many players in game.
-        JButton cpuButton = new JButton("CPU");
-        cpuButton.setActionCommand("cpu");
-        cpuButton.addActionListener(new ButtonClickListener());
-        cpuButton.setBounds(340, 200, 100, 50);
-        panel.add(cpuButton);
+	private void start() {
 
-        JButton twoPlayerButton = new JButton("Two Players");
-        twoPlayerButton.setActionCommand("twoPlayer");
-        twoPlayerButton.addActionListener(new ButtonClickListener());
-        twoPlayerButton.setBounds(340, 300, 100, 50);
-        panel.add(twoPlayerButton);
+		// Start with buttons that determine how many players in game.
+		JButton cpuButton = new JButton("CPU");
+		cpuButton.setActionCommand("cpu");
+		cpuButton.addActionListener(new ButtonClickListener());
+		cpuButton.setBounds(340, 200, 100, 50);
+		panel.add(cpuButton);
 
-        JButton threePlayerButton = new JButton("Three Players");
-        threePlayerButton.setActionCommand("threePlayer");
-        threePlayerButton.addActionListener(new ButtonClickListener());
-        threePlayerButton.setBounds(340, 400, 100, 50);
-        panel.add(threePlayerButton);
+		JButton twoPlayerButton = new JButton("Two Players");
+		twoPlayerButton.setActionCommand("twoPlayer");
+		twoPlayerButton.addActionListener(new ButtonClickListener());
+		twoPlayerButton.setBounds(340, 300, 100, 50);
+		panel.add(twoPlayerButton);
 
-        JButton fourPlayerButton = new JButton("Four Players");
-        fourPlayerButton.setActionCommand("fourPlayer");
-        fourPlayerButton.addActionListener(new ButtonClickListener());
-        fourPlayerButton.setBounds(340, 500, 100, 50);
-        panel.add(fourPlayerButton);
+		JButton threePlayerButton = new JButton("Three Players");
+		threePlayerButton.setActionCommand("threePlayer");
+		threePlayerButton.addActionListener(new ButtonClickListener());
+		threePlayerButton.setBounds(340, 400, 100, 50);
+		panel.add(threePlayerButton);
 
-        // Also add an exit button. (In case user changes their mind about playing).
-        JButton exitButton = new JButton("Exit");
-        exitButton.setActionCommand("exit");
-        exitButton.addActionListener(new ButtonClickListener());
-        exitButton.setBounds(650, 25, 100, 50);
-        panel.add(exitButton);
+		JButton fourPlayerButton = new JButton("Four Players");
+		fourPlayerButton.setActionCommand("fourPlayer");
+		fourPlayerButton.addActionListener(new ButtonClickListener());
+		fourPlayerButton.setBounds(340, 500, 100, 50);
+		panel.add(fourPlayerButton);
 
-        this.add(panel);
+		// Also add an exit button. (In case user changes their mind about playing).
+		JButton exitButton = new JButton("Exit");
+		exitButton.setActionCommand("exit");
+		exitButton.addActionListener(new ButtonClickListener());
+		exitButton.setBounds(650, 25, 100, 50);
+		panel.add(exitButton);
 
-        this.revalidate();
-        this.repaint();
-    }
+		// roll button created here for use later
+		this.rollButton = new JButton("Roll");
+		this.add(panel);
 
-    /**
-     * Method to create the page where a player will play yahtzee during their turn.
-     * @param rolls 
-     * @param name 
-     */
-    private void playPage(String name, int rolls) {
-        // Wipe GUI to start from fresh slate.
-        this.getContentPane().removeAll();
-        this.setLayout(null);
+		this.revalidate();
+		this.repaint();
+	}
 
-        // Will update playerNum label later, for now just declare its position.
-        playerNumLabel = new JLabel("Current player: " + name);
-        playerNumLabel.setBounds(50, 25, 200, 100);
-        this.add(playerNumLabel);
+	/**
+	 * Method to create the page where a player will play yahtzee during their turn.
+	 * 
+	 * @param rolls
+	 * @param name
+	 */
+	private void playPage(String name, int rolls) {
+		// Wipe GUI to start from fresh slate.
+		this.getContentPane().removeAll();
+		this.setLayout(null);
 
-        // Will update rollsRemaining count later, for now just declare its position.
-        rollCountLabel = new JLabel("Rolls remaining: " + rolls);
-        rollCountLabel.setBounds(650, 25, 200, 100);
-        this.add(rollCountLabel);
-        
-        // Button user can click to see current scores in all categories.
-        JButton scoresButton = new JButton("Score Card");
-        scoresButton.setActionCommand("scorecard");
-        scoresButton.addActionListener(new ButtonClickListener());
-        scoresButton.setBounds(10, 700, 100, 50);
-        this.add(scoresButton);
-        
+		// Will update playerNum label later, for now just declare its position.
+		playerNumLabel = new JLabel("Current player: " + name);
+		playerNumLabel.setBounds(50, 25, 200, 100);
+		this.add(playerNumLabel);
 
-        // Display the "roll" button, which will indicate we need a new set of dice displayed and decrement rollCount.
-        JButton rollButton = new JButton("Roll");
-        rollButton.setActionCommand("roll");
-        rollButton.addActionListener(new ButtonClickListener());
-        rollButton.setBounds(340, 600, 100, 50);
-        this.add(rollButton);
+		// Will update rollsRemaining count later, for now just declare its position.
+		rollCountLabel = new JLabel("Rolls remaining: " + rolls);
+		rollCountLabel.setBounds(650, 25, 200, 100);
+		this.add(rollCountLabel);
 
-        // Create a panel where the dice will be displayed. Do not need to fill it yet, since user has not rolled.
-        dicePanel = new JPanel();
-        dicePanel.setBounds(100, 350, 600, 100);
-        dicePanel.setLayout(new GridLayout(1, 5, 15, 0));
-        this.add(dicePanel);
+		// Button user can click to see current scores in all categories.
+		JButton scoresButton = new JButton("Score Card");
+		scoresButton.setActionCommand("scorecard");
+		scoresButton.addActionListener(new ButtonClickListener());
+		scoresButton.setBounds(10, 700, 100, 50);
+		this.add(scoresButton);
 
-        this.revalidate();
-        this.repaint();
+		// Display the "roll" button, which will indicate we need a new set of dice
+		// displayed and decrement rollCount.
+		rollButton.setActionCommand("roll");
+		rollButton.addActionListener(new ButtonClickListener());
+		rollButton.setBounds(340, 600, 100, 50);
+		this.add(rollButton);
 
-    }
+		// Create a panel where the dice will be displayed. Do not need to fill it yet,
+		// since user has not rolled.
+		dicePanel = new JPanel();
+		dicePanel.setBounds(100, 350, 600, 100);
+		dicePanel.setLayout(new GridLayout(1, 5, 15, 0));
+		this.add(dicePanel);
 
-    /**
-     * Method to create the page where scoreboard is displayed after game is completed.
-     */
-    private void scorePage() {
-        // Wipe GUI to start from fresh slate.
-        this.getContentPane().removeAll();
-        this.setLayout(null);
+		this.revalidate();
+		this.repaint();
 
-        // Label header to tell the user the game has ended.
-        JLabel overLabel = new JLabel("Game Over!");
-        overLabel.setBounds(350, 25, 200, 100);
-        this.add(overLabel);
+	}
 
-        // Label to ask user if they would like to play another game.
-        JLabel playAgainLabel = new JLabel("New Game?");
-        playAgainLabel.setBounds(350, 400, 200, 100);
-        this.add(playAgainLabel);
+	/**
+	 * Method to create the page where scoreboard is displayed after game is
+	 * completed.
+	 */
+	private void scorePage() {
+		// Wipe GUI to start from fresh slate.
+		this.getContentPane().removeAll();
+		this.setLayout(null);
 
-        // YES/NO buttons for user to decide if they want to play another game.
-        JButton yesButton = new JButton("YES");
-        yesButton.setActionCommand("yes");
-        yesButton.addActionListener(new ButtonClickListener());
-        yesButton.setBounds(336, 480, 50, 50);
-        this.add(yesButton);
+		// Label header to tell the user the game has ended.
+		JLabel overLabel = new JLabel("Game Over!");
+		overLabel.setBounds(350, 25, 200, 100);
+		this.add(overLabel);
 
-        JButton noButton = new JButton("NO");
-        noButton.setActionCommand("no");
-        noButton.addActionListener(new ButtonClickListener());
-        noButton.setBounds(386, 480, 50, 50);
-        this.add(noButton);
+		// Label to ask user if they would like to play another game.
+		JLabel playAgainLabel = new JLabel("New Game?");
+		playAgainLabel.setBounds(350, 400, 200, 100);
+		this.add(playAgainLabel);
 
-        // Text Area to display results for each of the players.
-        JTextArea scoreArea = new JTextArea();
-        scoreArea.setSize(400, 200);
-        scoreArea.setEditable(false);
-        scoreArea.setBounds(150, 100, 500, 200);
-        this.add(scoreArea);
+		// YES/NO buttons for user to decide if they want to play another game.
+		JButton yesButton = new JButton("YES");
+		yesButton.setActionCommand("yes");
+		yesButton.addActionListener(new ButtonClickListener());
+		yesButton.setBounds(336, 480, 50, 50);
+		this.add(yesButton);
 
-        this.setVisible(true);
+		JButton noButton = new JButton("NO");
+		noButton.setActionCommand("no");
+		noButton.addActionListener(new ButtonClickListener());
+		noButton.setBounds(386, 480, 50, 50);
+		this.add(noButton);
 
-        this.revalidate();
-        this.repaint();
+		// Text Area to display results for each of the players.
+		JTextArea scoreArea = new JTextArea();
+		scoreArea.setSize(400, 200);
+		scoreArea.setEditable(false);
+		scoreArea.setBounds(150, 100, 500, 200);
+		this.add(scoreArea);
 
-    }
+		this.setVisible(true);
 
-    /**
-     * When user clicks roll button, display new dice and update rollCountLabel.
-     */
-    private void rollDice() {
-        // Get rid of existing dice. (If any).
-        dicePanel.removeAll();
+		this.revalidate();
+		this.repaint();
 
-        // Retrieve five random dice from the model, and add each to the panel.
-        for (int i = 0; i < 5; i++) {
-            // For now, add one picture to make sure it is appearing in GUI.
-            // Update later with functionality.
-            JLabel diceLabel = new JLabel(new ImageIcon("six.png"));
-            dicePanel.add(diceLabel);
-        }
+	}
 
-        JLabel selectLabel = new JLabel("Select a Category");
-        
+	/**
+	 * When user clicks roll button, display new dice and update rollCountLabel.
+	 */
+	private void rollDice() {
+		// Get rid of existing dice. (If any).
+		dicePanel.removeAll();
+		// make the player roll their dice
+		boolean ableToRoll = myGame.currRollDice();
+		// get the result of the roll
+		ArrayList<DiceEnum> curHand = myGame.getPlayerHand();
+		// Retrieve five random dice from the model, and add each to the panel.
+		for (int i = 0; i < 5; i++) {
+			// Update later with functionality.
+			JLabel diceLabel = new JLabel();
+			String diceName = curHand.get(i).name().toLowerCase() + ".png";
+			ImageIcon DiceIcon = new ImageIcon(new ImageIcon(diceName).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+			diceLabel.setIcon(DiceIcon);
+			dicePanel.add(diceLabel);
+		}
+		// update rollsRemaining
+		rollCountLabel.setText("Rolls remaining: " + myGame.getRollCount());
+		rollCountLabel.revalidate();
+		rollCountLabel.repaint();
 
-        // Refresh the panel.
-        dicePanel.revalidate();
-        dicePanel.repaint();
+		JLabel selectLabel = new JLabel("Select a Category");
 
-    }
+		// Refresh the panel.
+		dicePanel.revalidate();
+		dicePanel.repaint();
 
-    // Click listener for the previously listed buttons.
-    private class ButtonClickListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            String command = e.getActionCommand();
-            
-            // If statements to handle each game mode that is selected.
+	}
 
-            // CPU Button
-            if (command.equals("cpu")) {
-            	myGame.addPlayer("Player 1");
-            	myGame.addPlayer("CPU");
-            	String name = myGame.getCurName();
-            	int rolls = myGame.getRollCount();
-                // Set up the page to prepare for the game.
-                playPage(name, rolls);
-            }
-            // Two Player Button
-            else if (command.equals("twoPlayer")) {
-            	myGame.addPlayer("Player 1");
-            	myGame.addPlayer("Player 2");
-            	String name = myGame.getCurName();
-            	int rolls = myGame.getRollCount();
-                // Set up the page to prepare for the game.
-                playPage(name, rolls);
-            }
-            // Three Player Button
-            else if (command.equals("threePlayer")) {
-            	myGame.addPlayer("Player 1");
-            	myGame.addPlayer("Player 2");
-            	myGame.addPlayer("Player 3");
-            	String name = myGame.getCurName();
-            	int rolls = myGame.getRollCount();
-                // Set up the page to prepare for the game.
-                playPage(name, rolls);
-            }
-            // Four Player Button
-            else if (command.equals("fourPlayer")) {
-            	myGame.addPlayer("Player 1");
-            	myGame.addPlayer("Player 2");
-            	myGame.addPlayer("Player 3");
-            	myGame.addPlayer("Player 4");
-            	String name = myGame.getCurName();
-            	int rolls = myGame.getRollCount();
-                // Set up the page to prepare for the game.
-                playPage(name, rolls);
-            }
-            // Roll Button
-            else if (command.equals("roll")) {
-                // Display a new set of dice for the player and update their available rollCount.
-                rollDice();
-            }
-            // YES Button
-            else if (command.equals("yes")) {
-                // Go back to the start page.
-            	dispose();
-            	GUIView.main(null);
-            }
-            // NO Button
-            else if (command.equals("no")) {
-                // Exit the program.
-                System.exit(0);
-            }
-            // Score Card Button
-            else if (command.equals("scorecard")) {
-            	// Pop up window for user to view possible Yahtzee scores.
-                String scoresString = getScoresString();
-                JTextArea scoreArea = new JTextArea(scoresString);
-                JOptionPane.showMessageDialog(null, scoreArea);
-            }
-            // Close the program.
-            else if (command.equals("exit")) {
-                System.exit(0);
-            }
-        }
-    }
-    
-    private String getScoresString() {
-    	// Create arraylist of all possible categories, IN ORDER.
-    	ArrayList<Category> allCategories = new ArrayList<Category>();
-    	allCategories.add(Category.ONES);
-    	allCategories.add(Category.TWOS);
-    	allCategories.add(Category.THREES);
-    	allCategories.add(Category.FOURS);
-    	allCategories.add(Category.FIVES);
-    	allCategories.add(Category.SIXES);
-    	allCategories.add(Category.THREEOFKIND);
-    	allCategories.add(Category.FOUROFKIND);
-    	allCategories.add(Category.FULLHOUSE);
-    	allCategories.add(Category.SMALLSTRAIGHT);
-    	allCategories.add(Category.LARGESTRAIGHT);
-    	allCategories.add(Category.YAHTZEE);
-    	allCategories.add(Category.CHANCE);
-    	String result = "";
-    	for(Category cat: allCategories) {
-    		// Add each category, followed by current player's score in that category.
-    		result += cat.name() + " : ";
-    		result += myGame.getCategoryScore(cat) + "\n";
-    	}
-    	
-    	return result;
-    	
-    }
+	// Click listener for the previously listed buttons.
+	private class ButtonClickListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			String command = e.getActionCommand();
 
-    public static void main(String[] args) {
-        GUIView view = new GUIView();
-        view.start();
-        view.setVisible(true);
-    }
+			// If statements to handle each game mode that is selected.
+
+			// CPU Button
+			if (command.equals("cpu")) {
+				myGame.addPlayer("Player 1");
+				myGame.addPlayer("CPU");
+				String name = myGame.getCurName();
+				int rolls = myGame.getRollCount();
+				// Set up the page to prepare for the game.
+				playPage(name, rolls);
+			}
+			// Two Player Button
+			else if (command.equals("twoPlayer")) {
+				myGame.addPlayer("Player 1");
+				myGame.addPlayer("Player 2");
+				String name = myGame.getCurName();
+				int rolls = myGame.getRollCount();
+				// Set up the page to prepare for the game.
+				playPage(name, rolls);
+			}
+			// Three Player Button
+			else if (command.equals("threePlayer")) {
+				myGame.addPlayer("Player 1");
+				myGame.addPlayer("Player 2");
+				myGame.addPlayer("Player 3");
+				String name = myGame.getCurName();
+				int rolls = myGame.getRollCount();
+				// Set up the page to prepare for the game.
+				playPage(name, rolls);
+			}
+			// Four Player Button
+			else if (command.equals("fourPlayer")) {
+				myGame.addPlayer("Player 1");
+				myGame.addPlayer("Player 2");
+				myGame.addPlayer("Player 3");
+				myGame.addPlayer("Player 4");
+				String name = myGame.getCurName();
+				int rolls = myGame.getRollCount();
+				// Set up the page to prepare for the game.
+				playPage(name, rolls);
+			}
+			// Roll Button
+			else if (command.equals("roll")) {
+				// Display a new set of dice for the player and update their available
+				// rollCount.
+				rollDice();
+				// disable button if no more rolls left
+				if (myGame.getRollCount() == 0) {
+					rollButton.setEnabled(false);
+				}
+			}
+			// YES Button
+			else if (command.equals("yes")) {
+				// Go back to the start page.
+				dispose();
+				GUIView.main(null);
+			}
+			// NO Button
+			else if (command.equals("no")) {
+				// Exit the program.
+				System.exit(0);
+			}
+			// Score Card Button
+			else if (command.equals("scorecard")) {
+				// Pop up window for user to view possible Yahtzee scores.
+				String scoresString = getScoresString();
+				JTextArea scoreArea = new JTextArea(scoresString);
+				JOptionPane.showMessageDialog(null, scoreArea);
+			}
+			// Close the program.
+			else if (command.equals("exit")) {
+				System.exit(0);
+			}
+		}
+	}
+
+	private String getScoresString() {
+		// Create arraylist of all possible categories, IN ORDER.
+		ArrayList<Category> allCategories = new ArrayList<Category>();
+		allCategories.add(Category.ONES);
+		allCategories.add(Category.TWOS);
+		allCategories.add(Category.THREES);
+		allCategories.add(Category.FOURS);
+		allCategories.add(Category.FIVES);
+		allCategories.add(Category.SIXES);
+		allCategories.add(Category.THREEOFKIND);
+		allCategories.add(Category.FOUROFKIND);
+		allCategories.add(Category.FULLHOUSE);
+		allCategories.add(Category.SMALLSTRAIGHT);
+		allCategories.add(Category.LARGESTRAIGHT);
+		allCategories.add(Category.YAHTZEE);
+		allCategories.add(Category.CHANCE);
+		String result = "";
+		for (Category cat : allCategories) {
+			// Add each category, followed by current player's score in that category.
+			result += cat.name() + " : ";
+			result += myGame.getCategoryScore(cat) + "\n";
+		}
+
+		return result;
+
+	}
+
+	public static void main(String[] args) {
+		GUIView view = new GUIView();
+		view.start();
+		view.setVisible(true);
+	}
 }
-
-
