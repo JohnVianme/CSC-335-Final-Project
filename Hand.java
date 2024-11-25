@@ -23,7 +23,7 @@ public final class Hand {
 			// create five dices and add them to hand
 			aHand.add(Dice.getDice());
 		}
-		return aHand;
+		return new ArrayList<>(aHand);
 	}
 
 	/*
