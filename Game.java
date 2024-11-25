@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Game {
 	private int playerAmount;
@@ -92,7 +93,7 @@ public class Game {
 		return currPlayer.getName();
 	}
 	
-	public ScoreCard getCurCard() {
+	public HashMap<Category, Integer> getCurCard() {
 		Player currPlayer = players.get(currentPlayerIdx);
 		return currPlayer.getScoreCard();
 	}

@@ -86,19 +86,21 @@ public class GUIView extends JFrame {
 
     /**
      * Method to create the page where a player will play yahtzee during their turn.
+     * @param rolls 
+     * @param name 
      */
-    private void playPage() {
+    private void playPage(String name, int rolls) {
         // Wipe GUI to start from fresh slate.
         this.getContentPane().removeAll();
         this.setLayout(null);
 
         // Will update playerNum label later, for now just declare its position.
-        playerNumLabel = new JLabel("Current player: ");
+        playerNumLabel = new JLabel("Current player: " + name);
         playerNumLabel.setBounds(50, 25, 200, 100);
         this.add(playerNumLabel);
 
         // Will update rollsRemaining count later, for now just declare its position.
-        rollCountLabel = new JLabel("Rolls remaining: " );
+        rollCountLabel = new JLabel("Rolls remaining: " + rolls);
         rollCountLabel.setBounds(650, 25, 200, 100);
         this.add(rollCountLabel);
         
@@ -206,25 +208,42 @@ public class GUIView extends JFrame {
 
             // CPU Button
             if (command.equals("cpu")) {
+            	myGame.addPlayer("Player 1");
+            	myGame.addPlayer("CPU");
             	String name = myGame.getCurName();
-            	int rools = myGame.getRollCount();
+            	int rolls = myGame.getRollCount();
                 // Set up the page to prepare for the game.
-                playPage();
+                playPage(name, rolls);
             }
             // Two Player Button
             else if (command.equals("twoPlayer")) {
+            	myGame.addPlayer("Player 1");
+            	myGame.addPlayer("Player 2");
+            	String name = myGame.getCurName();
+            	int rolls = myGame.getRollCount();
                 // Set up the page to prepare for the game.
-                playPage();
+                playPage(name, rolls);
             }
             // Three Player Button
             else if (command.equals("threePlayer")) {
+            	myGame.addPlayer("Player 1");
+            	myGame.addPlayer("Player 2");
+            	myGame.addPlayer("Player 3");
+            	String name = myGame.getCurName();
+            	int rolls = myGame.getRollCount();
                 // Set up the page to prepare for the game.
-                playPage();
+                playPage(name, rolls);
             }
             // Four Player Button
             else if (command.equals("fourPlayer")) {
+            	myGame.addPlayer("Player 1");
+            	myGame.addPlayer("Player 2");
+            	myGame.addPlayer("Player 3");
+            	myGame.addPlayer("Player 4");
+            	String name = myGame.getCurName();
+            	int rolls = myGame.getRollCount();
                 // Set up the page to prepare for the game.
-                scorePage();
+                playPage(name, rolls);
             }
             // Roll Button
             else if (command.equals("roll")) {

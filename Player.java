@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Player {
@@ -20,6 +21,7 @@ public class Player {
 	 */
 	public Player(String name) {
 		this.name = name;
+		this.rollCount = 3;
 		myScoreCard = new ScoreCard();
 		heldDice = new ArrayList<DiceEnum>();
 		for (int i = 0; i < 5; i++) {
@@ -144,9 +146,10 @@ public class Player {
 		return true;
 	}
 
-	// TODO Auto-generated method stub
-	public ScoreCard getScoreCard() {
-		// TODO Auto-generated method stub
-		return null;
+	/*
+	 * return copy of the current plays scoreCard
+	 */
+	public HashMap<Category, Integer> getScoreCard() {
+		return myScoreCard.getScoreCardCopy();
 	}
 }

@@ -247,4 +247,11 @@ public class ScoreCard {
 
         return grandTotal;
     }
+    /*
+     * Returns copy of this scorecard
+     */
+	public HashMap<Category, Integer> getScoreCardCopy() {
+		// TODO Auto-generated method stub
+		return new HashMap<Category, Integer>(scorecard);
+	}
 }
