@@ -21,6 +21,7 @@ public class Player {
 	 */
 	public Player(String name) {
 		this.name = name;
+		this.rollCount = 3;
 		myScoreCard = new ScoreCard();
 		heldDice = new ArrayList<DiceEnum>();
 		for (int i = 0; i < 5; i++) {
