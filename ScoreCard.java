@@ -10,178 +10,196 @@ import static java.util.Collections.unmodifiableList;
 
 public class ScoreCard {
 
-    //
-    // instance variable
-    //
-    public final HashMap<Category, Integer> scorecard = new HashMap<>();
+	//
+	// instance variable
+	//
+	public final HashMap<Category, Integer> scorecard;
 
-    //
-    // constructor
-    //
-    public ScoreCard() {
-        // fill hashmap with each category of the scorecard and null
-        for (Category cat : Category.values()) {
-            scorecard.put(cat, 0);
-        }
-    }
+	//
+	// constructor
+	//
+	public ScoreCard() {
+		this.scorecard = new HashMap<>();
+		// fill hashmap with each category of the scorecard and null
+		for (Category cat : Category.values()) {
+			scorecard.put(cat, 0);
+		}
+	}
 
-    /*
-     * fill category of the scorecard using a Hand objects content
-     *
-     * use different methods for each category since they're each scored differently
-     *
-     * @param hand: a Hand object with field aHand -> list of DiceEnum objects
-     * @param cat: the scoring category to be filled
-     */
-    public void fillCategory(ArrayList<DiceEnum> dices, Category cat) {
-        int score = 0;
+	private ScoreCard(HashMap<Category, Integer> copyHashMap) {
+		// fill hashmap with each category of the scorecard and null
+		this.scorecard = copyHashMap;
+	}
 
-        if (cat == Category.ONES) {
-            for (DiceEnum dice : dices) {
-                if (dice.getValue() == 1) {
-                    score += dice.getValue();
-                }
-            }
-            scorecard.put(cat, score);
-        }
+	/*
+	 * fill category of the scorecard using a Hand objects content
+	 *
+	 * use different methods for each category since they're each scored differently
+	 *
+	 * @param hand: a Hand object with field aHand -> list of DiceEnum objects
+	 * 
+	 * @param cat: the scoring category to be filled
+	 */
+	public void fillCategory(ArrayList<DiceEnum> dices, Category cat) {
+		int score = 0;
 
-        else if (cat == Category.TWOS) {
-            for (DiceEnum dice : dices) {
-                if (dice.getValue() == 2) {
-                    score += dice.getValue();
-                }
-            }
-            scorecard.put(cat, score);
-        }
+		if (cat == Category.ONES) {
+			for (DiceEnum dice : dices) {
+				if (dice.getValue() == 1) {
+					score += dice.getValue();
+				}
+			}
+			scorecard.put(cat, score);
+		}
 
-        else if (cat == Category.THREES) {
-            for (DiceEnum dice : dices) {
-                if (dice.getValue() == 3) {
-                    score += dice.getValue();
-                }
-            }
-            scorecard.put(cat, score);
-        }
+		else if (cat == Category.TWOS) {
+			for (DiceEnum dice : dices) {
+				if (dice.getValue() == 2) {
+					score += dice.getValue();
+				}
+			}
+			scorecard.put(cat, score);
+		}
 
-        else if (cat == Category.FOURS) {
-            for (DiceEnum dice : dices) {
-                if (dice.getValue() == 4) {
-                    score += dice.getValue();
-                }
-            }
-            scorecard.put(cat, score);
-        }
+		else if (cat == Category.THREES) {
+			for (DiceEnum dice : dices) {
+				if (dice.getValue() == 3) {
+					score += dice.getValue();
+				}
+			}
+			scorecard.put(cat, score);
+		}
 
-        else if (cat == Category.FIVES) {
-            for (DiceEnum dice : dices) {
-                if (dice.getValue() == 5) {
-                    score += dice.getValue();
-                }
-            }
-            scorecard.put(cat, score);
-        }
+		else if (cat == Category.FOURS) {
+			for (DiceEnum dice : dices) {
+				if (dice.getValue() == 4) {
+					score += dice.getValue();
+				}
+			}
+			scorecard.put(cat, score);
+		}
 
-        else if (cat == Category.SIXES) {
-            for (DiceEnum dice : dices) {
-                if (dice.getValue() == 6) {
-                    score += dice.getValue();
-                }
-            }
-            scorecard.put(cat, score);
-        }
+		else if (cat == Category.FIVES) {
+			for (DiceEnum dice : dices) {
+				if (dice.getValue() == 5) {
+					score += dice.getValue();
+				}
+			}
+			scorecard.put(cat, score);
+		}
 
-        else if (cat == Category.THREEOFKIND) {
-            return;
-        }
+		else if (cat == Category.SIXES) {
+			for (DiceEnum dice : dices) {
+				if (dice.getValue() == 6) {
+					score += dice.getValue();
+				}
+			}
+			scorecard.put(cat, score);
+		}
 
-        else if (cat == Category.FOUROFKIND) {
+		else if (cat == Category.THREEOFKIND) {
+			return;
+		}
 
-            return;
-        }
+		else if (cat == Category.FOUROFKIND) {
 
-        else if (cat == Category.FULLHOUSE) {
+			return;
+		}
 
-            return;
-        }
+		else if (cat == Category.FULLHOUSE) {
 
-        else if (cat == Category.SMALLSTRAIGHT) {
+			return;
+		}
 
-            return;
-        }
+		else if (cat == Category.SMALLSTRAIGHT) {
 
-        else if (cat == Category.LARGESTRAIGHT) {
+			return;
+		}
 
-            return;
-        }
+		else if (cat == Category.LARGESTRAIGHT) {
 
-        else if (cat == Category.YAHTZEE) {
+			return;
+		}
 
-            return;
-        }
+		else if (cat == Category.YAHTZEE) {
 
-        else if (cat == Category.CHANCE) {
+			return;
+		}
 
-            return;
-        }
-    }
+		else if (cat == Category.CHANCE) {
 
-    public void checkForBonus() {
-        ArrayList<Category> topCategories = new ArrayList<>();
-        topCategories.add(Category.ONES);
-        topCategories.add(Category.TWOS);
-        topCategories.add(Category.THREES);
-        topCategories.add(Category.FOURS);
-        topCategories.add(Category.FIVES);
-        topCategories.add(Category.SIXES);
+			return;
+		}
+	}
 
-        int topScore = 0;
+	public void checkForBonus() {
+		ArrayList<Category> topCategories = new ArrayList<>();
+		topCategories.add(Category.ONES);
+		topCategories.add(Category.TWOS);
+		topCategories.add(Category.THREES);
+		topCategories.add(Category.FOURS);
+		topCategories.add(Category.FIVES);
+		topCategories.add(Category.SIXES);
 
-        for (Category cat : topCategories) {
-            topScore += scorecard.get(cat);
-        }
+		int topScore = 0;
 
-        if (topScore >= 63) {
-            scorecard.put(Category.BONUS, 35);
-        } else {
-            scorecard.put(Category.BONUS, 0);
-        }
-    }
+		for (Category cat : topCategories) {
+			topScore += scorecard.get(cat);
+		}
 
-    public int getCategoryScore(Category cat) {
-        return scorecard.get(cat);
-    }
+		if (topScore >= 63) {
+			scorecard.put(Category.BONUS, 35);
+		} else {
+			scorecard.put(Category.BONUS, 0);
+		}
+	}
 
-    /*
-     * get a list of scoring categories yet to be filled
-     *
-     * @return unmodifiable list of scoring categories
-     */
-    public List<Category> getUnfilledCategories() {
-        ArrayList<Category> unfilledCategories = new ArrayList<>();
+	public int getCategoryScore(Category cat) {
+		return scorecard.get(cat);
+	}
 
-        for (Category cat : scorecard.keySet()) {
-            if (scorecard.get(cat) == null) {
-                unfilledCategories.add(cat);
-            }
-        }
+	/*
+	 * get a list of scoring categories yet to be filled
+	 *
+	 * @return unmodifiable list of scoring categories
+	 */
+	public List<Category> getUnfilledCategories() {
+		ArrayList<Category> unfilledCategories = new ArrayList<>();
 
-        return unmodifiableList(unfilledCategories);
-    }
+		for (Category cat : scorecard.keySet()) {
+			if (scorecard.get(cat) == null) {
+				unfilledCategories.add(cat);
+			}
+		}
 
-    /*
-     * add the scores from each category to get grand total
-     *
-     * shouldn't be called until end of game when all categories have been filled, thus
-     * no categories will have null value
-     */
-    public int getGrandTotal() {
-        int grandTotal = 0;
+		return unmodifiableList(unfilledCategories);
+	}
 
-        for (Category cat : scorecard.keySet()) {
-            grandTotal += scorecard.get(cat);
-        }
+	/*
+	 * add the scores from each category to get grand total
+	 *
+	 * shouldn't be called until end of game when all categories have been filled,
+	 * thus no categories will have null value
+	 */
+	public int getGrandTotal() {
+		int grandTotal = 0;
 
-        return grandTotal;
-    }
+		for (Category cat : scorecard.keySet()) {
+			grandTotal += scorecard.get(cat);
+		}
+
+		return grandTotal;
+	}
+	/*
+	 * Method returns a copy of the scoreCard by using 
+	 * a private contructer the passes in a copy of the instance
+	 * varible "scoreCard"
+	 * 
+	 */
+	public ScoreCard getCopy() {
+		// make a copy with a compy constrcutor   
+		ScoreCard copy = new ScoreCard(new HashMap<>(scorecard));
+		return copy;
+	}
 
 }

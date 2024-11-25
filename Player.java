@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Player {
@@ -144,9 +145,10 @@ public class Player {
 		return true;
 	}
 
-	// TODO Auto-generated method stub
+	/*
+	 * return copy of the current plays scoreCard
+	 */
 	public ScoreCard getScoreCard() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.myScoreCard.getCopy();
 	}
 }
