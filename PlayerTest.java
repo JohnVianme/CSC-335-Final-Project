@@ -13,6 +13,8 @@ class PlayerTest {
 		assertEquals(player1.getName(), "Player 1");
 		player1.startNewTurn();
 		assertEquals(player1.getRollCount(), 3);
+		assertEquals(player1.getTotalScore(), 0);
+		
 	}
 	
 	@Test
@@ -56,6 +58,15 @@ class PlayerTest {
 		player1.startNewTurn();
 		assertEquals(player1.getRollCount(), 3);
 		assertTrue(player1.RollDice());
+		System.out.println(player1.getHand());
+		player1.SetHold(0);
+		player1.SetHold(2);
+		player1.SetHold(4);
+		prevRoll = player1.getHand();
+		assertTrue(player1.RollDice());
+		assertEquals(player1.getHand().get(0), prevRoll.get(0));
+		assertEquals(player1.getHand().get(2), prevRoll.get(2));
+		assertEquals(player1.getHand().get(4), prevRoll.get(4));
 		System.out.println(player1.getHand());
 	}
 }
