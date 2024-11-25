@@ -125,8 +125,7 @@ public class ScoreCard {
         }
     }
 
-
-    private void checkForBonus() {
+    public void checkForBonus() {
         ArrayList<Category> topCategories = new ArrayList<>();
         topCategories.add(Category.ONES);
         topCategories.add(Category.TWOS);
@@ -143,8 +142,9 @@ public class ScoreCard {
 
         if (topScore >= 63) {
             scorecard.put(Category.BONUS, 35);
+        } else {
+            scorecard.put(Category.BONUS, 0);
         }
-
     }
 
     public int getCategoryScore(Category cat) {
