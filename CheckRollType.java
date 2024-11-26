@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class CheckHandType {
+public class CheckRollType {
 
     /*
      * checks if a collection of DiceEnums contains 3 of a kind

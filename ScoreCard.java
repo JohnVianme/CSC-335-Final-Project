@@ -103,7 +103,7 @@ public class ScoreCard {
         // call method to check valid three of a kind
         // if valid, add up all dice for score, else score is 0
         else if (cat == Category.THREEOFKIND) {
-            if (CheckHandType.threeOfAKind(dices)) {
+            if (CheckRollType.threeOfAKind(dices)) {
                 for (DiceEnum dice : dices) {
                     score += dice.getValue();
                 }
@@ -117,7 +117,7 @@ public class ScoreCard {
         // call method to check valid four of a kind
         // if valid, add up all dice for score, else score is 0
         else if (cat == Category.FOUROFKIND) {
-            if (CheckHandType.fourOfAKind(dices)) {
+            if (CheckRollType.fourOfAKind(dices)) {
                 for (DiceEnum dice : dices) {
                     score += dice.getValue();
                 }
@@ -131,7 +131,7 @@ public class ScoreCard {
         // call method to check valid full house
         // if valid, score is 25, else score is 0
         else if (cat == Category.FULLHOUSE) {
-            if (CheckHandType.fullHouse(dices)) {
+            if (CheckRollType.fullHouse(dices)) {
                 scorecard.put(cat, 25);
             } else {
                 scorecard.put(cat, 0);
@@ -142,7 +142,7 @@ public class ScoreCard {
         // call method to check valid small straight
         // if valid, score is 30, else score is 0
         else if (cat == Category.SMALLSTRAIGHT) {
-            if (CheckHandType.smallStraight(dices)) {
+            if (CheckRollType.smallStraight(dices)) {
                 scorecard.put(cat, 30);
             } else {
                 scorecard.put(cat, 0);
@@ -153,7 +153,7 @@ public class ScoreCard {
         // call method to check valid large straight
         // if valid, score is 40, else score is 0
         else if (cat == Category.LARGESTRAIGHT) {
-            if (CheckHandType.largeStraight(dices)) {
+            if (CheckRollType.largeStraight(dices)) {
                 scorecard.put(cat, 40);
             } else {
                 scorecard.put(cat, 0);
@@ -164,7 +164,7 @@ public class ScoreCard {
         // call method to check valid Yahtzee
         // if valid, score is 50, else score is 0
         else if (cat == Category.YAHTZEE) {
-            if (CheckHandType.yahtzee(dices)) {
+            if (CheckRollType.yahtzee(dices)) {
                 scorecard.put(cat, 50);
             } else {
                 scorecard.put(cat, 0);
