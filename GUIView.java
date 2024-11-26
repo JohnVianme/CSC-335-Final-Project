@@ -249,7 +249,7 @@ public class GUIView extends JFrame {
 
         // Get all unselected and valid categories player can choose from.
         String[] unfilledCats = myGame.getCurPlayerCategories();
-        catOptions = new JComboBox<>(unfilledCats);
+        catOptions = new JComboBox<String>(unfilledCats);
         catOptions.setBounds(340, 700, 100, 50);
         catOptions.setEditable(false);
         this.add(catOptions);
