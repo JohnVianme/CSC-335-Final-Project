@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.naming.spi.DirStateFactory.Result;
-
 public class Game {
 	private int playerAmount;
 	private ArrayList<Player> players;
@@ -140,6 +138,18 @@ public class Game {
 		Player currPlayer = players.get(currentPlayerIdx);
 		boolean result = currPlayer.RollDice();
 		return result;
+	}
+
+	public void curSetHold(DiceEnum dice) {
+		Player currPlayer = players.get(currentPlayerIdx);
+		currPlayer.SetHold(dice);
+
+	}
+
+	public void curRemoveHold(DiceEnum dice) {
+		Player currPlayer = players.get(currentPlayerIdx);
+		currPlayer.removeHold(dice);
+
 	}
 
 }
