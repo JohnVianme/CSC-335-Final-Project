@@ -6,8 +6,6 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-import org.junit.jupiter.params.shadow.com.univocity.parsers.common.processor.core.AbstractBatchedColumnProcessor;
-
 public class GUIView extends JFrame {
 	private static Game myGame = new Game();
 	private JPanel panel;

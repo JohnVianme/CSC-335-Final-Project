@@ -79,6 +79,8 @@ public class Player {
 		roll = hand.getHand();
 		TransferHolds();
 		rollCount--;
+		// clear helds
+		heldDice.clear();
 		if (rollCount == 0) {
 			return false;
 		}
