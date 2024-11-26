@@ -88,11 +88,13 @@ public class Player {
 	// @post roll is updated to reflect any held dice.
 	private void TransferHolds() {
 		for (int i = 0; i < 5; i++) {
-
 			// if we can get a held dice
 			if (heldDice.size() != 0 && i < heldDice.size()) {
-				// replace one dice in roll with held dices
-				roll.set(i, heldDice.get(i));
+				if (heldDice.get(i) != null) {
+					// replace one dice in roll with held dices
+					roll.set(i, heldDice.get(i));
+				}
+
 			}
 		}
 	}
@@ -116,6 +118,10 @@ public class Player {
 	 */
 	public void removeHold(DiceEnum dice) {
 		heldDice.remove(dice);
+	}
+
+	public DiceEnum getDiceAt(int idx) {
+		return roll.get(idx);
 	}
 
 	/*
