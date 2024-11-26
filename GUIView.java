@@ -2,9 +2,10 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.*;
-import java.util.ArrayList;
+import java.util.*;
 
 import javax.swing.*;
+
 
 public class GUIView extends JFrame {
 	private static Game myGame = new Game();
@@ -16,6 +17,7 @@ public class GUIView extends JFrame {
 	private JPanel dicePanel;
 	private JButton rollButton;
 	private JPanel heldPanel;
+    private JComboBox<String> catOptions;
 
 	public GUIView() {
 		setUp();
@@ -129,11 +131,24 @@ public class GUIView extends JFrame {
 		dicePanel.setLayout(new GridLayout(1, 5, 15, 0));
 		this.add(dicePanel);
 
+        // Create a label to help user recognize their current hand.
+        JLabel currentLabel = new JLabel("Current Hand: ");
+		currentLabel.setBounds(10, 355, 100, 100);
+        currentLabel.setForeground(Color.RED);
+		this.add(currentLabel);
+
+
 		heldPanel = new JPanel();
 		heldPanel.setBackground(Color.GREEN);
 		heldPanel.setBounds(100, 460, 600, 100);
 		heldPanel.setLayout(new GridLayout(1, 5, 15, 0));
 		this.add(heldPanel);
+
+        // Create a label to help user recognize the current dice they are holding.
+        JLabel heldLabel = new JLabel("Dice Held: ");
+		heldLabel.setBounds(10, 470, 100, 100);
+        heldLabel.setForeground(Color.GREEN);
+		this.add(heldLabel);
 
 		this.revalidate();
 		this.repaint();
@@ -223,13 +238,40 @@ public class GUIView extends JFrame {
 		rollCountLabel.revalidate();
 		rollCountLabel.repaint();
 
-		JLabel selectLabel = new JLabel("Select a Category");
+		// Create button to let user submit their hand. (Marked as latest category selected.)
+        JButton submitButton = new JButton("Submit Hand");
+		submitButton.setActionCommand("submit");
+		submitButton.addActionListener(new ButtonClickListener());
+		submitButton.setBounds(680, 700, 100, 50);
+		this.add(submitButton);
 
-		// Refresh the panel.
+        // Click listener for the combo box of available player categories.
+
+        // Get all unselected and valid categories player can choose from.
+        String[] unfilledCats = myGame.getCurPlayerCategories();
+        catOptions = new JComboBox<>(unfilledCats);
+        catOptions.setBounds(340, 700, 100, 50);
+        this.add(catOptions);
+
+        catOptions.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            String selectedItem = (String) catOptions.getSelectedItem();
+            System.out.println("Selected item: " + selectedItem);
+        }
+        });
+
+        // Add label above dropdown menu of categories.
+        JLabel catLabel = new JLabel("Select Category");
+        catLabel.setBounds(340, 670, 200, 50);
+        this.add(catLabel);
+
+		// Refresh each element of GUI.
 		dicePanel.revalidate();
 		dicePanel.repaint();
 		heldPanel.revalidate();
-		heldPanel.repaint();
+		heldPanel.repaint(); 
+        this.revalidate();
+        this.repaint();
 
 	}
 
@@ -407,7 +449,22 @@ public class GUIView extends JFrame {
 				// Pop up window for user to view possible Yahtzee scores.
 				String scoresString = getScoresString();
 				JTextArea scoreArea = new JTextArea(scoresString);
+                scoreArea.setEditable(false);
 				JOptionPane.showMessageDialog(null, scoreArea);
+			}
+            // Submit Hand Button
+            else if (command.equals("submit")) {
+				
+
+			}
+            // Select Category Button
+            else if (command.equals("select")) {
+				// Get all unselected and valid categories player can choose from.
+                String[] unfilledCats = myGame.getCurPlayerCategories();
+                catOptions = new JComboBox<>(unfilledCats);
+                String selected = (String) catOptions.getSelectedItem();
+
+
 			}
 			// Close the program.
 			else if (command.equals("exit")) {
@@ -415,6 +472,7 @@ public class GUIView extends JFrame {
 			}
 		}
 	}
+
 
 	private String getScoresString() {
 		// Create arraylist of all possible categories, IN ORDER.
