@@ -1,5 +1,6 @@
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
+
+import javax.naming.spi.DirStateFactory.Result;
 
 public class Game {
 	private int playerAmount;
@@ -102,6 +103,24 @@ public class Game {
 	public String getCurName() {
 		Player currPlayer = players.get(currentPlayerIdx);
 		return currPlayer.getName();
+	}
+
+	/*
+	 * This method return's the current player's available categories.
+	 * 
+	 * @return list of the player's unfilled categories based on name.
+	 */
+	public String[] getCurPlayerCategories() {
+		Player currPlayer = players.get(currentPlayerIdx);
+		// get the categories
+		List<Category> unfilledCategories = currPlayer.getUnfilledCategories();
+		// new String[] to hold categories
+		String result[] = new String[unfilledCategories.size()];
+		// add each categories to String[]
+		for (int i = 0; i < unfilledCategories.size(); i++) {
+			result[i] = unfilledCategories.get(i).name();
+		}
+		return result;
 	}
 
 	/*
