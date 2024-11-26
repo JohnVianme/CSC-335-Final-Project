@@ -1,13 +1,10 @@
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.*;
 import java.util.ArrayList;
 
 import javax.swing.*;
-import javax.swing.text.StyledEditorKit.ForegroundAction;
-
-import org.junit.internal.matchers.StacktracePrintingMatcher;
 
 public class GUIView extends JFrame {
 	private static Game myGame = new Game();
@@ -18,6 +15,7 @@ public class GUIView extends JFrame {
 	private JLabel scoreLabel;
 	private JPanel dicePanel;
 	private JButton rollButton;
+	private JPanel heldPanel;
 
 	public GUIView() {
 		setUp();
@@ -126,9 +124,16 @@ public class GUIView extends JFrame {
 		// Create a panel where the dice will be displayed. Do not need to fill it yet,
 		// since user has not rolled.
 		dicePanel = new JPanel();
+		dicePanel.setBackground(Color.RED);
 		dicePanel.setBounds(100, 350, 600, 100);
 		dicePanel.setLayout(new GridLayout(1, 5, 15, 0));
 		this.add(dicePanel);
+
+		heldPanel = new JPanel();
+		heldPanel.setBackground(Color.GREEN);
+		heldPanel.setBounds(100, 460, 600, 100);
+		heldPanel.setLayout(new GridLayout(1, 5, 15, 0));
+		this.add(heldPanel);
 
 		this.revalidate();
 		this.repaint();
@@ -191,14 +196,27 @@ public class GUIView extends JFrame {
 		boolean ableToRoll = myGame.currRollDice();
 		// get the result of the roll
 		ArrayList<DiceEnum> curHand = myGame.getPlayerHand();
+		String result = "Just rolled: ";
+		for (DiceEnum adice : curHand) {
+			result += adice.getValue() + " ";
+		}
+		System.out.println(result);
 		// Retrieve five random dice from the model, and add each to the panel.
 		for (int i = 0; i < 5; i++) {
 			// Update later with functionality.
 			JLabel diceLabel = new JLabel();
+			// set diceLabel name
+			diceLabel.setName(curHand.get(i).name());
+			// get name of dice
 			String diceName = curHand.get(i).name().toLowerCase() + ".png";
-			ImageIcon DiceIcon = new ImageIcon(new ImageIcon(diceName).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+			// get icon for the dice
+			ImageIcon DiceIcon = new ImageIcon(
+					new ImageIcon(diceName).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
 			diceLabel.setIcon(DiceIcon);
+			giveLabelClick(diceLabel, myGame.getPlayerHand());
+
 			dicePanel.add(diceLabel);
+
 		}
 		// update rollsRemaining
 		rollCountLabel.setText("Rolls remaining: " + myGame.getRollCount());
@@ -210,6 +228,106 @@ public class GUIView extends JFrame {
 		// Refresh the panel.
 		dicePanel.revalidate();
 		dicePanel.repaint();
+		heldPanel.revalidate();
+		heldPanel.repaint();
+
+	}
+
+	// test for giving label functionality
+	private void giveLabelClick(JLabel diceLabel, ArrayList<DiceEnum> curHand) {
+		diceLabel.addMouseListener(new MouseAdapter() {
+			// if we click a label, we want move it a new list of held dices
+			public void mouseClicked(MouseEvent e) {
+				String diceName = diceLabel.getName();
+				boolean isHead = hasLabel(diceLabel);
+				DiceEnum theDice = DiceEnum.valueOf(diceName);
+				if (!isHead) {
+					switch (diceName) {
+					case "ONE":
+						heldPanel.add(diceLabel);
+						dicePanel.remove(diceLabel);
+
+						break;
+					case "TWO":
+						heldPanel.add(diceLabel);
+						dicePanel.remove(diceLabel);
+
+						break;
+					case "THREE":
+						heldPanel.add(diceLabel);
+						dicePanel.remove(diceLabel);
+
+						break;
+					case "FOUR":
+						heldPanel.add(diceLabel);
+						dicePanel.remove(diceLabel);
+
+						break;
+					case "FIVE":
+						heldPanel.add(diceLabel);
+						dicePanel.remove(diceLabel);
+
+						break;
+					case "SIX":
+						heldPanel.add(diceLabel);
+						dicePanel.remove(diceLabel);
+
+						break;
+					}
+					myGame.curSetHold(theDice);
+
+				} else {
+					switch (diceName) {
+					case "ONE":
+						dicePanel.add(diceLabel);
+						heldPanel.remove(diceLabel);
+
+						break;
+					case "TWO":
+						dicePanel.add(diceLabel);
+						heldPanel.remove(diceLabel);
+
+						break;
+					case "THREE":
+						dicePanel.add(diceLabel);
+						heldPanel.remove(diceLabel);
+
+						break;
+					case "FOUR":
+						dicePanel.add(diceLabel);
+						heldPanel.remove(diceLabel);
+
+						break;
+					case "FIVE":
+						dicePanel.add(diceLabel);
+						heldPanel.remove(diceLabel);
+
+						break;
+					case "SIX":
+						dicePanel.add(diceLabel);
+						heldPanel.remove(diceLabel);
+
+						break;
+					}
+					myGame.curRemoveHold(theDice);
+
+				}
+				heldPanel.revalidate();
+				heldPanel.repaint();
+				dicePanel.revalidate();
+				dicePanel.repaint();
+			}
+
+			private boolean hasLabel(JLabel diceLabel) {
+				for (java.awt.Component component : heldPanel.getComponents()) {
+					if (component.equals(diceLabel)) {
+						System.out.println("Already Held");
+						return true;
+					}
+				}
+				return false;
+			}
+		});
 
 	}
 
@@ -268,6 +386,10 @@ public class GUIView extends JFrame {
 				if (myGame.getRollCount() == 0) {
 					rollButton.setEnabled(false);
 				}
+				// clear heldDice Panle
+				heldPanel.removeAll();
+				heldPanel.revalidate();
+				heldPanel.repaint();
 			}
 			// YES Button
 			else if (command.equals("yes")) {
