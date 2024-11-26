@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class Game {
 	private int playerAmount;
@@ -102,6 +101,16 @@ public class Game {
 	public String getCurName() {
 		Player currPlayer = players.get(currentPlayerIdx);
 		return currPlayer.getName();
+	}
+
+	/*
+	 * This method return's the current player's available categories.
+	 * 
+	 * @return list of the player's unfilled categories.
+	 */
+	public List<Category> getCurPlayerCategories() {
+		Player currPlayer = players.get(currentPlayerIdx);
+		return currPlayer.getUnfilledCategories();
 	}
 
 	/*
