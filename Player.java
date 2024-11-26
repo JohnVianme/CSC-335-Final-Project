@@ -36,12 +36,10 @@ public class Player {
 		return rollCount;
 	}
 
-	// @post rollCount is reset to be 3. All heldDice values are reset to null.
+	// @post rollCount is reset to be 3. All heldDice values are removed.
 	public void startNewTurn() {
 		rollCount = 3;
-		for (int i = 0; i < 5; i++) {
-			heldDice.add(null);
-		}
+		heldDice.clear();
 	}
 
 	// @return A list of Category enums that this Player has not submitted yet.
@@ -57,6 +55,9 @@ public class Player {
 	 * Category.
 	 */
 	public int getCategoryScore(Category category) {
+		if (myScoreCard.getCategoryScore(category) == null) {
+			return 0;
+		}
 		return myScoreCard.getCategoryScore(category);
 	}
 
@@ -69,7 +70,7 @@ public class Player {
 	 * @pre rollCount != 0.
 	 * 
 	 * @post roll is a shuffled hand of Dice with any heldDice remaining in their
-	 * same spot.
+	 * roll. The ArrayList heldDice will be cleared.
 	 * 
 	 * @return A boolean that is false if the last roll was just made, otherwise
 	 * returns true.
@@ -78,9 +79,8 @@ public class Player {
 		Hand hand = new Hand();
 		roll = hand.getHand();
 		TransferHolds();
-		rollCount--;
-		// clear helds
 		heldDice.clear();
+		rollCount--;
 		if (rollCount == 0) {
 			return false;
 		}
@@ -90,13 +90,8 @@ public class Player {
 	// @post roll is updated to reflect any held dice.
 	private void TransferHolds() {
 		for (int i = 0; i < 5; i++) {
-			// if we can get a held dice
 			if (heldDice.size() != 0 && i < heldDice.size()) {
-				if (heldDice.get(i) != null) {
-					// replace one dice in roll with held dices
-					roll.set(i, heldDice.get(i));
-				}
-
+				roll.set(i, heldDice.get(i));
 			}
 		}
 	}
@@ -104,12 +99,11 @@ public class Player {
 	/*
 	 * @pre RollDice has already been called for this Player this turn.
 	 * 
-	 * @post The Dice at the given index is stored in the heldDice ArrayList.
+	 * @post The given DiceEnum value is stored in the heldDice ArrayList.
 	 * 
-	 * @param dice - The Dice that is to be held.
+	 * @param dice - The DiceEnum value that is to be held.
 	 */
 	public void SetHold(DiceEnum dice) {
-		System.out.println("Just held: " + dice.getValue());
 		heldDice.add(dice);
 	}
 
@@ -122,6 +116,12 @@ public class Player {
 		heldDice.remove(dice);
 	}
 
+	/*
+	 * @pre index is an int ranging from 0-4.
+	 * 
+	 * @return The DiceEnum value of the Dice held at the given index in the
+	 * ArrayList "roll".
+	 */
 	public DiceEnum getDiceAt(int idx) {
 		return roll.get(idx);
 	}
@@ -137,6 +137,7 @@ public class Player {
 
 	/*
 	 * @pre RollDice has already been called for this Player this turn.
+	 * @pre category != Category.BONUS
 	 * 
 	 * @post This Player's ScoreCard will be updated to reflect this Player's
 	 * current roll. If this Player has no remaining Categories to be filled, then
@@ -156,7 +157,7 @@ public class Player {
 	}
 
 	/*
-	 * return copy of the current plays scoreCard
+	 * @return A copy of this Player's ScoreCard
 	 */
 	public HashMap<Category, Integer> getScoreCard() {
 		return myScoreCard.getScoreCardCopy();
