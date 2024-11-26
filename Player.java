@@ -55,6 +55,9 @@ public class Player {
 	 * Category.
 	 */
 	public int getCategoryScore(Category category) {
+		if (myScoreCard.getCategoryScore(category) == null) {
+			return 0;
+		}
 		return myScoreCard.getCategoryScore(category);
 	}
 
@@ -134,6 +137,7 @@ public class Player {
 
 	/*
 	 * @pre RollDice has already been called for this Player this turn.
+	 * @pre category != Category.BONUS
 	 * 
 	 * @post This Player's ScoreCard will be updated to reflect this Player's
 	 * current roll. If this Player has no remaining Categories to be filled, then
