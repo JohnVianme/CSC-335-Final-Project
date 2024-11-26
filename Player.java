@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Player {
@@ -20,11 +21,9 @@ public class Player {
 	 */
 	public Player(String name) {
 		this.name = name;
+		this.rollCount = 3;
 		myScoreCard = new ScoreCard();
 		heldDice = new ArrayList<DiceEnum>();
-		for (int i = 0; i < 5; i++) {
-			heldDice.add(null);
-		}
 	}
 
 	// @return A String representing the name of this Player.
@@ -80,6 +79,8 @@ public class Player {
 		roll = hand.getHand();
 		TransferHolds();
 		rollCount--;
+		// clear helds
+		heldDice.clear();
 		if (rollCount == 0) {
 			return false;
 		}
@@ -89,8 +90,13 @@ public class Player {
 	// @post roll is updated to reflect any held dice.
 	private void TransferHolds() {
 		for (int i = 0; i < 5; i++) {
-			if (heldDice.get(i) != null) {
-				roll.set(i, heldDice.get(i));
+			// if we can get a held dice
+			if (heldDice.size() != 0 && i < heldDice.size()) {
+				if (heldDice.get(i) != null) {
+					// replace one dice in roll with held dices
+					roll.set(i, heldDice.get(i));
+				}
+
 			}
 		}
 	}
@@ -100,19 +106,24 @@ public class Player {
 	 * 
 	 * @post The Dice at the given index is stored in the heldDice ArrayList.
 	 * 
-	 * @param i - The index of the Dice that is to be held.
+	 * @param dice - The Dice that is to be held.
 	 */
-	public void SetHold(int i) {
-		heldDice.set(i, roll.get(i));
+	public void SetHold(DiceEnum dice) {
+		System.out.println("Just held: " + dice.getValue());
+		heldDice.add(dice);
 	}
 
 	/*
 	 * @post The value at the given index is set to null in the heldDice ArrayList.
 	 * 
-	 * @param i - The index of the Dice that is to be un-held.
+	 * @param dice - The Dice that is to be un-held.
 	 */
-	public void removeHold(int i) {
-		heldDice.set(i, null);
+	public void removeHold(DiceEnum dice) {
+		heldDice.remove(dice);
+	}
+
+	public DiceEnum getDiceAt(int idx) {
+		return roll.get(idx);
 	}
 
 	/*
@@ -144,9 +155,10 @@ public class Player {
 		return true;
 	}
 
-	// TODO Auto-generated method stub
-	public ScoreCard getScoreCard() {
-		// TODO Auto-generated method stub
-		return null;
+	/*
+	 * return copy of the current plays scoreCard
+	 */
+	public HashMap<Category, Integer> getScoreCard() {
+		return myScoreCard.getScoreCardCopy();
 	}
 }

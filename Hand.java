@@ -23,11 +23,14 @@ public final class Hand {
 			// create five dices and add them to hand
 			aHand.add(Dice.getDice());
 		}
-		return aHand;
+		return new ArrayList<>(aHand);
 	}
 
-	// TODO
+	/*
+	 * return the set the dice at index to the new dice
+	 */
 	public ArrayList<DiceEnum> setHand(int index, DiceEnum dice) {
 		return aHand;
 	}
+
 }
