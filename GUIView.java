@@ -6,7 +6,6 @@ import java.util.*;
 
 import javax.swing.*;
 
-
 public class GUIView extends JFrame {
 	private static Game myGame = new Game();
 	private JPanel panel;
@@ -17,7 +16,7 @@ public class GUIView extends JFrame {
 	private JPanel dicePanel;
 	private JButton rollButton;
 	private JPanel heldPanel;
-    private JComboBox<String> catOptions;
+	private JComboBox<String> catOptions;
 
 	public GUIView() {
 		setUp();
@@ -131,12 +130,11 @@ public class GUIView extends JFrame {
 		dicePanel.setLayout(new GridLayout(1, 5, 15, 0));
 		this.add(dicePanel);
 
-        // Create a label to help user recognize their current hand.
-        JLabel currentLabel = new JLabel("Current Hand: ");
+		// Create a label to help user recognize their current hand.
+		JLabel currentLabel = new JLabel("Current Hand: ");
 		currentLabel.setBounds(10, 355, 100, 100);
-        currentLabel.setForeground(Color.RED);
+		currentLabel.setForeground(Color.RED);
 		this.add(currentLabel);
-
 
 		heldPanel = new JPanel();
 		heldPanel.setBackground(Color.GREEN);
@@ -144,10 +142,10 @@ public class GUIView extends JFrame {
 		heldPanel.setLayout(new GridLayout(1, 5, 15, 0));
 		this.add(heldPanel);
 
-        // Create a label to help user recognize the current dice they are holding.
-        JLabel heldLabel = new JLabel("Dice Held: ");
+		// Create a label to help user recognize the current dice they are holding.
+		JLabel heldLabel = new JLabel("Dice Held: ");
 		heldLabel.setBounds(10, 470, 100, 100);
-        heldLabel.setForeground(Color.GREEN);
+		heldLabel.setForeground(Color.GREEN);
 		this.add(heldLabel);
 
 		this.revalidate();
@@ -238,42 +236,49 @@ public class GUIView extends JFrame {
 		rollCountLabel.revalidate();
 		rollCountLabel.repaint();
 
-		// Create button to let user submit their hand. (Marked as latest category selected.)
-        JButton submitButton = new JButton("Submit Hand");
+		// Create button to let user submit their hand. (Marked as latest category
+		// selected.)
+		JButton submitButton = new JButton("Submit Hand");
 		submitButton.setActionCommand("submit");
 		submitButton.addActionListener(new ButtonClickListener());
 		submitButton.setBounds(680, 700, 100, 50);
 		this.add(submitButton);
 
-        // Click listener for the combo box of available player categories.
+		// Click listener for the combo box of available player categories.
 
-        // Get all unselected and valid categories player can choose from.
-        String[] unfilledCats = myGame.getCurPlayerCategories();
-        catOptions = new JComboBox<String>(unfilledCats);
-        catOptions.setBounds(340, 700, 100, 50);
-        catOptions.setEditable(false);
-        this.add(catOptions);
+		// Get all unselected and valid categories player can choose from.
+		String[] unfilledCats = myGame.getCurPlayerCategories();
+		// remove old catOptions if existed
+		if (catOptions != null) {
+			this.remove(catOptions);
+		}
+		System.out.println("Unfiled: " + unfilledCats[0] + ", " + unfilledCats[1] + ", " + unfilledCats[2] + ", "
+				+ unfilledCats[4] + ", " + unfilledCats[5] + ", " + unfilledCats[6]);
+		catOptions = new JComboBox<String>(unfilledCats);
+		catOptions.setBounds(340, 700, 100, 50);
+		catOptions.setEditable(false);
+		this.add(catOptions);
+//		//create a Action Listener for the new buttons
+//		catOptions.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				String selectedItem = (String) catOptions.getSelectedItem();
+//				System.out.println("Selected item: " + selectedItem);
+//
+//			}
+//		});
 
-        catOptions.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-            String selectedItem = (String) catOptions.getSelectedItem();
-            System.out.println("Selected item: " + selectedItem);
-
-        }
-        });
-
-        // Add label above dropdown menu of categories.
-        JLabel catLabel = new JLabel("Select Category");
-        catLabel.setBounds(340, 670, 200, 50);
-        this.add(catLabel);
+		// Add label above dropdown menu of categories.
+		JLabel catLabel = new JLabel("Select Category");
+		catLabel.setBounds(340, 670, 200, 50);
+		this.add(catLabel);
 
 		// Refresh each element of GUI.
 		dicePanel.revalidate();
 		dicePanel.repaint();
 		heldPanel.revalidate();
-		heldPanel.repaint(); 
-        this.revalidate();
-        this.repaint();
+		heldPanel.repaint();
+		this.revalidate();
+		this.repaint();
 
 	}
 
@@ -451,19 +456,20 @@ public class GUIView extends JFrame {
 				// Pop up window for user to view possible Yahtzee scores.
 				String scoresString = getScoresString();
 				JTextArea scoreArea = new JTextArea(scoresString);
-                scoreArea.setEditable(false);
+				scoreArea.setEditable(false);
 				JOptionPane.showMessageDialog(null, scoreArea);
 			}
-            // Submit Hand Button
-            else if (command.equals("submit")) {
+			// Submit Hand Button
+			else if (command.equals("submit")) {
 				// If the user has not selected a category yet, they cannot submit their hand.
-                // Get the most recently selected item in the combo box.
-                String selected = (String) catOptions.getSelectedItem();
-                if (selected.equals(null)) {
-                    JTextArea warningArea = new JTextArea("Please select category before submitting hand");
-                    warningArea.setEditable(false);
-                    JOptionPane.showMessageDialog(null, warningArea);
-                }
+				// Get the most recently selected item in the combo box.
+				String selected = (String) catOptions.getSelectedItem();
+				System.out.println("Just selected: " + selected);
+				if (selected.equals(null)) {
+					JTextArea warningArea = new JTextArea("Please select category before submitting hand");
+					warningArea.setEditable(false);
+					JOptionPane.showMessageDialog(null, warningArea);
+				}
 			}
 			// Close the program.
 			else if (command.equals("exit")) {
@@ -471,7 +477,6 @@ public class GUIView extends JFrame {
 			}
 		}
 	}
-
 
 	private String getScoresString() {
 		// Create arraylist of all possible categories, IN ORDER.
