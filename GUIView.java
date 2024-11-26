@@ -251,12 +251,14 @@ public class GUIView extends JFrame {
         String[] unfilledCats = myGame.getCurPlayerCategories();
         catOptions = new JComboBox<>(unfilledCats);
         catOptions.setBounds(340, 700, 100, 50);
+        catOptions.setEditable(false);
         this.add(catOptions);
 
         catOptions.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
             String selectedItem = (String) catOptions.getSelectedItem();
             System.out.println("Selected item: " + selectedItem);
+
         }
         });
 
@@ -454,17 +456,14 @@ public class GUIView extends JFrame {
 			}
             // Submit Hand Button
             else if (command.equals("submit")) {
-				
-
-			}
-            // Select Category Button
-            else if (command.equals("select")) {
-				// Get all unselected and valid categories player can choose from.
-                String[] unfilledCats = myGame.getCurPlayerCategories();
-                catOptions = new JComboBox<>(unfilledCats);
+				// If the user has not selected a category yet, they cannot submit their hand.
+                // Get the most recently selected item in the combo box.
                 String selected = (String) catOptions.getSelectedItem();
-
-
+                if (selected.equals(null)) {
+                    JTextArea warningArea = new JTextArea("Please select category before submitting hand");
+                    warningArea.setEditable(false);
+                    JOptionPane.showMessageDialog(null, warningArea);
+                }
 			}
 			// Close the program.
 			else if (command.equals("exit")) {
