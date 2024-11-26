@@ -19,10 +19,12 @@ public class ScoreCard {
     // constructor
     //
     public ScoreCard() {
-        // fill hashmap with each category of the scorecard and 0
+        // fill hashmap with each category of the scorecard with null
         for (Category cat : Category.values()) {
-            scorecard.put(cat, 0);
+            scorecard.put(cat, null);
         }
+        // set the BONUS Category to be 0
+        scorecard.put(Category.BONUS, 0);
     }
 
     /*
@@ -211,7 +213,7 @@ public class ScoreCard {
      *
      * @return int - the current value of the scoring category
      */
-    public int getCategoryScore(Category cat) {
+    public Integer getCategoryScore(Category cat) {
         return scorecard.get(cat);
     }
 
@@ -235,14 +237,15 @@ public class ScoreCard {
     /*
      * add the scores from each category to get grand total
      *
-     * shouldn't be called until end of game when all categories have been filled, thus
-     * no categories will have null value
+     * only adds filled categories, avoiding any null values
      */
     public int getGrandTotal() {
         int grandTotal = 0;
 
         for (Category cat : scorecard.keySet()) {
-            grandTotal += scorecard.get(cat);
+        	if (scorecard.get(cat) != null) {
+        		grandTotal += scorecard.get(cat);
+        	}
         }
 
         return grandTotal;
