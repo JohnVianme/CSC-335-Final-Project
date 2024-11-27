@@ -118,7 +118,7 @@ public class GUIView extends JFrame {
 		// Display the "roll" button, which will indicate we need a new set of dice
 		// displayed and decrement rollCount.
 		rollButton.setActionCommand("roll");
-		// if rollButton has action listion listener do not add another 
+		// if rollButton has action listion listener do not add another
 		if (rollButton.getActionListeners().length < 1) {
 			rollButton.addActionListener(new ButtonClickListener());
 		}
@@ -522,7 +522,11 @@ public class GUIView extends JFrame {
 		String result = "";
 		for (Category cat : allCategories) {
 			// Add each category, followed by current player's score in that category.
-			result += cat.name() + " : ";
+			if (!Arrays.asList(myGame.getCurPlayerCategories()).contains(cat.name())) {
+				result += cat.name() + " (✓) : ";
+			} else {
+				result += cat.name() + " : ";
+			}
 			result += myGame.getCategoryScore(cat) + "\n";
 		}
 
