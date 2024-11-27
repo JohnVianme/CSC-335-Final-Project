@@ -118,7 +118,11 @@ public class GUIView extends JFrame {
 		// Display the "roll" button, which will indicate we need a new set of dice
 		// displayed and decrement rollCount.
 		rollButton.setActionCommand("roll");
-		rollButton.addActionListener(new ButtonClickListener());
+		// if rollButton has action listion listener do not add another
+		if (rollButton.getActionListeners().length < 1) {
+			rollButton.addActionListener(new ButtonClickListener());
+		}
+		// rollButton.addActionListener(new ButtonClickListener());
 		rollButton.setBounds(340, 600, 100, 50);
 		this.add(rollButton);
 
@@ -382,6 +386,7 @@ public class GUIView extends JFrame {
 
 	// Click listener for the previously listed buttons.
 	private class ButtonClickListener implements ActionListener {
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			String command = e.getActionCommand();
 
@@ -430,6 +435,9 @@ public class GUIView extends JFrame {
 			else if (command.equals("roll")) {
 				// Display a new set of dice for the player and update their available
 				// rollCount.
+				System.out.println("!!!!!!ROLL BUTTON PRESSED!!!!!!");
+				System.out.println("Action Lisiner amount = " + rollButton.getActionListeners().length);
+
 				rollDice();
 				// disable button if no more rolls left
 				if (myGame.getRollCount() == 0) {
@@ -470,12 +478,29 @@ public class GUIView extends JFrame {
 					warningArea.setEditable(false);
 					JOptionPane.showMessageDialog(null, warningArea);
 				}
+				// get the selected cat category
+				Category selectedCategory = Category.valueOf(selected);
+				// make the current player submit thier Hand
+				boolean result = myGame.submitHand(selectedCategory);
+				if (result == false) {
+					System.out.println("Game is Over, Last player Roleld last Turn");
+				}
+				nextTurn();
+
 			}
 			// Close the program.
 			else if (command.equals("exit")) {
 				System.exit(0);
 			}
 		}
+	}
+
+	public void nextTurn() {
+		this.playPage(myGame.getCurName(), myGame.getRollCount());
+		this.revalidate();
+		this.repaint();
+		rollButton.setEnabled(true);
+
 	}
 
 	private String getScoresString() {
@@ -497,7 +522,11 @@ public class GUIView extends JFrame {
 		String result = "";
 		for (Category cat : allCategories) {
 			// Add each category, followed by current player's score in that category.
-			result += cat.name() + " : ";
+			if (!Arrays.asList(myGame.getCurPlayerCategories()).contains(cat.name())) {
+				result += cat.name() + " (✓) : ";
+			} else {
+				result += cat.name() + " : ";
+			}
 			result += myGame.getCategoryScore(cat) + "\n";
 		}
 

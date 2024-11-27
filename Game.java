@@ -59,6 +59,10 @@ public class Game {
 				return false;
 			}
 		}
+		// get the current player
+		curPlayer = players.get(currentPlayerIdx);
+		// make player submit their hand
+		curPlayer.submitHand(category);
 		// update current player to next player
 		currentPlayerIdx = ((currentPlayerIdx + 1) % playerAmount);
 		curPlayer = players.get(currentPlayerIdx);

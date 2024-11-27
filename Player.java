@@ -137,6 +137,7 @@ public class Player {
 
 	/*
 	 * @pre RollDice has already been called for this Player this turn.
+	 * 
 	 * @pre category != Category.BONUS
 	 * 
 	 * @post This Player's ScoreCard will be updated to reflect this Player's
@@ -148,6 +149,11 @@ public class Player {
 	 */
 	public boolean submitHand(Category category) {
 		myScoreCard.fillCategory(roll, category);
+		String result = "";
+		for (DiceEnum aDiceEnum : roll) {
+			result += aDiceEnum.name() + " ";
+		}
+		System.out.println("Just Sumited:" + result);
 		List<Category> remainingCategories = getUnfilledCategories();
 		if (remainingCategories.size() == 0) {
 			myScoreCard.checkForBonus();
