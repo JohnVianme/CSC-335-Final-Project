@@ -7,6 +7,9 @@ import java.util.*;
 import javax.swing.*;
 
 public class GUIView extends JFrame {
+	private JButton easyModebutton;
+	private JButton hardModebutton;
+
 	private static Game myGame = new Game();
 	private JPanel panel;
 	private JLabel instructionLabel;
@@ -78,6 +81,23 @@ public class GUIView extends JFrame {
 		exitButton.addActionListener(new ButtonClickListener());
 		exitButton.setBounds(650, 25, 100, 50);
 		panel.add(exitButton);
+
+		// Also add cpu buttons
+		this.easyModebutton = new JButton("Easy Mode");
+		easyModebutton.setActionCommand("easy");
+		easyModebutton.addActionListener(new ButtonClickListener());
+		easyModebutton.setBounds(500, 200, 100, 50);
+		easyModebutton.setEnabled(false);
+		easyModebutton.setVisible(false);
+		panel.add(easyModebutton);
+
+		this.hardModebutton = new JButton("Hard Mode");
+		hardModebutton.setActionCommand("hard");
+		hardModebutton.addActionListener(new ButtonClickListener());
+		hardModebutton.setBounds(500, 250, 100, 50);
+		hardModebutton.setEnabled(false);
+		hardModebutton.setVisible(false);
+		panel.add(hardModebutton);
 
 		// roll button created here for use later
 		this.rollButton = new JButton("Roll");
@@ -262,14 +282,6 @@ public class GUIView extends JFrame {
 		catOptions.setBounds(340, 700, 100, 50);
 		catOptions.setEditable(false);
 		this.add(catOptions);
-//		//create a Action Listener for the new buttons
-//		catOptions.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				String selectedItem = (String) catOptions.getSelectedItem();
-//				System.out.println("Selected item: " + selectedItem);
-//
-//			}
-//		});
 
 		// Add label above dropdown menu of categories.
 		JLabel catLabel = new JLabel("Select Category");
@@ -294,74 +306,17 @@ public class GUIView extends JFrame {
 				String diceName = diceLabel.getName();
 				boolean isHead = hasLabel(diceLabel);
 				DiceEnum theDice = DiceEnum.valueOf(diceName);
+				// if we have not held this dice before
 				if (!isHead) {
-					switch (diceName) {
-					case "ONE":
-						heldPanel.add(diceLabel);
-						dicePanel.remove(diceLabel);
-
-						break;
-					case "TWO":
-						heldPanel.add(diceLabel);
-						dicePanel.remove(diceLabel);
-
-						break;
-					case "THREE":
-						heldPanel.add(diceLabel);
-						dicePanel.remove(diceLabel);
-
-						break;
-					case "FOUR":
-						heldPanel.add(diceLabel);
-						dicePanel.remove(diceLabel);
-
-						break;
-					case "FIVE":
-						heldPanel.add(diceLabel);
-						dicePanel.remove(diceLabel);
-
-						break;
-					case "SIX":
-						heldPanel.add(diceLabel);
-						dicePanel.remove(diceLabel);
-
-						break;
-					}
+					// add dice to held hand
+					heldPanel.add(diceLabel);
+					dicePanel.remove(diceLabel);
 					myGame.curSetHold(theDice);
-
+					// if dice is heald
 				} else {
-					switch (diceName) {
-					case "ONE":
-						dicePanel.add(diceLabel);
-						heldPanel.remove(diceLabel);
-
-						break;
-					case "TWO":
-						dicePanel.add(diceLabel);
-						heldPanel.remove(diceLabel);
-
-						break;
-					case "THREE":
-						dicePanel.add(diceLabel);
-						heldPanel.remove(diceLabel);
-
-						break;
-					case "FOUR":
-						dicePanel.add(diceLabel);
-						heldPanel.remove(diceLabel);
-
-						break;
-					case "FIVE":
-						dicePanel.add(diceLabel);
-						heldPanel.remove(diceLabel);
-
-						break;
-					case "SIX":
-						dicePanel.add(diceLabel);
-						heldPanel.remove(diceLabel);
-
-						break;
-					}
+					// remove from held and add back to regular hand
+					dicePanel.add(diceLabel);
+					heldPanel.remove(diceLabel);
 					myGame.curRemoveHold(theDice);
 
 				}
@@ -395,7 +350,22 @@ public class GUIView extends JFrame {
 			// CPU Button
 			if (command.equals("cpu")) {
 				myGame.addPlayer("Player 1");
-				myGame.addPlayer("CPU");
+				hardModebutton.setVisible(true);
+				hardModebutton.setEnabled(true);
+				easyModebutton.setVisible(true);
+				easyModebutton.setEnabled(true);
+			}
+			// Two Player Button
+			else if (command.equals("easy")) {
+				myGame.addPlayer(new CPU("EASY CPU", CpuMode.EASY));
+				String name = myGame.getCurName();
+				int rolls = myGame.getRollCount();
+				// Set up the page to prepare for the game.
+				playPage(name, rolls);
+			}
+			// Two Player Button
+			else if (command.equals("hard")) {
+				myGame.addPlayer(new CPU("HARD CPU", CpuMode.HARD));
 				String name = myGame.getCurName();
 				int rolls = myGame.getRollCount();
 				// Set up the page to prepare for the game.
