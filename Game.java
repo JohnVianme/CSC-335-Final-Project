@@ -1,7 +1,5 @@
 import java.util.*;
 
-import javax.naming.spi.DirStateFactory.Result;
-
 public class Game {
 	private int playerAmount;
 	private ArrayList<Player> players;
@@ -97,6 +95,18 @@ public class Game {
 		players.add(aPlayer);
 		playerAmount++;
 		return true;
+	}
+
+	public boolean addPlayer(CPU cpu) {
+		// can not add more then 4 players
+		if (players.size() > 4) {
+			return false;
+		}
+		// add CPU to list of players
+		players.add(cpu);
+		playerAmount++;
+		return true;
+
 	}
 
 	/*
