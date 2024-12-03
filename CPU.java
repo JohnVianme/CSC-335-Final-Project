@@ -100,9 +100,9 @@ public class CPU extends Player {
 				// make that the new maxValue and maxCategory
 				maxValue = aScore;
 				maxCategory = cat;
+
 			}
 		}
-
 		return maxCategory;
 	}
 
