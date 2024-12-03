@@ -59,6 +59,8 @@ public class Game {
 				return false;
 			}
 			// make the player start a new turn
+			currentPlayerIdx = ((currentPlayerIdx + 1) % playerAmount);
+			curPlayer = players.get(currentPlayerIdx);
 			curPlayer.startNewTurn();
 			return true;
 		}
