@@ -276,8 +276,6 @@ public class GUIView extends JFrame {
 		if (catOptions != null) {
 			this.remove(catOptions);
 		}
-		System.out.println("Unfiled: " + unfilledCats[0] + ", " + unfilledCats[1] + ", " + unfilledCats[2] + ", "
-				+ unfilledCats[4] + ", " + unfilledCats[5] + ", " + unfilledCats[6]);
 		catOptions = new JComboBox<String>(unfilledCats);
 		catOptions.setBounds(340, 700, 100, 50);
 		catOptions.setEditable(false);

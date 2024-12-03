@@ -1,7 +1,3 @@
-import static org.junit.jupiter.api.Assertions.assertAll;
-
-import java.util.List;
-
 public class CPU extends Player {
 
 	private final CpuMode mode;
