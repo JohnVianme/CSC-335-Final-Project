@@ -220,7 +220,7 @@ public class Game {
 	 * 
 	 * @pre curPlayer most be a CPU player
 	 */
-	public Category getHardCPUCat() {
+	public Category getCPUBestCat() {
 		Player curPlayer = players.get(currentPlayerIdx);
 		assert curPlayer instanceof CPU;
 		return ((CPU) curPlayer).getBestCategory();
