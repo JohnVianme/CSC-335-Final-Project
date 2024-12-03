@@ -22,6 +22,8 @@ public class CheckRollType {
 	 * @param dices - an array of DiceEnums
 	 */
 	public static boolean threeOfAKind(ArrayList<DiceEnum> dices) {
+		assert dices != null && dices.size() == 5;
+
 		HashMap<Integer, Integer> counts = new HashMap<>();
 
 		// count the occurrences
@@ -42,6 +44,8 @@ public class CheckRollType {
 	}
 
 	public static int getThreeOfAKind(ArrayList<DiceEnum> dices) {
+		assert dices != null && dices.size() == 5;
+
 		int score = 0;
 		for (DiceEnum dice : dices) {
 			score += dice.getValue();
@@ -56,6 +60,8 @@ public class CheckRollType {
 	 * @param dices - an array of DiceEnums
 	 */
 	public static boolean fourOfAKind(ArrayList<DiceEnum> dices) {
+		assert dices != null && dices.size() == 5;
+
 		HashMap<Integer, Integer> counts = new HashMap<>();
 
 		for (DiceEnum dice : dices) {
@@ -72,6 +78,8 @@ public class CheckRollType {
 	}
 
 	public static int getFourOfAKind(ArrayList<DiceEnum> dices) {
+		assert dices != null && dices.size() == 5;
+
 		int score = 0;
 		for (DiceEnum dice : dices) {
 			score += dice.getValue();
@@ -86,6 +94,8 @@ public class CheckRollType {
 	 * @param dices - an array of DiceEnums
 	 */
 	public static boolean fullHouse(ArrayList<DiceEnum> dices) {
+		assert dices != null && dices.size() == 5;
+
 		HashMap<Integer, Integer> counts = new HashMap<>();
 
 		for (DiceEnum dice : dices) {
@@ -102,6 +112,8 @@ public class CheckRollType {
 	}
 
 	public static int getFullHouse(ArrayList<DiceEnum> dices) {
+		assert dices != null && dices.size() == 5;
+
 		return 25;
 	}
 
@@ -112,6 +124,8 @@ public class CheckRollType {
 	 * @param dices - an array of DiceEnums
 	 */
 	public static boolean smallStraight(ArrayList<DiceEnum> dices) {
+		assert dices != null && dices.size() == 5;
+
 		// sort array of dice
 		Collections.sort(dices);
 
@@ -142,6 +156,8 @@ public class CheckRollType {
 	}
 
 	public static int getSmallStraight(ArrayList<DiceEnum> dices) {
+		assert dices != null && dices.size() == 5;
+
 		return 30;
 	}
 
@@ -152,6 +168,8 @@ public class CheckRollType {
 	 * @param dices - an array of DiceEnums
 	 */
 	public static boolean largeStraight(ArrayList<DiceEnum> dices) {
+		assert dices != null && dices.size() == 5;
+
 		// sort array of dice
 		Collections.sort(dices);
 
@@ -167,6 +185,8 @@ public class CheckRollType {
 	}
 
 	public static int getLargeStraight(ArrayList<DiceEnum> dices) {
+		assert dices != null && dices.size() == 5;
+
 		return 40;
 	}
 
@@ -177,6 +197,8 @@ public class CheckRollType {
 	 * @param dices - an array of DiceEnums
 	 */
 	public static boolean yahtzee(ArrayList<DiceEnum> dices) {
+		assert dices != null && dices.size() == 5;
+
 		// value to check against
 		int diceValue = dices.get(0).getValue();
 
@@ -190,14 +212,30 @@ public class CheckRollType {
 		return true;
 	}
 
+	/*
+	 * This method returns the score for the yahtzee catagory base on the dices
+	 * 
+	 * @pre dices != null && dices.size() == 5
+	 * 
+	 * @return the score for the catagory
+	 */
 	public static int getYahtzee(ArrayList<DiceEnum> dices) {
-		return 50;
+		assert dices != null && dices.size() == 5;
+		if (yahtzee(dices)) {
+			return 50;
+		}
+		return 0;
 	}
 
 	/*
+	 * This method returns the score for the chance catagory base on the dices
 	 * 
+	 * @pre dices != null && dices.size() == 5
+	 * 
+	 * @return the score for the catagory
 	 */
 	public static int getChance(ArrayList<DiceEnum> dices) {
+		assert dices != null && dices.size() == 5;
 		int score = 0;
 		for (DiceEnum dice : dices) {
 			score += dice.getValue();
@@ -215,11 +253,11 @@ public class CheckRollType {
 	 * 
 	 * @return the score for the that diceType upper section
 	 */
-	public static int getUpperSection(ArrayList<DiceEnum> dices, int diceType) {
-		assert dices != null && diceType < 7 && diceType > 0;
+	public static int getUpperSection(ArrayList<DiceEnum> dices, DiceEnum diceType) {
+		assert dices != null && diceType.getValue() < 7 && diceType.getValue() > 0;
 		int score = 0;
 		for (DiceEnum dice : dices) {
-			if (dice.getValue() == diceType) {
+			if (dice == diceType) {
 				score += dice.getValue();
 			}
 		}
