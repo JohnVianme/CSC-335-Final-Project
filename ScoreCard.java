@@ -1,6 +1,9 @@
 /*
  * The scorecard that tracks 13 score categories for a Yahtzee game
  *
+ * categories: ones, twos, threes, fours, fives, sixes, bonus, three of a kind,
+ * four of a kind, full house, small straight, large straight, yahtzee
+ *
  * @authors Garret W., John I., Dylan C. Jason B.
  */
 
@@ -23,7 +26,9 @@ public class ScoreCard {
         for (Category cat : Category.values()) {
             scorecard.put(cat, null);
         }
+
         // set the BONUS Category to be 0
+        // required so doesn't appear in unfilled categories
         scorecard.put(Category.BONUS, 0);
     }
 
@@ -109,7 +114,7 @@ public class ScoreCard {
                 }
                 scorecard.put(cat, score);
             } else {
-                scorecard.put(cat, 0);
+                scorecard.put(cat, score);
             }
         }
 
@@ -123,7 +128,7 @@ public class ScoreCard {
                 }
                 scorecard.put(cat, score);
             } else {
-                scorecard.put(cat, 0);
+                scorecard.put(cat, score);
             }
         }
 
@@ -134,7 +139,7 @@ public class ScoreCard {
             if (CheckRollType.fullHouse(dices)) {
                 scorecard.put(cat, 25);
             } else {
-                scorecard.put(cat, 0);
+                scorecard.put(cat, score);
             }
         }
 
@@ -145,7 +150,7 @@ public class ScoreCard {
             if (CheckRollType.smallStraight(dices)) {
                 scorecard.put(cat, 30);
             } else {
-                scorecard.put(cat, 0);
+                scorecard.put(cat, score);
             }
         }
 
@@ -156,7 +161,7 @@ public class ScoreCard {
             if (CheckRollType.largeStraight(dices)) {
                 scorecard.put(cat, 40);
             } else {
-                scorecard.put(cat, 0);
+                scorecard.put(cat, score);
             }
         }
 
@@ -167,7 +172,7 @@ public class ScoreCard {
             if (CheckRollType.yahtzee(dices)) {
                 scorecard.put(cat, 50);
             } else {
-                scorecard.put(cat, 0);
+                scorecard.put(cat, score);
             }
         }
 
@@ -237,24 +242,28 @@ public class ScoreCard {
     /*
      * add the scores from each category to get grand total
      *
-     * only adds filled categories, avoiding any null values
+     * @return int - grand-total from summing all categories
      */
     public int getGrandTotal() {
         int grandTotal = 0;
 
         for (Category cat : scorecard.keySet()) {
-        	if (scorecard.get(cat) != null) {
-        		grandTotal += scorecard.get(cat);
-        	}
+            if (scorecard.get(cat) == null) {
+                grandTotal += 0;
+            } else {
+                grandTotal += scorecard.get(cat);
+            }
         }
 
         return grandTotal;
     }
+
     /*
      * Returns copy of this scorecard
+     *
+     * @return HashMap - a copy of the ScoreCard objects HashMap of categories and scores
      */
 	public HashMap<Category, Integer> getScoreCardCopy() {
-		// TODO Auto-generated method stub
 		return new HashMap<Category, Integer>(scorecard);
 	}
 }
