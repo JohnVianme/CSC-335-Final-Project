@@ -188,7 +188,8 @@ public class GUIView extends JFrame {
 	}
 
 	private void HardCcpuTurn() {
-		myGame.currRollDice();
+		boolean attemptRoll = myGame.currRollDice();
+		
 		
 	}
 
