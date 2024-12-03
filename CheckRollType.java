@@ -18,7 +18,9 @@ public class CheckRollType {
 	/*
 	 * checks if a collection of DiceEnums contains 3 of a kind that is, 3 dice with
 	 * the same value
-	 *
+	 * 
+	 * @pre dices != null && dices.size() == 5
+	 * 
 	 * @param dices - an array of DiceEnums
 	 */
 	public static boolean threeOfAKind(ArrayList<DiceEnum> dices) {
@@ -43,6 +45,14 @@ public class CheckRollType {
 		return false;
 	}
 
+	/*
+	 * This method returns the score for the ThreeOfAKind( catagory base on the
+	 * dices
+	 * 
+	 * @pre dices != null && dices.size() == 5
+	 * 
+	 * @return the score for the catagory
+	 */
 	public static int getThreeOfAKind(ArrayList<DiceEnum> dices) {
 		assert dices != null && dices.size() == 5;
 
@@ -56,7 +66,9 @@ public class CheckRollType {
 	/*
 	 * checks if a collection of DiceEnums contains 4 of a kind that is, 4 dice with
 	 * the same value
-	 *
+	 * 
+	 * @pre dices != null && dices.size() == 5
+	 * 
 	 * @param dices - an array of DiceEnums
 	 */
 	public static boolean fourOfAKind(ArrayList<DiceEnum> dices) {
@@ -77,6 +89,13 @@ public class CheckRollType {
 		return false;
 	}
 
+	/*
+	 * This method returns the score for the FourOfAKind catagory base on the dices
+	 * 
+	 * @pre dices != null && dices.size() == 5
+	 * 
+	 * @return the score for the catagory
+	 */
 	public static int getFourOfAKind(ArrayList<DiceEnum> dices) {
 		assert dices != null && dices.size() == 5;
 
@@ -90,7 +109,9 @@ public class CheckRollType {
 	/*
 	 * checks if a collection of DiceEnums contains a full house that is, 3 dice of
 	 * the same value and 2 other dice of the same value
-	 *
+	 * 
+	 * @pre dices != null && dices.size() == 5
+	 * 
 	 * @param dices - an array of DiceEnums
 	 */
 	public static boolean fullHouse(ArrayList<DiceEnum> dices) {
@@ -111,6 +132,13 @@ public class CheckRollType {
 		return false;
 	}
 
+	/*
+	 * This method returns the score for the FullHouse catagory base on the dices
+	 * 
+	 * @pre dices != null && dices.size() == 5
+	 * 
+	 * @return the score for the catagory
+	 */
 	public static int getFullHouse(ArrayList<DiceEnum> dices) {
 		assert dices != null && dices.size() == 5;
 
@@ -120,7 +148,9 @@ public class CheckRollType {
 	/*
 	 * checks if a collection of DiceEnums contains a small straight that is, 4 dice
 	 * of consecutive value
-	 *
+	 * 
+	 * @pre dices != null && dices.size() == 5
+	 * 
 	 * @param dices - an array of DiceEnums
 	 */
 	public static boolean smallStraight(ArrayList<DiceEnum> dices) {
@@ -155,6 +185,14 @@ public class CheckRollType {
 		return false;
 	}
 
+	/*
+	 * This method returns the score for the SmallStraight catagory base on the
+	 * dices
+	 * 
+	 * @pre dices != null && dices.size() == 5
+	 * 
+	 * @return the score for the catagory
+	 */
 	public static int getSmallStraight(ArrayList<DiceEnum> dices) {
 		assert dices != null && dices.size() == 5;
 
@@ -164,7 +202,9 @@ public class CheckRollType {
 	/*
 	 * checks if a collection of DiceEnums contains a large straight that is, 5 dice
 	 * of consecutive value
-	 *
+	 * 
+	 * @pre dices != null && dices.size() == 5
+	 * 
 	 * @param dices - an array of DiceEnums
 	 */
 	public static boolean largeStraight(ArrayList<DiceEnum> dices) {
@@ -184,6 +224,14 @@ public class CheckRollType {
 		return true;
 	}
 
+	/*
+	 * This method returns the score for the LargeStraight catagory base on the
+	 * dices
+	 * 
+	 * @pre dices != null && dices.size() == 5
+	 * 
+	 * @return the score for the catagory
+	 */
 	public static int getLargeStraight(ArrayList<DiceEnum> dices) {
 		assert dices != null && dices.size() == 5;
 
@@ -193,7 +241,9 @@ public class CheckRollType {
 	/*
 	 * checks if a collection of DiceEnums contains a Yahtzee that is, all 5 dice
 	 * have the same value
-	 *
+	 * 
+	 * @pre dices != null && dices.size() == 5
+	 * 
 	 * @param dices - an array of DiceEnums
 	 */
 	public static boolean yahtzee(ArrayList<DiceEnum> dices) {
@@ -247,7 +297,7 @@ public class CheckRollType {
 	 * Method returns the score of the upper section scores given the hand and the
 	 * interger value of the upper section.
 	 * 
-	 * @pre ices != null
+	 * @pre dices != null
 	 * 
 	 * @pre diceType < 7 && diceType > 0
 	 * 
