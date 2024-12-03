@@ -136,46 +136,65 @@ public class GUIView extends JFrame {
 		scoresButton.setBounds(10, 700, 100, 50);
 		this.add(scoresButton);
 
-		// Display the "roll" button, which will indicate we need a new set of dice
-		// displayed and decrement rollCount.
-		rollButton.setActionCommand("roll");
-		// if rollButton has action listion listener do not add another
-		if (rollButton.getActionListeners().length < 1) {
-			rollButton.addActionListener(new ButtonClickListener());
+		// if current player is Hard Mode CPU
+		if (myGame.getCurName().equals("HARD CPU")) {
+			HardCcpuTurn();
+			
+		// if current player is Hard Mode CPU
+		} else if (myGame.getCurName().equals("EASY CPU")) {
+			EasyCcpuTurn();
+		} else {
+			// Display the "roll" button, which will indicate we need a new set of dice
+			// displayed and decrement rollCount.
+			rollButton.setActionCommand("roll");
+			// if rollButton has action listion listener do not add another
+			if (rollButton.getActionListeners().length < 1) {
+				rollButton.addActionListener(new ButtonClickListener());
+			}
+			// rollButton.addActionListener(new ButtonClickListener());
+			rollButton.setBounds(340, 600, 100, 50);
+			this.add(rollButton);
+
+			// Create a panel where the dice will be displayed. Do not need to fill it yet,
+			// since user has not rolled.
+			dicePanel = new JPanel();
+			dicePanel.setBackground(Color.RED);
+			dicePanel.setBounds(100, 350, 600, 100);
+			dicePanel.setLayout(new GridLayout(1, 5, 15, 0));
+			this.add(dicePanel);
+
+			// Create a label to help user recognize their current hand.
+			JLabel currentLabel = new JLabel("Current Hand: ");
+			currentLabel.setBounds(10, 355, 100, 100);
+			currentLabel.setForeground(Color.RED);
+			this.add(currentLabel);
+
+			heldPanel = new JPanel();
+			heldPanel.setBackground(Color.GREEN);
+			heldPanel.setBounds(100, 460, 600, 100);
+			heldPanel.setLayout(new GridLayout(1, 5, 15, 0));
+			this.add(heldPanel);
+
+			// Create a label to help user recognize the current dice they are holding.
+			JLabel heldLabel = new JLabel("Dice Held: ");
+			heldLabel.setBounds(10, 470, 100, 100);
+			heldLabel.setForeground(Color.GREEN);
+			this.add(heldLabel);
+
+			this.revalidate();
+			this.repaint();
 		}
-		// rollButton.addActionListener(new ButtonClickListener());
-		rollButton.setBounds(340, 600, 100, 50);
-		this.add(rollButton);
 
-		// Create a panel where the dice will be displayed. Do not need to fill it yet,
-		// since user has not rolled.
-		dicePanel = new JPanel();
-		dicePanel.setBackground(Color.RED);
-		dicePanel.setBounds(100, 350, 600, 100);
-		dicePanel.setLayout(new GridLayout(1, 5, 15, 0));
-		this.add(dicePanel);
+	}
 
-		// Create a label to help user recognize their current hand.
-		JLabel currentLabel = new JLabel("Current Hand: ");
-		currentLabel.setBounds(10, 355, 100, 100);
-		currentLabel.setForeground(Color.RED);
-		this.add(currentLabel);
+	private void HardCcpuTurn() {
+		myGame.currRollDice();
+		
+	}
 
-		heldPanel = new JPanel();
-		heldPanel.setBackground(Color.GREEN);
-		heldPanel.setBounds(100, 460, 600, 100);
-		heldPanel.setLayout(new GridLayout(1, 5, 15, 0));
-		this.add(heldPanel);
-
-		// Create a label to help user recognize the current dice they are holding.
-		JLabel heldLabel = new JLabel("Dice Held: ");
-		heldLabel.setBounds(10, 470, 100, 100);
-		heldLabel.setForeground(Color.GREEN);
-		this.add(heldLabel);
-
-		this.revalidate();
-		this.repaint();
-
+	private void EasyCcpuTurn() {
+		myGame.currRollDice();
+		
 	}
 
 	/**
@@ -215,7 +234,8 @@ public class GUIView extends JFrame {
 		scoreArea.setSize(200, 100);
 		scoreArea.setEditable(false);
 		scoreArea.setBounds(340, 150, 100, 200);
-		// This is where we need to add the concatenated string of each player and their scores.
+		// This is where we need to add the concatenated string of each player and their
+		// scores.
 		String scoreText = getScoreText();
 		scoreArea.setText(scoreText);
 		this.add(scoreArea);
@@ -228,15 +248,16 @@ public class GUIView extends JFrame {
 	}
 
 	/*
-	 * Private helper method to retrieve every player's name along with their associated score.
-	 * Add to string in order 
+	 * Private helper method to retrieve every player's name along with their
+	 * associated score. Add to string in order
 	 * 
 	 * @return concatenated string of every player and their score.
 	 */
 	private String getScoreText() {
 		// Create map to store each player and their score.
 		HashMap<Integer, String> scoreMap = new HashMap<>();
-		// Iterate through each player in the current game. Add name and current score to the string.
+		// Iterate through each player in the current game. Add name and current score
+		// to the string.
 		int playerCount = myGame.getPlayerAmount();
 		// Add each name/score pair to the map.
 		for (int i = 0; i < playerCount; i++) {
@@ -244,7 +265,7 @@ public class GUIView extends JFrame {
 			int currScore = myGame.getTotalScore();
 			String currName = myGame.getCurName();
 			scoreMap.put(currScore, currName);
-			
+
 		}
 
 		// Get all of the total score keys and sort them.
@@ -262,7 +283,6 @@ public class GUIView extends JFrame {
 		}
 		return scoreText;
 	}
-	
 
 	/**
 	 * When user clicks roll button, display new dice and update rollCountLabel.
