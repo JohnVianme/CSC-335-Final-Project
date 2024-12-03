@@ -8,6 +8,9 @@
  * @authors Garret W., John I., Dylan C. Jason B.
  */
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+import java.awt.desktop.AboutHandler;
 import java.util.*;
 
 public class CheckRollType {
@@ -191,6 +194,9 @@ public class CheckRollType {
 		return 50;
 	}
 
+	/*
+	 * 
+	 */
 	public static int getChance(ArrayList<DiceEnum> dices) {
 		int score = 0;
 		for (DiceEnum dice : dices) {
@@ -198,8 +204,19 @@ public class CheckRollType {
 		}
 		return score;
 	}
-	
+
+	/*
+	 * Method returns the score of the upper section scores given the hand and the
+	 * interger value of the upper section.
+	 * 
+	 * @pre ices != null
+	 * 
+	 * @pre diceType < 7 && diceType > 0
+	 * 
+	 * @return the score for the that diceType upper section
+	 */
 	public static int getUpperSection(ArrayList<DiceEnum> dices, int diceType) {
+		assert dices != null && diceType < 7 && diceType > 0;
 		int score = 0;
 		for (DiceEnum dice : dices) {
 			if (dice.getValue() == diceType) {
