@@ -153,7 +153,7 @@ public class Player {
 		for (DiceEnum aDiceEnum : roll) {
 			result += aDiceEnum.name() + " ";
 		}
-		System.out.println("Just Sumited:" + result);
+		System.out.println("Just Sumited (player class):" + result);
 		List<Category> remainingCategories = getUnfilledCategories();
 		if (remainingCategories.size() == 0) {
 			myScoreCard.checkForBonus();

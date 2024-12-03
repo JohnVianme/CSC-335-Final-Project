@@ -47,16 +47,22 @@ public class Game {
 		Player curPlayer;
 		// if we are the last player
 		if (currentPlayerIdx == players.size() - 1) {
+			System.out.println("AT LAST TURN!!!!!");
 			// get the last player
 			curPlayer = players.get(currentPlayerIdx);
 			// try to make make the last player submitHand
 			boolean result = curPlayer.submitHand(category);
 			// if not possible
 			if (result == false) {
+				System.out.println("LAST PLAYER CAN NOT SUBMIT!!!!!");
 				// end of game
 				return false;
 			}
+			// make the player start a new turn
+			curPlayer.startNewTurn();
+			return true;
 		}
+		
 		// get the current player
 		curPlayer = players.get(currentPlayerIdx);
 		// make player submit their hand
