@@ -231,7 +231,7 @@ public class Game {
 	 * 
 	 * @pre curPlayer most be a CPU player
 	 */
-	public Category getACPUCat() {
+	public Category getEasyCPUCat() {
 		Player curPlayer = players.get(currentPlayerIdx);
 		assert curPlayer instanceof CPU;
 		return ((CPU) curPlayer).getFirstCategory();

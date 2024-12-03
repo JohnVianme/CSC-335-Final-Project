@@ -203,8 +203,6 @@ public class GUIView extends JFrame {
 		// Do not need to display the rollCount for the CPU.
 		rollCountLabel.setText("");
 
-		// Have Easy CPU roll their dice.
-		boolean ableToRoll = myGame.currRollDice();
 		// get the result of the roll
 		ArrayList<DiceEnum> curHand = myGame.getPlayerHand();
 
@@ -225,7 +223,6 @@ public class GUIView extends JFrame {
 			dicePanel.add(diceLabel);
 
 		}
-
 		// Get the first category available, since this is the EASY CPU.
 		Category cpuCategory = myGame.getCPUBestCat();
 
@@ -264,8 +261,7 @@ public class GUIView extends JFrame {
 		// Do not need to display the rollCount for the CPU.
 		rollCountLabel.setText("");
 
-		// Have Easy CPU roll their dice.
-		boolean ableToRoll = myGame.currRollDice();
+		
 		// get the result of the roll
 		ArrayList<DiceEnum> curHand = myGame.getPlayerHand();
 
