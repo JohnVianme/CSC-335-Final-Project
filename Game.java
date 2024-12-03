@@ -1,3 +1,5 @@
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 import java.util.*;
 
 public class Game {
@@ -62,7 +64,7 @@ public class Game {
 			curPlayer.startNewTurn();
 			return true;
 		}
-		
+
 		// get the current player
 		curPlayer = players.get(currentPlayerIdx);
 		// make player submit their hand
@@ -192,10 +194,11 @@ public class Game {
 	}
 
 	/*
-	 * Helper method to reset currentPlayerIdx for iterating
-	 * through each player at the end of the game.
+	 * Helper method to reset currentPlayerIdx for iterating through each player at
+	 * the end of the game.
 	 * 
 	 * @pre newIdx is within the limits of 0 to playerAmount-1.
+	 * 
 	 * @post currentPlayerIdx is set to parameter.
 	 */
 	public void setCurrIdx(int newIdx) {
@@ -204,6 +207,7 @@ public class Game {
 
 	/*
 	 * Helper method to get the current player's total game score.
+	 * 
 	 * @return the current player's total score in the current game.
 	 */
 	public int getTotalScore() {
@@ -211,4 +215,25 @@ public class Game {
 		return curPlayer.getTotalScore();
 	}
 
+	/*
+	 * Method for return the CPU's best cat to fill
+	 * 
+	 * @pre curPlayer most be a CPU player
+	 */
+	public Category getCPUBestCat() {
+		Player curPlayer = players.get(currentPlayerIdx);
+		assert curPlayer instanceof CPU;
+		return ((CPU) curPlayer).getBestCategory();
+	}
+
+	/*
+	 * Method for return a CPU's open cat to fill
+	 * 
+	 * @pre curPlayer most be a CPU player
+	 */
+	public Category getACPUCat() {
+		Player curPlayer = players.get(currentPlayerIdx);
+		assert curPlayer instanceof CPU;
+		return ((CPU) curPlayer).getFirstCategory();
+	}
 }
