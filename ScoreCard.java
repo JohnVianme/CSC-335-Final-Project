@@ -1,6 +1,9 @@
 /*
  * The scorecard that tracks 13 score categories for a Yahtzee game
  *
+ * categories: ones, twos, threes, fours, fives, sixes, bonus, three of a kind,
+ * four of a kind, full house, small straight, large straight, yahtzee
+ *
  * @authors Garret W., John I., Dylan C. Jason B.
  */
 
@@ -23,7 +26,9 @@ public class ScoreCard {
         for (Category cat : Category.values()) {
             scorecard.put(cat, null);
         }
+
         // set the BONUS Category to be 0
+        // required so doesn't appear in unfilled categories
         scorecard.put(Category.BONUS, 0);
     }
 
@@ -36,146 +41,93 @@ public class ScoreCard {
      * @param cat: the scoring category to be filled
      */
     public void fillCategory(ArrayList<DiceEnum> dices, Category cat) {
-        // initialize score variable
-        int score = 0;
-
         // score category is ONES, add up all dice with value of 1 for score
         if (cat == Category.ONES) {
-            for (DiceEnum dice : dices) {
-                if (dice.getValue() == 1) {
-                    score += dice.getValue();
-                }
-            }
-            scorecard.put(cat, score);
+            int onesScore = CheckRollType.getUpperSection(dices, DiceEnum.ONE);
+            scorecard.put(cat, onesScore);
         }
 
         // score category is TWOS, add up all dice with value of 2 for score
         else if (cat == Category.TWOS) {
-            for (DiceEnum dice : dices) {
-                if (dice.getValue() == 2) {
-                    score += dice.getValue();
-                }
-            }
-            scorecard.put(cat, score);
+            int twosScore = CheckRollType.getUpperSection(dices, DiceEnum.TWO);
+            scorecard.put(cat, twosScore);
         }
 
         // score category is THREES, add up all dice with value of 3 for score
         else if (cat == Category.THREES) {
-            for (DiceEnum dice : dices) {
-                if (dice.getValue() == 3) {
-                    score += dice.getValue();
-                }
-            }
-            scorecard.put(cat, score);
+            int threesScore = CheckRollType.getUpperSection(dices, DiceEnum.THREE);
+            scorecard.put(cat, threesScore);
         }
 
         // score category is FOURS, add up all dice with value of 4 for score
         else if (cat == Category.FOURS) {
-            for (DiceEnum dice : dices) {
-                if (dice.getValue() == 4) {
-                    score += dice.getValue();
-                }
-            }
-            scorecard.put(cat, score);
+            int foursScore = CheckRollType.getUpperSection(dices, DiceEnum.FOUR);
+            scorecard.put(cat, foursScore);
         }
 
         // score category is FIVES, add up all dice with value of 5 for score
         else if (cat == Category.FIVES) {
-            for (DiceEnum dice : dices) {
-                if (dice.getValue() == 5) {
-                    score += dice.getValue();
-                }
-            }
-            scorecard.put(cat, score);
+            int fivesScore = CheckRollType.getUpperSection(dices, DiceEnum.FIVE);
+            scorecard.put(cat, fivesScore);
         }
 
         // score category is SIXES, add up all dice with value of 6 for score
         else if (cat == Category.SIXES) {
-            for (DiceEnum dice : dices) {
-                if (dice.getValue() == 6) {
-                    score += dice.getValue();
-                }
-            }
-            scorecard.put(cat, score);
+            int sixesScore = CheckRollType.getUpperSection(dices, DiceEnum.SIX);
+            scorecard.put(cat, sixesScore);
         }
 
         // score category is THREE OF A KIND
         // call method to check valid three of a kind
         // if valid, add up all dice for score, else score is 0
         else if (cat == Category.THREEOFKIND) {
-            if (CheckRollType.threeOfAKind(dices)) {
-                for (DiceEnum dice : dices) {
-                    score += dice.getValue();
-                }
-                scorecard.put(cat, score);
-            } else {
-                scorecard.put(cat, 0);
-            }
+            int score = CheckRollType.getThreeOfAKind(dices);
+            scorecard.put(cat, score);
         }
 
         // score category is FOUR OF A KIND
         // call method to check valid four of a kind
         // if valid, add up all dice for score, else score is 0
         else if (cat == Category.FOUROFKIND) {
-            if (CheckRollType.fourOfAKind(dices)) {
-                for (DiceEnum dice : dices) {
-                    score += dice.getValue();
-                }
-                scorecard.put(cat, score);
-            } else {
-                scorecard.put(cat, 0);
-            }
+            int score = CheckRollType.getFourOfAKind(dices);
+            scorecard.put(cat, score);
         }
 
         // score category is FULL HOUSE
         // call method to check valid full house
         // if valid, score is 25, else score is 0
         else if (cat == Category.FULLHOUSE) {
-            if (CheckRollType.fullHouse(dices)) {
-                scorecard.put(cat, 25);
-            } else {
-                scorecard.put(cat, 0);
-            }
+            int score = CheckRollType.getFullHouse(dices);
+            scorecard.put(cat, score);
         }
 
         // score category is SMALL STRAIGHT
         // call method to check valid small straight
         // if valid, score is 30, else score is 0
         else if (cat == Category.SMALLSTRAIGHT) {
-            if (CheckRollType.smallStraight(dices)) {
-                scorecard.put(cat, 30);
-            } else {
-                scorecard.put(cat, 0);
-            }
+            int score = CheckRollType.getSmallStraight(dices);
+            scorecard.put(cat, score);
         }
 
         // score category is LARGE STRAIGHT
         // call method to check valid large straight
         // if valid, score is 40, else score is 0
         else if (cat == Category.LARGESTRAIGHT) {
-            if (CheckRollType.largeStraight(dices)) {
-                scorecard.put(cat, 40);
-            } else {
-                scorecard.put(cat, 0);
-            }
+            int score = CheckRollType.getLargeStraight(dices);
+            scorecard.put(cat, score);
         }
 
         // score category is YAHTZEE
         // call method to check valid Yahtzee
         // if valid, score is 50, else score is 0
         else if (cat == Category.YAHTZEE) {
-            if (CheckRollType.yahtzee(dices)) {
-                scorecard.put(cat, 50);
-            } else {
-                scorecard.put(cat, 0);
-            }
+            int score = CheckRollType.getYahtzee(dices);
+            scorecard.put(cat, score);
         }
 
         // score category is CHANCE, add up all dice for score
         else if (cat == Category.CHANCE) {
-            for (DiceEnum dice : dices) {
-                score += dice.getValue();
-            }
+            int score = CheckRollType.getChance(dices);
             scorecard.put(cat, score);
         }
     }
@@ -237,24 +189,28 @@ public class ScoreCard {
     /*
      * add the scores from each category to get grand total
      *
-     * only adds filled categories, avoiding any null values
+     * @return int - grand-total from summing all categories
      */
     public int getGrandTotal() {
         int grandTotal = 0;
 
         for (Category cat : scorecard.keySet()) {
-        	if (scorecard.get(cat) != null) {
-        		grandTotal += scorecard.get(cat);
-        	}
+            if (scorecard.get(cat) == null) {
+                grandTotal += 0;
+            } else {
+                grandTotal += scorecard.get(cat);
+            }
         }
 
         return grandTotal;
     }
+
     /*
      * Returns copy of this scorecard
+     *
+     * @return HashMap - a copy of the ScoreCard objects HashMap of categories and scores
      */
 	public HashMap<Category, Integer> getScoreCardCopy() {
-		// TODO Auto-generated method stub
 		return new HashMap<Category, Integer>(scorecard);
 	}
 }

@@ -2,12 +2,15 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.*;
-import java.util.ArrayList;
+import java.util.*;
 
 import javax.swing.*;
 
 public class GUIView extends JFrame {
-	private static Game myGame = new Game();
+	private JButton easyModebutton;
+	private JButton hardModebutton;
+
+	private static Game myGame;
 	private JPanel panel;
 	private JLabel instructionLabel;
 	private JLabel playerNumLabel;
@@ -16,9 +19,11 @@ public class GUIView extends JFrame {
 	private JPanel dicePanel;
 	private JButton rollButton;
 	private JPanel heldPanel;
+	private JComboBox<String> catOptions;
 
 	public GUIView() {
 		setUp();
+		myGame = new Game();
 	}
 
 	private void setUp() {
@@ -78,6 +83,23 @@ public class GUIView extends JFrame {
 		exitButton.setBounds(650, 25, 100, 50);
 		panel.add(exitButton);
 
+		// Also add cpu buttons
+		this.easyModebutton = new JButton("Easy Mode");
+		easyModebutton.setActionCommand("easy");
+		easyModebutton.addActionListener(new ButtonClickListener());
+		easyModebutton.setBounds(500, 200, 100, 50);
+		easyModebutton.setEnabled(false);
+		easyModebutton.setVisible(false);
+		panel.add(easyModebutton);
+
+		this.hardModebutton = new JButton("Hard Mode");
+		hardModebutton.setActionCommand("hard");
+		hardModebutton.addActionListener(new ButtonClickListener());
+		hardModebutton.setBounds(500, 250, 100, 50);
+		hardModebutton.setEnabled(false);
+		hardModebutton.setVisible(false);
+		panel.add(hardModebutton);
+
 		// roll button created here for use later
 		this.rollButton = new JButton("Roll");
 		this.add(panel);
@@ -114,30 +136,65 @@ public class GUIView extends JFrame {
 		scoresButton.setBounds(10, 700, 100, 50);
 		this.add(scoresButton);
 
-		// Display the "roll" button, which will indicate we need a new set of dice
-		// displayed and decrement rollCount.
-		rollButton.setActionCommand("roll");
-		rollButton.addActionListener(new ButtonClickListener());
-		rollButton.setBounds(340, 600, 100, 50);
-		this.add(rollButton);
+		// if current player is Hard Mode CPU
+		if (myGame.getCurName().equals("HARD CPU")) {
+			HardCcpuTurn();
+			
+		// if current player is Hard Mode CPU
+		} else if (myGame.getCurName().equals("EASY CPU")) {
+			EasyCcpuTurn();
+		} else {
+			// Display the "roll" button, which will indicate we need a new set of dice
+			// displayed and decrement rollCount.
+			rollButton.setActionCommand("roll");
+			// if rollButton has action listion listener do not add another
+			if (rollButton.getActionListeners().length < 1) {
+				rollButton.addActionListener(new ButtonClickListener());
+			}
+			// rollButton.addActionListener(new ButtonClickListener());
+			rollButton.setBounds(340, 600, 100, 50);
+			this.add(rollButton);
 
-		// Create a panel where the dice will be displayed. Do not need to fill it yet,
-		// since user has not rolled.
-		dicePanel = new JPanel();
-		dicePanel.setBackground(Color.RED);
-		dicePanel.setBounds(100, 350, 600, 100);
-		dicePanel.setLayout(new GridLayout(1, 5, 15, 0));
-		this.add(dicePanel);
+			// Create a panel where the dice will be displayed. Do not need to fill it yet,
+			// since user has not rolled.
+			dicePanel = new JPanel();
+			dicePanel.setBackground(Color.RED);
+			dicePanel.setBounds(100, 350, 600, 100);
+			dicePanel.setLayout(new GridLayout(1, 5, 15, 0));
+			this.add(dicePanel);
 
-		heldPanel = new JPanel();
-		heldPanel.setBackground(Color.GREEN);
-		heldPanel.setBounds(100, 460, 600, 100);
-		heldPanel.setLayout(new GridLayout(1, 5, 15, 0));
-		this.add(heldPanel);
+			// Create a label to help user recognize their current hand.
+			JLabel currentLabel = new JLabel("Current Hand: ");
+			currentLabel.setBounds(10, 355, 100, 100);
+			currentLabel.setForeground(Color.RED);
+			this.add(currentLabel);
 
-		this.revalidate();
-		this.repaint();
+			heldPanel = new JPanel();
+			heldPanel.setBackground(Color.GREEN);
+			heldPanel.setBounds(100, 460, 600, 100);
+			heldPanel.setLayout(new GridLayout(1, 5, 15, 0));
+			this.add(heldPanel);
 
+			// Create a label to help user recognize the current dice they are holding.
+			JLabel heldLabel = new JLabel("Dice Held: ");
+			heldLabel.setBounds(10, 470, 100, 100);
+			heldLabel.setForeground(Color.GREEN);
+			this.add(heldLabel);
+
+			this.revalidate();
+			this.repaint();
+		}
+
+	}
+
+	private void HardCcpuTurn() {
+		myGame.currRollDice();
+		
+	}
+
+	private void EasyCcpuTurn() {
+		myGame.currRollDice();
+		
 	}
 
 	/**
@@ -174,9 +231,13 @@ public class GUIView extends JFrame {
 
 		// Text Area to display results for each of the players.
 		JTextArea scoreArea = new JTextArea();
-		scoreArea.setSize(400, 200);
+		scoreArea.setSize(200, 100);
 		scoreArea.setEditable(false);
-		scoreArea.setBounds(150, 100, 500, 200);
+		scoreArea.setBounds(340, 150, 100, 200);
+		// This is where we need to add the concatenated string of each player and their
+		// scores.
+		String scoreText = getScoreText();
+		scoreArea.setText(scoreText);
 		this.add(scoreArea);
 
 		this.setVisible(true);
@@ -184,6 +245,43 @@ public class GUIView extends JFrame {
 		this.revalidate();
 		this.repaint();
 
+	}
+
+	/*
+	 * Private helper method to retrieve every player's name along with their
+	 * associated score. Add to string in order
+	 * 
+	 * @return concatenated string of every player and their score.
+	 */
+	private String getScoreText() {
+		// Create map to store each player and their score.
+		HashMap<Integer, String> scoreMap = new HashMap<>();
+		// Iterate through each player in the current game. Add name and current score
+		// to the string.
+		int playerCount = myGame.getPlayerAmount();
+		// Add each name/score pair to the map.
+		for (int i = 0; i < playerCount; i++) {
+			myGame.setCurrIdx(i);
+			int currScore = myGame.getTotalScore();
+			String currName = myGame.getCurName();
+			scoreMap.put(currScore, currName);
+
+		}
+
+		// Get all of the total score keys and sort them.
+		List<Integer> scoreKeys = new ArrayList<>(scoreMap.keySet());
+		Collections.sort(scoreKeys);
+
+		// Add each of the players to the concatenated result string.
+		// In order of DESCENDING scores. (So player with highest score is at top).
+		// Start with an empty string.
+		String scoreText = "";
+		for (int i = scoreKeys.size() - 1; i >= 0; i--) {
+			int scoreNum = scoreKeys.get(i);
+			String playerName = scoreMap.get(scoreNum);
+			scoreText += playerName + ": " + scoreNum + "\n";
+		}
+		return scoreText;
 	}
 
 	/**
@@ -223,13 +321,39 @@ public class GUIView extends JFrame {
 		rollCountLabel.revalidate();
 		rollCountLabel.repaint();
 
-		JLabel selectLabel = new JLabel("Select a Category");
+		// Create button to let user submit their hand. (Marked as latest category
+		// selected.)
+		JButton submitButton = new JButton("Submit Hand");
+		submitButton.setActionCommand("submit");
+		submitButton.addActionListener(new ButtonClickListener());
+		submitButton.setBounds(680, 700, 100, 50);
+		this.add(submitButton);
 
-		// Refresh the panel.
+		// Click listener for the combo box of available player categories.
+
+		// Get all unselected and valid categories player can choose from.
+		String[] unfilledCats = myGame.getCurPlayerCategories();
+		// remove old catOptions if existed
+		if (catOptions != null) {
+			this.remove(catOptions);
+		}
+		catOptions = new JComboBox<String>(unfilledCats);
+		catOptions.setBounds(340, 700, 100, 50);
+		catOptions.setEditable(false);
+		this.add(catOptions);
+
+		// Add label above dropdown menu of categories.
+		JLabel catLabel = new JLabel("Select Category");
+		catLabel.setBounds(340, 670, 200, 50);
+		this.add(catLabel);
+
+		// Refresh each element of GUI.
 		dicePanel.revalidate();
 		dicePanel.repaint();
 		heldPanel.revalidate();
 		heldPanel.repaint();
+		this.revalidate();
+		this.repaint();
 
 	}
 
@@ -241,74 +365,17 @@ public class GUIView extends JFrame {
 				String diceName = diceLabel.getName();
 				boolean isHead = hasLabel(diceLabel);
 				DiceEnum theDice = DiceEnum.valueOf(diceName);
+				// if we have not held this dice before
 				if (!isHead) {
-					switch (diceName) {
-					case "ONE":
-						heldPanel.add(diceLabel);
-						dicePanel.remove(diceLabel);
-
-						break;
-					case "TWO":
-						heldPanel.add(diceLabel);
-						dicePanel.remove(diceLabel);
-
-						break;
-					case "THREE":
-						heldPanel.add(diceLabel);
-						dicePanel.remove(diceLabel);
-
-						break;
-					case "FOUR":
-						heldPanel.add(diceLabel);
-						dicePanel.remove(diceLabel);
-
-						break;
-					case "FIVE":
-						heldPanel.add(diceLabel);
-						dicePanel.remove(diceLabel);
-
-						break;
-					case "SIX":
-						heldPanel.add(diceLabel);
-						dicePanel.remove(diceLabel);
-
-						break;
-					}
+					// add dice to held hand
+					heldPanel.add(diceLabel);
+					dicePanel.remove(diceLabel);
 					myGame.curSetHold(theDice);
-
+					// if dice is heald
 				} else {
-					switch (diceName) {
-					case "ONE":
-						dicePanel.add(diceLabel);
-						heldPanel.remove(diceLabel);
-
-						break;
-					case "TWO":
-						dicePanel.add(diceLabel);
-						heldPanel.remove(diceLabel);
-
-						break;
-					case "THREE":
-						dicePanel.add(diceLabel);
-						heldPanel.remove(diceLabel);
-
-						break;
-					case "FOUR":
-						dicePanel.add(diceLabel);
-						heldPanel.remove(diceLabel);
-
-						break;
-					case "FIVE":
-						dicePanel.add(diceLabel);
-						heldPanel.remove(diceLabel);
-
-						break;
-					case "SIX":
-						dicePanel.add(diceLabel);
-						heldPanel.remove(diceLabel);
-
-						break;
-					}
+					// remove from held and add back to regular hand
+					dicePanel.add(diceLabel);
+					heldPanel.remove(diceLabel);
 					myGame.curRemoveHold(theDice);
 
 				}
@@ -333,6 +400,7 @@ public class GUIView extends JFrame {
 
 	// Click listener for the previously listed buttons.
 	private class ButtonClickListener implements ActionListener {
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			String command = e.getActionCommand();
 
@@ -341,7 +409,22 @@ public class GUIView extends JFrame {
 			// CPU Button
 			if (command.equals("cpu")) {
 				myGame.addPlayer("Player 1");
-				myGame.addPlayer("CPU");
+				hardModebutton.setVisible(true);
+				hardModebutton.setEnabled(true);
+				easyModebutton.setVisible(true);
+				easyModebutton.setEnabled(true);
+			}
+			// Two Player Button
+			else if (command.equals("easy")) {
+				myGame.addPlayer(new CPU("EASY CPU", CpuMode.EASY));
+				String name = myGame.getCurName();
+				int rolls = myGame.getRollCount();
+				// Set up the page to prepare for the game.
+				playPage(name, rolls);
+			}
+			// Two Player Button
+			else if (command.equals("hard")) {
+				myGame.addPlayer(new CPU("HARD CPU", CpuMode.HARD));
 				String name = myGame.getCurName();
 				int rolls = myGame.getRollCount();
 				// Set up the page to prepare for the game.
@@ -381,6 +464,7 @@ public class GUIView extends JFrame {
 			else if (command.equals("roll")) {
 				// Display a new set of dice for the player and update their available
 				// rollCount.
+
 				rollDice();
 				// disable button if no more rolls left
 				if (myGame.getRollCount() == 0) {
@@ -407,13 +491,46 @@ public class GUIView extends JFrame {
 				// Pop up window for user to view possible Yahtzee scores.
 				String scoresString = getScoresString();
 				JTextArea scoreArea = new JTextArea(scoresString);
+				scoreArea.setEditable(false);
 				JOptionPane.showMessageDialog(null, scoreArea);
+			}
+			// Submit Hand Button
+			else if (command.equals("submit")) {
+				// If the user has not selected a category yet, they cannot submit their hand.
+				// Get the most recently selected item in the combo box.
+				String selected = (String) catOptions.getSelectedItem();
+				System.out.println("Just selected: " + selected);
+				if (selected.equals(null)) {
+					JTextArea warningArea = new JTextArea("Please select category before submitting hand");
+					warningArea.setEditable(false);
+					JOptionPane.showMessageDialog(null, warningArea);
+				}
+				// get the selected cat category
+				Category selectedCategory = Category.valueOf(selected);
+				// make the current player submit their Hand
+				boolean result = myGame.submitHand(selectedCategory);
+				// If the user was able to submit, continue game with next turn.
+				if (result == true) {
+					nextTurn();
+				}
+				// If the user cannot submit anymore, game is over.
+				else {
+					scorePage();
+				}
 			}
 			// Close the program.
 			else if (command.equals("exit")) {
 				System.exit(0);
 			}
 		}
+	}
+
+	public void nextTurn() {
+		this.playPage(myGame.getCurName(), myGame.getRollCount());
+		this.revalidate();
+		this.repaint();
+		rollButton.setEnabled(true);
+
 	}
 
 	private String getScoresString() {
@@ -435,7 +552,11 @@ public class GUIView extends JFrame {
 		String result = "";
 		for (Category cat : allCategories) {
 			// Add each category, followed by current player's score in that category.
-			result += cat.name() + " : ";
+			if (!Arrays.asList(myGame.getCurPlayerCategories()).contains(cat.name())) {
+				result += cat.name() + " (✓) : ";
+			} else {
+				result += cat.name() + " : ";
+			}
 			result += myGame.getCategoryScore(cat) + "\n";
 		}
 

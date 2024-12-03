@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class Game {
 	private int playerAmount;
@@ -57,7 +56,17 @@ public class Game {
 				// end of game
 				return false;
 			}
+			// make the player start a new turn
+			currentPlayerIdx = ((currentPlayerIdx + 1) % playerAmount);
+			curPlayer = players.get(currentPlayerIdx);
+			curPlayer.startNewTurn();
+			return true;
 		}
+		
+		// get the current player
+		curPlayer = players.get(currentPlayerIdx);
+		// make player submit their hand
+		curPlayer.submitHand(category);
 		// update current player to next player
 		currentPlayerIdx = ((currentPlayerIdx + 1) % playerAmount);
 		curPlayer = players.get(currentPlayerIdx);
@@ -94,6 +103,18 @@ public class Game {
 		return true;
 	}
 
+	public boolean addPlayer(CPU cpu) {
+		// can not add more then 4 players
+		if (players.size() > 4) {
+			return false;
+		}
+		// add CPU to list of players
+		players.add(cpu);
+		playerAmount++;
+		return true;
+
+	}
+
 	/*
 	 * This method returns the current player's name
 	 * 
@@ -102,6 +123,24 @@ public class Game {
 	public String getCurName() {
 		Player currPlayer = players.get(currentPlayerIdx);
 		return currPlayer.getName();
+	}
+
+	/*
+	 * This method return's the current player's available categories.
+	 * 
+	 * @return list of the player's unfilled categories based on name.
+	 */
+	public String[] getCurPlayerCategories() {
+		Player currPlayer = players.get(currentPlayerIdx);
+		// get the categories
+		List<Category> unfilledCategories = currPlayer.getUnfilledCategories();
+		// new String[] to hold categories
+		String result[] = new String[unfilledCategories.size()];
+		// add each categories to String[]
+		for (int i = 0; i < unfilledCategories.size(); i++) {
+			result[i] = unfilledCategories.get(i).name();
+		}
+		return result;
 	}
 
 	/*
@@ -150,6 +189,26 @@ public class Game {
 		Player currPlayer = players.get(currentPlayerIdx);
 		currPlayer.removeHold(dice);
 
+	}
+
+	/*
+	 * Helper method to reset currentPlayerIdx for iterating
+	 * through each player at the end of the game.
+	 * 
+	 * @pre newIdx is within the limits of 0 to playerAmount-1.
+	 * @post currentPlayerIdx is set to parameter.
+	 */
+	public void setCurrIdx(int newIdx) {
+		currentPlayerIdx = newIdx;
+	}
+
+	/*
+	 * Helper method to get the current player's total game score.
+	 * @return the current player's total score in the current game.
+	 */
+	public int getTotalScore() {
+		Player curPlayer = players.get(currentPlayerIdx);
+		return curPlayer.getTotalScore();
 	}
 
 }
