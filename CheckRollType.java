@@ -1,3 +1,13 @@
+/*
+ * a class with static methods used to check if a roll of die meets the criteria
+ * of certain scoring categories
+ *
+ * categories checked: three of a kind, four of a kind, full house, small straight,
+ * large straight, yahtzee
+ *
+ * @authors Garret W., John I., Dylan C. Jason B.
+ */
+
 import java.util.*;
 
 public class CheckRollType {
@@ -86,7 +96,7 @@ public class CheckRollType {
         int counter = 0;
 
         for (int i=0; i<dices.size()-1; i++) {
-            // next dice value is one more than current dice value  ->  increment tracker
+            // next dice value is one more than current dice value  ->  increment counter
             if (dices.get(i).getValue() + 1 == dices.get(i + 1).getValue()) {
                 counter++;
             }
@@ -94,12 +104,12 @@ public class CheckRollType {
             else if (dices.get(i + 1).getValue() == dices.get(i).getValue()) {
                 continue;
             }
-            // next dice value is more that current dice value + 1  ->  reset counter
+            // next dice value is more than current dice value + 1  ->  reset counter
             else {
                 counter = 0;
             }
 
-            // if counter gets to 3, have found for consecutive dice
+            // if counter gets to 3, have found four consecutive dice
             if (counter == 3) {
                 return true;
             }
