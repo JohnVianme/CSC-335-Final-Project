@@ -10,7 +10,7 @@ public class GUIView extends JFrame {
 	private JButton easyModebutton;
 	private JButton hardModebutton;
 
-	private static Game myGame = new Game();
+	private static Game myGame;
 	private JPanel panel;
 	private JLabel instructionLabel;
 	private JLabel playerNumLabel;
@@ -23,6 +23,7 @@ public class GUIView extends JFrame {
 
 	public GUIView() {
 		setUp();
+		myGame = new Game();
 	}
 
 	private void setUp() {
@@ -214,6 +215,9 @@ public class GUIView extends JFrame {
 		scoreArea.setSize(400, 200);
 		scoreArea.setEditable(false);
 		scoreArea.setBounds(150, 100, 500, 200);
+		// This is where we need to add the concatenated string of each player and their scores.
+		String scoreText = getScoreText();
+		scoreArea.setText(scoreText);
 		this.add(scoreArea);
 
 		this.setVisible(true);
@@ -221,6 +225,26 @@ public class GUIView extends JFrame {
 		this.revalidate();
 		this.repaint();
 
+	}
+
+	/*
+	 * Private helper method to retrieve every player's name along with their associated score.
+	 * 
+	 * @return concatenated string of every player and their score.
+	 */
+	private String getScoreText() {
+		// Start with an empty string.
+		String scoreText = "";
+		// Iterate through each player in the current game. Add name and current score to the string.
+		int playerCount = myGame.getPlayerAmount();
+		for (int i = 0; i < playerCount; i++) {
+			myGame.setCurrIdx(i);
+			String currName = myGame.getCurName();
+			int currScore = myGame.getTotalScore();
+			scoreText += currName + " ";
+			scoreText += currScore + " \n";
+		}
+		return scoreText;
 	}
 
 	/**
@@ -403,8 +427,6 @@ public class GUIView extends JFrame {
 			else if (command.equals("roll")) {
 				// Display a new set of dice for the player and update their available
 				// rollCount.
-				System.out.println("!!!!!!ROLL BUTTON PRESSED!!!!!!");
-				System.out.println("Action Lisiner amount = " + rollButton.getActionListeners().length);
 
 				rollDice();
 				// disable button if no more rolls left
@@ -450,11 +472,14 @@ public class GUIView extends JFrame {
 				Category selectedCategory = Category.valueOf(selected);
 				// make the current player submit thier Hand
 				boolean result = myGame.submitHand(selectedCategory);
-				if (result == false) {
-					System.out.println("Game is Over, Last player Roleld last Turn");
+				// If the user was able to submit, continue game with next turn.
+				if (result == true) {
+					nextTurn();
 				}
-				nextTurn();
-
+				// If the user cannot submit anymore, game is over.
+				else {
+					scorePage();
+				}
 			}
 			// Close the program.
 			else if (command.equals("exit")) {
