@@ -262,6 +262,7 @@ public class GUIView extends JFrame {
 		}
 		return scoreText;
 	}
+	
 
 	/**
 	 * When user clicks roll button, display new dice and update rollCountLabel.

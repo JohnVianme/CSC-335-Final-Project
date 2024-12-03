@@ -26,7 +26,7 @@ public class CPU extends Player {
 	 */
 	public Category getBestCategory() {
 		assert this.getRollCount() != 3;
-		// TODO 
+		
 		
 		return null;
 	}
@@ -42,7 +42,7 @@ public class CPU extends Player {
 	public Category getFirstCategory() {
 		assert this.getRollCount() != 3;
 
-		
+
 		return this.getUnfilledCategories().get(0);
 	}
 
