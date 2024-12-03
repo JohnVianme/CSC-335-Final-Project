@@ -42,7 +42,7 @@ public class CPU extends Player {
 	public Category getFirstCategory() {
 		assert this.getRollCount() != 3;
 
-		
+
 		return this.getUnfilledCategories().get(0);
 	}
 
