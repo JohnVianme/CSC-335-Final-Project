@@ -139,8 +139,8 @@ public class GUIView extends JFrame {
 		// if current player is Hard Mode CPU
 		if (myGame.getCurName().equals("HARD CPU")) {
 			HardCpuTurn();
-			
-		// if current player is Hard Mode CPU
+
+			// if current player is Hard Mode CPU
 		} else if (myGame.getCurName().equals("EASY CPU")) {
 			EasyCpuTurn();
 		} else {
@@ -228,7 +228,7 @@ public class GUIView extends JFrame {
 
 		// Create button to let user go to next player now that CPU is done.
 		JButton nextButton = new JButton("Next");
-		nextButton.setActionCommand("submit");
+		nextButton.setActionCommand("Next");
 		nextButton.addActionListener(new ButtonClickListener());
 		nextButton.setBounds(680, 700, 100, 50);
 		this.add(nextButton);
@@ -241,8 +241,7 @@ public class GUIView extends JFrame {
 
 		this.revalidate();
 		this.repaint();
-		
-		
+
 	}
 
 	/*
@@ -261,7 +260,6 @@ public class GUIView extends JFrame {
 		// Do not need to display the rollCount for the CPU.
 		rollCountLabel.setText("");
 
-		
 		// get the result of the roll
 		ArrayList<DiceEnum> curHand = myGame.getPlayerHand();
 
@@ -288,7 +286,7 @@ public class GUIView extends JFrame {
 
 		// Create button to let user go to next player now that CPU is done.
 		JButton nextButton = new JButton("Next");
-		nextButton.setActionCommand("submit");
+		nextButton.setActionCommand("Next");
 		nextButton.addActionListener(new ButtonClickListener());
 		nextButton.setBounds(680, 700, 100, 50);
 		this.add(nextButton);
@@ -444,6 +442,11 @@ public class GUIView extends JFrame {
 		if (catOptions != null) {
 			this.remove(catOptions);
 		}
+		String resultString = "Unfilled Cat: ";
+		for (int i = 0; i < unfilledCats.length; i++) {
+			resultString = unfilledCats[i] + " ";
+		}
+		System.out.println(resultString);
 		catOptions = new JComboBox<String>(unfilledCats);
 		catOptions.setBounds(340, 700, 100, 50);
 		catOptions.setEditable(false);
@@ -607,6 +610,38 @@ public class GUIView extends JFrame {
 				// Get the most recently selected item in the combo box.
 				String selected = (String) catOptions.getSelectedItem();
 				System.out.println("Just selected: " + selected);
+				if (selected.equals(null)) {
+					JTextArea warningArea = new JTextArea("Please select category before submitting hand");
+					warningArea.setEditable(false);
+					JOptionPane.showMessageDialog(null, warningArea);
+				}
+				// get the selected cat category
+				Category selectedCategory = Category.valueOf(selected);
+				// make the current player submit their Hand
+				boolean result = myGame.submitHand(selectedCategory);
+				// If the user was able to submit, continue game with next turn.
+				if (result == true) {
+					nextTurn();
+				}
+				// If the user cannot submit anymore, game is over.
+				else {
+					scorePage();
+				}
+			}
+			// Submit Hand Button
+			else if (command.equals("Next")) {
+				// If the user has not selected a category yet, they cannot submit their hand.
+				// Get the most recently selected item in the combo box.
+				// catOptions.setSelectedItem(e);
+				String selected = "";
+				if (myGame.getCurName().equals("HARD CPU")) {
+					selected = myGame.getCPUBestCat().name();
+
+				} else {
+					selected = myGame.getEasyCPUCat().name();
+
+				}
+				System.out.println("CPU selected: " + selected);
 				if (selected.equals(null)) {
 					JTextArea warningArea = new JTextArea("Please select category before submitting hand");
 					warningArea.setEditable(false);
