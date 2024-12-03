@@ -212,9 +212,9 @@ public class GUIView extends JFrame {
 
 		// Text Area to display results for each of the players.
 		JTextArea scoreArea = new JTextArea();
-		scoreArea.setSize(400, 200);
+		scoreArea.setSize(200, 100);
 		scoreArea.setEditable(false);
-		scoreArea.setBounds(150, 100, 500, 200);
+		scoreArea.setBounds(340, 150, 100, 200);
 		// This is where we need to add the concatenated string of each player and their scores.
 		String scoreText = getScoreText();
 		scoreArea.setText(scoreText);
@@ -229,20 +229,36 @@ public class GUIView extends JFrame {
 
 	/*
 	 * Private helper method to retrieve every player's name along with their associated score.
+	 * Add to string in order 
 	 * 
 	 * @return concatenated string of every player and their score.
 	 */
 	private String getScoreText() {
-		// Start with an empty string.
-		String scoreText = "";
+		// Create map to store each player and their score.
+		HashMap<Integer, String> scoreMap = new HashMap<>();
 		// Iterate through each player in the current game. Add name and current score to the string.
 		int playerCount = myGame.getPlayerAmount();
+		// Add each name/score pair to the map.
 		for (int i = 0; i < playerCount; i++) {
 			myGame.setCurrIdx(i);
-			String currName = myGame.getCurName();
 			int currScore = myGame.getTotalScore();
-			scoreText += currName + " ";
-			scoreText += currScore + " \n";
+			String currName = myGame.getCurName();
+			scoreMap.put(currScore, currName);
+			
+		}
+
+		// Get all of the total score keys and sort them.
+		List<Integer> scoreKeys = new ArrayList<>(scoreMap.keySet());
+		Collections.sort(scoreKeys);
+
+		// Add each of the players to the concatenated result string.
+		// In order of DESCENDING scores. (So player with highest score is at top).
+		// Start with an empty string.
+		String scoreText = "";
+		for (int i = scoreKeys.size() - 1; i >= 0; i--) {
+			int scoreNum = scoreKeys.get(i);
+			String playerName = scoreMap.get(scoreNum);
+			scoreText += playerName + ": " + scoreNum + "\n";
 		}
 		return scoreText;
 	}
@@ -471,7 +487,7 @@ public class GUIView extends JFrame {
 				}
 				// get the selected cat category
 				Category selectedCategory = Category.valueOf(selected);
-				// make the current player submit thier Hand
+				// make the current player submit their Hand
 				boolean result = myGame.submitHand(selectedCategory);
 				// If the user was able to submit, continue game with next turn.
 				if (result == true) {
