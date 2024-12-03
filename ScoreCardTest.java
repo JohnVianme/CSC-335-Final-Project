@@ -47,7 +47,6 @@ public class ScoreCardTest {
         // ensure scorecard ones category has correct score value saved
         assertEquals(4, scorecard.getCategoryScore(Category.ONES));
     }
-
     @Test
     public void fillCategoryTest_Ones_noOnes() {
         // make collection of 5 dice to mimic a roll
