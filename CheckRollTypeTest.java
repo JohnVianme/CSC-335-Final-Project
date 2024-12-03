@@ -227,4 +227,97 @@ public class CheckRollTypeTest {
         dice.add(three);
 
         // ensure roll is a small straight
-        assertTrue(CheckRollType.smallSt
+        assertTrue(CheckRollType.smallStraight(dice));
+    }
+
+    @Test
+    public void smallStraightTest_isSmallStraight_v3() {
+        // make collection of 5 dice to mimic a roll
+        dice.add(three);
+        dice.add(four);
+        dice.add(five);
+        dice.add(six);
+        dice.add(one);
+
+        // ensure roll is a small straight
+        assertTrue(CheckRollType.smallStraight(dice));
+    }
+
+    @Test
+    public void largeStraightTest_notLargeStraight_v1() {
+        // make collection of 5 dice to mimic a roll
+        dice.add(one);
+        dice.add(one);
+        dice.add(two);
+        dice.add(three);
+        dice.add(four);
+
+        // ensure roll is not a large straight
+        assertFalse(CheckRollType.largeStraight(dice));
+    }
+
+    @Test
+    public void largeStraightTest_notLargeStraight_v2() {
+        // make collection of 5 dice to mimic a roll
+        dice.add(one);
+        dice.add(two);
+        dice.add(three);
+        dice.add(four);
+        dice.add(four);
+
+        // ensure roll is not a large straight
+        assertFalse(CheckRollType.largeStraight(dice));
+    }
+
+    @Test
+    public void largeStraightTest_isLargeStraight_v1() {
+        // make collection of 5 dice to mimic a roll
+        dice.add(one);
+        dice.add(two);
+        dice.add(three);
+        dice.add(four);
+        dice.add(five);
+
+        // ensure roll is a large straight
+        assertTrue(CheckRollType.largeStraight(dice));
+    }
+
+    @Test
+    public void largeStraightTest_isLargeStraight_v2() {
+        // make collection of 5 dice to mimic a roll
+        dice.add(two);
+        dice.add(three);
+        dice.add(four);
+        dice.add(five);
+        dice.add(six);
+
+        // ensure roll is a large straight
+        assertTrue(CheckRollType.largeStraight(dice));
+    }
+
+    @Test
+    public void yahtzeeTest_notYahtzee_v1() {
+        // make collection of 5 dice to mimic a roll
+        dice.add(one);
+        dice.add(two);
+        dice.add(three);
+        dice.add(four);
+        dice.add(five);
+
+        // ensure roll is not a Yahtzee
+        assertFalse(CheckRollType.yahtzee(dice));
+    }
+
+    @Test
+    public void yahtzeeTest_isYahtzee_v1() {
+        // make collection of 5 dice to mimic a roll
+        dice.add(six);
+        dice.add(six);
+        dice.add(six);
+        dice.add(six);
+        dice.add(six);
+
+        // ensure roll is a Yahtzee
+        assertTrue(CheckRollType.yahtzee(dice));
+    }
+}
