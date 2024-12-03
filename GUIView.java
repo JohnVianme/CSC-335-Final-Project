@@ -138,11 +138,11 @@ public class GUIView extends JFrame {
 
 		// if current player is Hard Mode CPU
 		if (myGame.getCurName().equals("HARD CPU")) {
-			HardCcpuTurn();
+			HardCpuTurn();
 			
 		// if current player is Hard Mode CPU
 		} else if (myGame.getCurName().equals("EASY CPU")) {
-			EasyCcpuTurn();
+			EasyCpuTurn();
 		} else {
 			// Display the "roll" button, which will indicate we need a new set of dice
 			// displayed and decrement rollCount.
@@ -187,15 +187,125 @@ public class GUIView extends JFrame {
 
 	}
 
-	private void HardCcpuTurn() {
-		boolean attemptRoll = myGame.currRollDice();
+	/*
+	 * Helper method to display the Hard CPU's roll and selected category.
+	 */
+	private void HardCpuTurn() {
+		myGame.currRollDice();
+		// Create a panel where the dice will be displayed. Do not need to fill it yet,
+		// since user has not rolled.
+		dicePanel = new JPanel();
+		dicePanel.setBackground(Color.RED);
+		dicePanel.setBounds(100, 350, 600, 100);
+		dicePanel.setLayout(new GridLayout(1, 5, 15, 0));
+		this.add(dicePanel);
+
+		// Do not need to display the rollCount for the CPU.
+		rollCountLabel.setText("");
+
+		// Have Easy CPU roll their dice.
+		boolean ableToRoll = myGame.currRollDice();
+		// get the result of the roll
+		ArrayList<DiceEnum> curHand = myGame.getPlayerHand();
+
+		// Retrieve five random dice from the model, and add each to the panel.
+		for (int i = 0; i < 5; i++) {
+			// Update later with functionality.
+			JLabel diceLabel = new JLabel();
+			// set diceLabel name
+			diceLabel.setName(curHand.get(i).name());
+			// get name of dice
+			String diceName = curHand.get(i).name().toLowerCase() + ".png";
+			// get icon for the dice
+			ImageIcon DiceIcon = new ImageIcon(
+					new ImageIcon(diceName).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+			diceLabel.setIcon(DiceIcon);
+			giveLabelClick(diceLabel, myGame.getPlayerHand());
+
+			dicePanel.add(diceLabel);
+
+		}
+
+		// Get the first category available, since this is the EASY CPU.
+		Category cpuCategory = myGame.getCPUBestCat();
+
+		// Create button to let user go to next player now that CPU is done.
+		JButton nextButton = new JButton("Next");
+		nextButton.setActionCommand("submit");
+		nextButton.addActionListener(new ButtonClickListener());
+		nextButton.setBounds(680, 700, 100, 50);
+		this.add(nextButton);
+
+		// Label to show the Easy CPU's selected category.
+		// Add label above dropdown menu of categories.
+		JLabel catLabel = new JLabel("HARD CPU selected category: " + cpuCategory.name());
+		catLabel.setBounds(250, 670, 400, 50);
+		this.add(catLabel);
+
+		this.revalidate();
+		this.repaint();
 		
 		
 	}
 
-	private void EasyCcpuTurn() {
+	/*
+	 * Helper method to display the Easy CPU's roll and selected category.
+	 */
+	private void EasyCpuTurn() {
 		myGame.currRollDice();
-		
+		// Create a panel where the dice will be displayed. Do not need to fill it yet,
+		// since user has not rolled.
+		dicePanel = new JPanel();
+		dicePanel.setBackground(Color.RED);
+		dicePanel.setBounds(100, 350, 600, 100);
+		dicePanel.setLayout(new GridLayout(1, 5, 15, 0));
+		this.add(dicePanel);
+
+		// Do not need to display the rollCount for the CPU.
+		rollCountLabel.setText("");
+
+		// Have Easy CPU roll their dice.
+		boolean ableToRoll = myGame.currRollDice();
+		// get the result of the roll
+		ArrayList<DiceEnum> curHand = myGame.getPlayerHand();
+
+		// Retrieve five random dice from the model, and add each to the panel.
+		for (int i = 0; i < 5; i++) {
+			// Update later with functionality.
+			JLabel diceLabel = new JLabel();
+			// set diceLabel name
+			diceLabel.setName(curHand.get(i).name());
+			// get name of dice
+			String diceName = curHand.get(i).name().toLowerCase() + ".png";
+			// get icon for the dice
+			ImageIcon DiceIcon = new ImageIcon(
+					new ImageIcon(diceName).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+			diceLabel.setIcon(DiceIcon);
+			giveLabelClick(diceLabel, myGame.getPlayerHand());
+
+			dicePanel.add(diceLabel);
+
+		}
+
+		// Get the first category available, since this is the EASY CPU.
+		Category cpuCategory = myGame.getEasyCPUCat();
+
+		// Create button to let user go to next player now that CPU is done.
+		JButton nextButton = new JButton("Next");
+		nextButton.setActionCommand("submit");
+		nextButton.addActionListener(new ButtonClickListener());
+		nextButton.setBounds(680, 700, 100, 50);
+		this.add(nextButton);
+
+		// Label to show the Easy CPU's selected category.
+		// Add label above dropdown menu of categories.
+		JLabel catLabel = new JLabel("EASY CPU selected category: " + cpuCategory.name());
+		catLabel.setBounds(250, 670, 400, 50);
+		this.add(catLabel);
+
+		this.revalidate();
+		this.repaint();
+
 	}
 
 	/**
