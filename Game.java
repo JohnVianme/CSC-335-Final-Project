@@ -191,4 +191,24 @@ public class Game {
 
 	}
 
+	/*
+	 * Helper method to reset currentPlayerIdx for iterating
+	 * through each player at the end of the game.
+	 * 
+	 * @pre newIdx is within the limits of 0 to playerAmount-1.
+	 * @post currentPlayerIdx is set to parameter.
+	 */
+	public void setCurrIdx(int newIdx) {
+		currentPlayerIdx = newIdx;
+	}
+
+	/*
+	 * Helper method to get the current player's total game score.
+	 * @return the current player's total score in the current game.
+	 */
+	public int getTotalScore() {
+		Player curPlayer = players.get(currentPlayerIdx);
+		return curPlayer.getTotalScore();
+	}
+
 }
