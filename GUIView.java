@@ -175,7 +175,7 @@ public class GUIView extends JFrame {
 			this.add(currentLabel);
 
 			heldPanel = new JPanel();
-			heldPanel.setBackground(Color.GREEN);
+			heldPanel.setBackground(Color.blue);
 			heldPanel.setBounds(100, 460, 600, 100);
 			heldPanel.setLayout(new GridLayout(1, 5, 15, 0));
 			this.add(heldPanel);
@@ -183,7 +183,7 @@ public class GUIView extends JFrame {
 			// Create a label to help user recognize the current dice they are holding.
 			JLabel heldLabel = new JLabel("Dice Held: ");
 			heldLabel.setBounds(10, 470, 100, 100);
-			heldLabel.setForeground(Color.GREEN);
+			heldLabel.setForeground(Color.blue);
 			this.add(heldLabel);
 
 			this.revalidate();
