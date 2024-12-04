@@ -221,12 +221,24 @@ public class Game {
 	/*
 	 * Method for return the CPU's best cat to fill
 	 * 
-	 * @pre curPlayer most be a CPU player
+	 * @@pre the current player is a CPU
+	 *
+	 * @return the cpu's best hand to score
 	 */
 	public Category getCPUBestCat() {
 		Player curPlayer = players.get(currentPlayerIdx);
 		assert curPlayer instanceof CPU;
 		return ((CPU) curPlayer).getBestCategory();
+	}
+
+	/*
+	 * Method for return the current players grand total points
+	 * 
+	 * @return the grad total for current player
+	 */
+	public int curGradTotal() {
+		Player curPlayer = players.get(currentPlayerIdx);
+		return curPlayer.getTotalScore();
 	}
 
 	/*
