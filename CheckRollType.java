@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+
 /*
  * a class with static methods used to check if a roll of die meets the criteria
  * of certain scoring categories
@@ -7,10 +11,6 @@
  *
  * @authors Garret W., John I., Dylan C. Jason B.
  */
-
-import static org.junit.jupiter.api.Assertions.assertAll;
-
-import java.util.*;
 
 public class CheckRollType {
 

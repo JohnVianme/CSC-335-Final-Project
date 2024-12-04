@@ -1,6 +1,11 @@
 import java.util.HashMap;
 import java.util.List;
 
+/*
+ * 
+ * @authors Garret W., John I., Dylan C. Jason B.
+ */
+
 public class CPU extends Player {
 
 	private final CpuMode mode;
