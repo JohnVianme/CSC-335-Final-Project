@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 import java.util.Collections;
 
+/*
+ * 
+ * @authors Garret W., John I., Dylan C. Jason B.
+ */
+
 public final class Dice {
 	private static final ArrayList<DiceEnum> diceList = new ArrayList<DiceEnum>();
 

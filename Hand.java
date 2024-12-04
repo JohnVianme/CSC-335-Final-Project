@@ -1,4 +1,8 @@
 import java.util.ArrayList;
+/*
+ * 
+ * @authors Garret W., John I., Dylan C. Jason B.
+ */
 
 public final class Hand {
 	//

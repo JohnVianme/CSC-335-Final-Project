@@ -1,6 +1,9 @@
-import static org.junit.jupiter.api.Assertions.assertAll;
-
 import java.util.*;
+
+/*
+ * 
+ * @authors Garret W., John I., Dylan C. Jason B.
+ */
 
 public class Game {
 	private int playerAmount;

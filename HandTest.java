@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+/*
+ * 
+ * @authors Garret W., John I., Dylan C. Jason B.
+ */
+
 class HandTest {
 
 	@Test
