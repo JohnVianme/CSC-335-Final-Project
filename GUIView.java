@@ -88,7 +88,7 @@ public class GUIView extends JFrame {
 		panel.add(exitButton);
 
 		// Also add an intruction button.
-		JButton instructionButton = new JButton("instruction");
+		JButton instructionButton = new JButton("Instructions");
 		instructionButton.setActionCommand("instruction");
 		instructionButton.addActionListener(new ButtonClickListener());
 		instructionButton.setBounds(650, 80, 100, 50);
@@ -149,11 +149,11 @@ public class GUIView extends JFrame {
 
 		// if current player is Hard Mode CPU
 		if (myGame.getCurName().equals("HARD CPU")) {
-			HardCpuTurn();
+			hardCpuTurn();
 
 			// if current player is Hard Mode CPU
 		} else if (myGame.getCurName().equals("EASY CPU")) {
-			EasyCpuTurn();
+			easyCpuTurn();
 		} else {
 			// Display the "roll" button, which will indicate we need a new set of dice
 			// displayed and decrement rollCount.
@@ -201,7 +201,7 @@ public class GUIView extends JFrame {
 	/*
 	 * Helper method to display the Hard CPU's roll and selected category.
 	 */
-	private void HardCpuTurn() {
+	private void hardCpuTurn() {
 		myGame.currRollDice();
 		// Create a panel where the dice will be displayed. Do not need to fill it yet,
 		// since user has not rolled.
@@ -213,7 +213,6 @@ public class GUIView extends JFrame {
 
 		// Do not need to display the rollCount for the CPU.
 		rollCountLabel.setText("");
-
 		// get the result of the roll
 		ArrayList<DiceEnum> curHand = myGame.getPlayerHand();
 
@@ -258,7 +257,7 @@ public class GUIView extends JFrame {
 	/*
 	 * Helper method to display the Easy CPU's roll and selected category.
 	 */
-	private void EasyCpuTurn() {
+	private void easyCpuTurn() {
 		myGame.currRollDice();
 		// Create a panel where the dice will be displayed. Do not need to fill it yet,
 		// since user has not rolled.
@@ -675,7 +674,7 @@ public class GUIView extends JFrame {
 			else if (command.equals("exit")) {
 				System.exit(0);
 			}
-			// Close the program.
+			// Display game instructions to the user.
 			else if (command.equals("instruction")) {
 				String instructionsString = "1. Each player will have three opportunities to roll their five dice.\n\n"
 						+ "2. After each roll, player can choose to hold (or unhold) any number of dice by directly clicking on the dice image.\n \n"
