@@ -19,13 +19,6 @@ public class CPU extends Player {
 	}
 
 	/*
-	 * Method for getting the cpu mode
-	 */
-	public CpuMode getCpuMode() {
-		return mode;
-	}
-
-	/*
 	 * This the best Category for the cpu to fill, will be used by super submit hand
 	 * 
 	 * @pre rollCount != 3
