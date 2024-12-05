@@ -6,6 +6,11 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+/*
+ * 
+ * @authors Garret W., John I., Dylan C. Jason B.
+ */
+
 class PlayerTest {
 	
 	private Player player1 = new Player("Player 1");

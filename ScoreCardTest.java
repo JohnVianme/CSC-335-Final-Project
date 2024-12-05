@@ -30,6 +30,21 @@ public class ScoreCardTest {
     public void getCategoryScoreTest_noScore() {
         // ensure scorecard category is null when no score has been saved
         assertNull(scorecard.getCategoryScore(Category.ONES));
+        assertNull(scorecard.getCategoryScore(Category.TWOS));
+        assertNull(scorecard.getCategoryScore(Category.THREES));
+        assertNull(scorecard.getCategoryScore(Category.FOURS));
+        assertNull(scorecard.getCategoryScore(Category.FIVES));
+        assertNull(scorecard.getCategoryScore(Category.SIXES));
+        assertNull(scorecard.getCategoryScore(Category.THREEOFKIND));
+        assertNull(scorecard.getCategoryScore(Category.FOUROFKIND));
+        assertNull(scorecard.getCategoryScore(Category.FULLHOUSE));
+        assertNull(scorecard.getCategoryScore(Category.SMALLSTRAIGHT));
+        assertNull(scorecard.getCategoryScore(Category.LARGESTRAIGHT));
+        assertNull(scorecard.getCategoryScore(Category.YAHTZEE));
+        assertNull(scorecard.getCategoryScore(Category.CHANCE));
+
+        // bonus category is initialized with 0 to be omitted from unfilled categories getter
+        assertEquals(0, scorecard.getCategoryScore(Category.BONUS));
     }
 
     @Test
@@ -521,6 +536,7 @@ public class ScoreCardTest {
         roll6.add(two);
         scorecard.fillCategory(roll6, Category.SIXES);
 
+        // checks if meets bonus criteria and applies bonus if met
         scorecard.checkForBonus();
 
         assertEquals(35, scorecard.getCategoryScore(Category.BONUS));
@@ -533,6 +549,7 @@ public class ScoreCardTest {
 
     @Test
     public void getUnfilledCategoriesTest_someFilled() {
+        // make collection of 5 dice to mimic a roll
         dice.add(one);
         dice.add(two);
         dice.add(three);

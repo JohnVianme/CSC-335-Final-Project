@@ -1,6 +1,11 @@
 import java.util.HashMap;
 import java.util.List;
 
+/*
+ * 
+ * @authors Garret W., John I., Dylan C. Jason B.
+ */
+
 public class CPU extends Player {
 
 	private final CpuMode mode;
@@ -90,9 +95,9 @@ public class CPU extends Player {
 			}
 		}
 		int maxValue = 0;
-		Category maxCategory = Category.CHANCE;
+		Category maxCategory = unfilled.get(0);
 		// for each category
-		for (Category cat : scores.keySet()) {
+		for (Category cat : unfilled) {
 			// get the score
 			int aScore = scores.get(cat);
 			// if score is bigger the maxValues
@@ -103,6 +108,7 @@ public class CPU extends Player {
 
 			}
 		}
+
 		return maxCategory;
 	}
 

@@ -1,6 +1,10 @@
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+/*
+ * 
+ * @authors Garret W., John I., Dylan C. Jason B.
+ */
 
 class DiceTest {
 
