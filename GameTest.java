@@ -4,6 +4,8 @@
  * @authors Garret W., John I., Dylan C., Jason B.
  */
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import org.junit.Test;
 
 public class GameTest {
@@ -17,8 +19,86 @@ public class GameTest {
         game.addPlayer(new CPU("CPU", CpuMode.EASY));
     }
 
-    @Test
-    public void getPlayerHandTest() {
+	@Test
+	final void testGetRollCount() {
+		fail("Not yet implemented"); // TODO
+	}
 
-    }
+	@Test
+	final void testGetPlayerAmount() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testSubmitHand() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testAddPlayerString() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testAddPlayerCPU() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testGetCurName() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testGetCurPlayerCategories() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testGetCategoryScore() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testCurrRollDice() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testCurSetHold() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testCurRemoveHold() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testSetCurrIdx() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testGetTotalScore() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testGetCPUBestCat() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testCurGradTotal() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	final void testGetEasyCPUCat() {
+		fail("Not yet implemented"); // TODO
+	}
+    
+    
+    
 }
