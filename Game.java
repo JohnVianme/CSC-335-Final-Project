@@ -149,16 +149,6 @@ public class Game {
 	}
 
 	/*
-	 * This method returns the copy of the current player's ScoreCard
-	 * 
-	 * @return copy of the plays ScoreCard
-	 */
-	public HashMap<Category, Integer> getCurCard() {
-		Player currPlayer = players.get(currentPlayerIdx);
-		return currPlayer.getScoreCard();
-	}
-
-	/*
 	 * This method return the players for a spacific category
 	 * 
 	 * @param category -a category
