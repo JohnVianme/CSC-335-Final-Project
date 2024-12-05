@@ -407,7 +407,7 @@ public class GUIView extends JFrame {
 		// Get rid of existing dice. (If any).
 		dicePanel.removeAll();
 		// make the player roll their dice
-		boolean ableToRoll = myGame.currRollDice();
+		myGame.currRollDice();
 		// get the result of the roll
 		ArrayList<DiceEnum> curHand = myGame.getPlayerHand();
 		String result = "Just rolled: ";
