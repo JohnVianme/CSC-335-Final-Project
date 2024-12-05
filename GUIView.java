@@ -20,7 +20,6 @@ public class GUIView extends JFrame {
 	private JLabel instructionLabel;
 	private JLabel playerNumLabel;
 	private JLabel rollCountLabel;
-	private JLabel scoreLabel;
 	private JPanel dicePanel;
 	private JButton rollButton;
 	private JPanel heldPanel;
@@ -87,6 +86,13 @@ public class GUIView extends JFrame {
 		exitButton.addActionListener(new ButtonClickListener());
 		exitButton.setBounds(650, 25, 100, 50);
 		panel.add(exitButton);
+
+		// Also add an intruction button.
+		JButton instructionButton = new JButton("instruction");
+		instructionButton.setActionCommand("instruction");
+		instructionButton.addActionListener(new ButtonClickListener());
+		instructionButton.setBounds(650, 80, 100, 50);
+		panel.add(instructionButton);
 
 		// Also add cpu buttons
 		this.easyModebutton = new JButton("Easy Mode");
@@ -669,6 +675,24 @@ public class GUIView extends JFrame {
 			else if (command.equals("exit")) {
 				System.exit(0);
 			}
+			// Close the program.
+			else if (command.equals("instruction")) {
+				String instructionsString = "1. Each player will have three opportunities to roll their five dice.\n\n"
+						+ "2. After each roll, player can choose to hold (or unhold) any number of dice by directly clicking on the dice image.\n \n"
+						+ "3. Once player has a hand they are happy with or is out of rolls, they select an unfilled category from  \n"
+						+ "    the dropdown menu and submit the hand. (See categories below)*.\n \n"
+						+ "4. PRO TIP Feel free to check your filled categories and points during your turn at any time by clicking the\n"
+						+ "    \"Score Card\" button in the bottom left-hand corner!\n \n"
+						+ "5. Once each player (or CPU) has filled their categories, they will be taken to the score page to see the leader\n"
+						+ "    board from the game with applied bonus points if any. Players will be displayed in order from most to least points won.\n \n"
+						+ "6. You will now have the option to play another game. If YES selected, repeat steps.\n \n"
+						+ "7. Have fun, and good luck!\n" + "\n*Yahtzee categories include: \n"
+						+ "Upper Section (Ones, Twos, Threes, Fours, Fives, Sixes)\n"
+						+ "Lower Section (Three of a Kind, Four of a Kind, Full House, Small Straight, Large Straight, Yahtzee, Chance)\n \n"
+						+ "\n" + "";
+				JOptionPane.showMessageDialog(null, instructionsString);
+
+			}
 		}
 	}
 
@@ -706,8 +730,8 @@ public class GUIView extends JFrame {
 			}
 			result += myGame.getCategoryScore(cat) + "\n";
 		}
-		// add the current players grade total 
-		result += "---------------\n"+ myGame.getCurName() + "'s Total: " + myGame.curGradTotal();
+		// add the current players grade total
+		result += "---------------\n" + myGame.getCurName() + "'s Total: " + myGame.curGradTotal();
 
 		return result;
 
