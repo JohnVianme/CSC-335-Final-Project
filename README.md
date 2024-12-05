@@ -13,7 +13,7 @@ To play the game, complete the following steps:
 - After each roll, player can choose to hold any number of dice by directly clicking on the dice image.
 - Once player has a hand they are happy with or is out of rolls, they select an unfilled category from the dropdown menu and submit the hand. (See categories below)*.
 - *PRO TIP* Feel free to check your filled categories and points during your turn at any time by clicking the "Score Card" button in the bottom left-hand corner!
-- Once each player (or CPU) has filled their categories, they will be taken to the score page to see the leader board from the past game. Players will be displayed in order from most to least points won.
+- Once each player (or CPU) has filled their categories, they will be taken to the score page to see the leader board from the game with applied bonus points if any. Players will be displayed in order from most to least points won.
 - You will now have the option to play another game. If YES selected, repeat steps.
 - Have fun, and good luck!
 
