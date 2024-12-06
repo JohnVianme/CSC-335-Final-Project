@@ -11,6 +11,7 @@
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
@@ -22,90 +23,90 @@ public class GameTest {
 
 	// instance of a Game
 	private Game game = new Game();
-  
-    // put a players into the game
-    public void createGame() {
-        game.addPlayer("player1");
-        game.addPlayer("player2");
-    }
 
-    @Test
-    public void testGetRollCount() {
-        // add 2 players to game
-        createGame();
+	// put a players into the game
+	public void createGame() {
+		game.addPlayer("player1");
+		game.addPlayer("player2");
+	}
 
-        // ensure roll counts are working correctly
-        for (int i=3; i>0; i--) {
-            assertEquals(i, game.getRollCount());
-            game.currRollDice();
-            game.setCurrIdx(1);
-            assertEquals(i, game.getRollCount());
-            game.currRollDice();
-            game.setCurrIdx(0);
-        }
-    }
+	@Test
+	public void testGetRollCount() {
+		// add 2 players to game
+		createGame();
 
-    @Test
-    public void testGetPlayerAmount() {
-        // add 2 players to game
-        createGame();
+		// ensure roll counts are working correctly
+		for (int i = 3; i > 0; i--) {
+			assertEquals(i, game.getRollCount());
+			game.currRollDice();
+			game.setCurrIdx(1);
+			assertEquals(i, game.getRollCount());
+			game.currRollDice();
+			game.setCurrIdx(0);
+		}
+	}
 
-        // ensure the two players are being tracked
-        assertEquals(2, game.getPlayerAmount());
-    }
+	@Test
+	public void testGetPlayerAmount() {
+		// add 2 players to game
+		createGame();
 
-    @Test
-    public void testSubmitHand() {
-        // add 2 players to game
-        createGame();
+		// ensure the two players are being tracked
+		assertEquals(2, game.getPlayerAmount());
+	}
 
-        // ensure players can submit hands for all their categories
-        for (int i=0; i < 26; i++) {
-            game.currRollDice();
-            String[] catNames = game.getCurPlayerCategories();
-            assert catNames.length > 0;
-            Category cat = Category.valueOf(catNames[0]);
+	@Test
+	public void testSubmitHand() {
+		// add 2 players to game
+		createGame();
 
-            if (i == 25) {
-                assertFalse(game.submitHand(cat));
-            } else {
-                assertTrue(game.submitHand(cat));
-            }
-        }
+		// ensure players can submit hands for all their categories
+		for (int i = 0; i < 26; i++) {
+			game.currRollDice();
+			String[] catNames = game.getCurPlayerCategories();
+			assert catNames.length > 0;
+			Category cat = Category.valueOf(catNames[0]);
 
-        // ensure no more categories are left to be filled in player 1
-        assertEquals(0, game.getCurPlayerCategories().length);
+			if (i == 25) {
+				assertFalse(game.submitHand(cat));
+			} else {
+				assertTrue(game.submitHand(cat));
+			}
+		}
 
-        // go to next player
-        game.setCurrIdx(0);
+		// ensure no more categories are left to be filled in player 1
+		assertEquals(0, game.getCurPlayerCategories().length);
 
-        // ensure no more categories are left to be filled in player 2
-        assertEquals(0, game.getCurPlayerCategories().length);
-    }
+		// go to next player
+		game.setCurrIdx(0);
 
-    @Test
-    public void testAddPlayerString() {
-        // add 2 players to game
-        createGame();
+		// ensure no more categories are left to be filled in player 2
+		assertEquals(0, game.getCurPlayerCategories().length);
+	}
 
-        // add a player
-        game.addPlayer("player3");
+	@Test
+	public void testAddPlayerString() {
+		// add 2 players to game
+		createGame();
 
-        // ensure there are now 3 players
-        assertEquals(3, game.getPlayerAmount());
-    }
+		// add a player
+		game.addPlayer("player3");
 
-    @Test
-    public void testAddPlayerCPU() {
-        // add 2 players to game
-        createGame();
+		// ensure there are now 3 players
+		assertEquals(3, game.getPlayerAmount());
+	}
 
-        // add a CPU
-        game.addPlayer(new CPU("CPU1", CpuMode.EASY));
+	@Test
+	public void testAddPlayerCPU() {
+		// add 2 players to game
+		createGame();
 
-        // ensure there is another player in the game
-        assertEquals(3, game.getPlayerAmount());
-    }
+		// add a CPU
+		game.addPlayer(new CPU("CPU1", CpuMode.EASY));
+
+		// ensure there is another player in the game
+		assertEquals(3, game.getPlayerAmount());
+	}
 
 	@Test
 	public void testGetCurName() {
@@ -138,6 +139,11 @@ public class GameTest {
 		// make sure player 2 first category is not same as prev
 		game.setCurrIdx(1);
 		assertFalse(getFirstCat(game) == p1cat);
+	}
+
+	private Category getFirstCat(Game game2) {
+		String nameString = game2.getCurPlayerCategories()[0];
+		return Category.valueOf(nameString);
 	}
 
 	@Test
@@ -229,48 +235,51 @@ public class GameTest {
 		assertEquals("Player 2", game.getCurName());
 
 	}
-  
-      @Test
-    public void testGetCPUBestCat() {
-        // add 2 players to game
-        createGame();
 
-        // add a hard CPU to the game
-        game.addPlayer(new CPU("CPU1", CpuMode.HARD));
+	@Test
+	public void testGetCPUBestCat() {
+		// add 2 players to game
+		createGame();
 
-        // set current player index to CPU
-        game.setCurrIdx(2);
+		// add a hard CPU to the game
+		game.addPlayer(new CPU("CPU1", CpuMode.HARD));
 
-        // CPU roll dice
-        game.currRollDice();
+		// set current player index to CPU
+		game.setCurrIdx(2);
 
-        // get CPU best category
-        Category bestCat = game.getCPUBestCat();
+		// CPU roll dice
+		game.currRollDice();
 
-        // submit
-        game.submitHand(bestCat);
+		// get CPU best category
+		Category bestCat = game.getCPUBestCat();
 
-        // ensure the CPUs best category is not null (null is place holder in scorecard hashmap)
-        assertNotNull(game.getCategoryScore(bestCat));
-    }
-  
-    @Test
-    public void testGetEasyCPUCat() {
-        // add 2 players to game
-        createGame();
+		// submit
+		game.submitHand(bestCat);
 
-        // add an easy CPU to the game
-        game.addPlayer(new CPU("CPU1", CpuMode.EASY));
+		// ensure the CPUs best category is not null (null is place holder in scorecard
+		// hashmap)
+		assertNotNull(game.getCategoryScore(bestCat));
+	}
 
-        // set the player index to CPU
-        game.setCurrIdx(2);
+	@Test
+	public void testGetEasyCPUCat() {
+		// add 2 players to game
+		createGame();
 
-        // CPU roll dice
-        game.currRollDice();
+		// add an easy CPU to the game
+		game.addPlayer(new CPU("CPU1", CpuMode.EASY));
 
-        // get the first unfilled category from the CPU and ensure its the same one picked by getEasyCPUCat()
-        assertEquals(game.getCurPlayerCategories()[0], game.getEasyCPUCat().toString());
-    }
+		// set the player index to CPU
+		game.setCurrIdx(2);
+
+		// CPU roll dice
+		game.currRollDice();
+
+		// get the first unfilled category from the CPU and ensure its the same one
+		// picked by getEasyCPUCat()
+		assertEquals(game.getCurPlayerCategories()[0], game.getEasyCPUCat().toString());
+	}
+
 	@Test
 	public void getTotalScore() {
 		createGame();
@@ -292,4 +301,4 @@ public class GameTest {
 		}
 
 	}
-  
+}
