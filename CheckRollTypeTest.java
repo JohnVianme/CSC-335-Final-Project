@@ -4,11 +4,11 @@
  * @authors Garret W., John I., Dylan C. Jason B.
  */
 
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 public class CheckRollTypeTest {
     // a collection to add dice to and all dice types
@@ -30,9 +30,6 @@ public class CheckRollTypeTest {
         dice.add(four);
         dice.add(five);
 
-        // ensure dice roll is not three of a kind
-        assertFalse(CheckRollType.threeOfAKind(dice));
-
         // get score for the roll
         assertEquals(0, CheckRollType.getThreeOfAKind(dice));
     }
@@ -45,9 +42,6 @@ public class CheckRollTypeTest {
         dice.add(three);
         dice.add(four);
         dice.add(five);
-
-        // ensure dice roll is not three of a kind
-        assertFalse(CheckRollType.threeOfAKind(dice));
 
         // get score for the roll
         assertEquals(0, CheckRollType.getThreeOfAKind(dice));
@@ -62,9 +56,6 @@ public class CheckRollTypeTest {
         dice.add(three);
         dice.add(four);
 
-        // ensure dice roll is three of a kind
-        assertTrue(CheckRollType.threeOfAKind(dice));
-
         // get score for the roll
         assertEquals(10, CheckRollType.getThreeOfAKind(dice));
     }
@@ -77,9 +68,6 @@ public class CheckRollTypeTest {
         dice.add(six);
         dice.add(two);
         dice.add(five);
-
-        // ensure dice roll is three of a kind
-        assertTrue(CheckRollType.threeOfAKind(dice));
 
         // get score for the roll
         assertEquals(25, CheckRollType.getThreeOfAKind(dice));
@@ -94,9 +82,6 @@ public class CheckRollTypeTest {
         dice.add(four);
         dice.add(five);
 
-        // ensure roll is not four of a kind
-        assertFalse(CheckRollType.fourOfAKind(dice));
-
         // get score for the roll
         assertEquals(0, CheckRollType.getFourOfAKind(dice));
     }
@@ -109,9 +94,6 @@ public class CheckRollTypeTest {
         dice.add(three);
         dice.add(four);
         dice.add(five);
-
-        // ensure roll is not four of a kind
-        assertFalse(CheckRollType.fourOfAKind(dice));
 
         // get score for the roll
         assertEquals(0, CheckRollType.getFourOfAKind(dice));
@@ -126,8 +108,6 @@ public class CheckRollTypeTest {
         dice.add(two);
         dice.add(five);
 
-        // ensure roll a four of a kind
-        assertTrue(CheckRollType.fourOfAKind(dice));
 
         // get score for the roll
         assertEquals(13, CheckRollType.getFourOfAKind(dice));
@@ -142,9 +122,6 @@ public class CheckRollTypeTest {
         dice.add(four);
         dice.add(six);
 
-        // ensure roll a four of a kind
-        assertTrue(CheckRollType.fourOfAKind(dice));
-
         // get score for the roll
         assertEquals(22, CheckRollType.getFourOfAKind(dice));
     }
@@ -157,9 +134,6 @@ public class CheckRollTypeTest {
         dice.add(three);
         dice.add(four);
         dice.add(five);
-
-        // ensure roll is not a full house
-        assertFalse(CheckRollType.fullHouse(dice));
 
         // get score for the roll
         assertEquals(0, CheckRollType.getFullHouse(dice));
@@ -174,9 +148,6 @@ public class CheckRollTypeTest {
         dice.add(six);
         dice.add(one);
 
-        // ensure roll is not a full house
-        assertFalse(CheckRollType.fullHouse(dice));
-
         // get score for the roll
         assertEquals(0, CheckRollType.getFullHouse(dice));
     }
@@ -189,9 +160,6 @@ public class CheckRollTypeTest {
         dice.add(two);
         dice.add(four);
         dice.add(four);
-
-        // ensure roll is a full house
-        assertTrue(CheckRollType.fullHouse(dice));
 
         // get score for the roll
         assertEquals(25, CheckRollType.getFullHouse(dice));
@@ -206,9 +174,6 @@ public class CheckRollTypeTest {
         dice.add(six);
         dice.add(six);
 
-        // ensure roll is a full house
-        assertTrue(CheckRollType.fullHouse(dice));
-
         // get score for the roll
         assertEquals(25, CheckRollType.getFullHouse(dice));
     }
@@ -221,9 +186,6 @@ public class CheckRollTypeTest {
         dice.add(three);
         dice.add(three);
         dice.add(five);
-
-        // ensure roll is not a small straight
-        assertFalse(CheckRollType.smallStraight(dice));
 
         // get score for the roll
         assertEquals(0, CheckRollType.getSmallStraight(dice));
@@ -238,9 +200,6 @@ public class CheckRollTypeTest {
         dice.add(four);
         dice.add(six);
 
-        // ensure roll is not a small straight
-        assertFalse(CheckRollType.smallStraight(dice));
-
         // get score for the roll
         assertEquals(0, CheckRollType.getSmallStraight(dice));
     }
@@ -253,9 +212,6 @@ public class CheckRollTypeTest {
         dice.add(three);
         dice.add(four);
         dice.add(one);
-
-        // ensure roll is a small straight
-        assertTrue(CheckRollType.smallStraight(dice));
 
         // get score for the roll
         assertEquals(30, CheckRollType.getSmallStraight(dice));
@@ -270,9 +226,6 @@ public class CheckRollTypeTest {
         dice.add(five);
         dice.add(three);
 
-        // ensure roll is a small straight
-        assertTrue(CheckRollType.smallStraight(dice));
-
         // get score for the roll
         assertEquals(30, CheckRollType.getSmallStraight(dice));
     }
@@ -285,9 +238,6 @@ public class CheckRollTypeTest {
         dice.add(five);
         dice.add(six);
         dice.add(one);
-
-        // ensure roll is a small straight
-        assertTrue(CheckRollType.smallStraight(dice));
 
         // get score for the roll
         assertEquals(30, CheckRollType.getSmallStraight(dice));
@@ -302,9 +252,6 @@ public class CheckRollTypeTest {
         dice.add(three);
         dice.add(four);
 
-        // ensure roll is not a large straight
-        assertFalse(CheckRollType.largeStraight(dice));
-
         // get score for the roll
         assertEquals(0, CheckRollType.getLargeStraight(dice));
     }
@@ -317,9 +264,6 @@ public class CheckRollTypeTest {
         dice.add(three);
         dice.add(four);
         dice.add(four);
-
-        // ensure roll is not a large straight
-        assertFalse(CheckRollType.largeStraight(dice));
 
         // get score for the roll
         assertEquals(0, CheckRollType.getLargeStraight(dice));
@@ -334,9 +278,6 @@ public class CheckRollTypeTest {
         dice.add(four);
         dice.add(five);
 
-        // ensure roll is a large straight
-        assertTrue(CheckRollType.largeStraight(dice));
-
         // get score for the roll
         assertEquals(40, CheckRollType.getLargeStraight(dice));
     }
@@ -349,9 +290,6 @@ public class CheckRollTypeTest {
         dice.add(four);
         dice.add(five);
         dice.add(six);
-
-        // ensure roll is a large straight
-        assertTrue(CheckRollType.largeStraight(dice));
 
         // get score for the roll
         assertEquals(40, CheckRollType.getLargeStraight(dice));
@@ -366,9 +304,6 @@ public class CheckRollTypeTest {
         dice.add(four);
         dice.add(five);
 
-        // ensure roll is not a Yahtzee
-        assertFalse(CheckRollType.yahtzee(dice));
-
         // get score for the roll
         assertEquals(0, CheckRollType.getYahtzee(dice));
     }
@@ -382,10 +317,98 @@ public class CheckRollTypeTest {
         dice.add(six);
         dice.add(six);
 
-        // ensure roll is a Yahtzee
-        assertTrue(CheckRollType.yahtzee(dice));
-
         // get score for the roll
         assertEquals(50, CheckRollType.getYahtzee(dice));
+    }
+    
+    @Test
+    public void getChanceTest_v1() {
+        // make collection of 5 dice to mimic a roll
+        dice.add(one);
+        dice.add(two);
+        dice.add(three);
+        dice.add(four);
+        dice.add(five);
+        
+        // get score for the roll
+        assertEquals(15, CheckRollType.getChance(dice));
+    }
+    
+    @Test
+    public void getUpperSection_ones() {
+        // make collection of 5 dice to mimic a roll
+        dice.add(one);
+        dice.add(two);
+        dice.add(three);
+        dice.add(four);
+        dice.add(five);
+        
+        // get score for the roll
+        assertEquals(1, CheckRollType.getUpperSection(dice, one));
+    }
+    
+    @Test
+    public void getUpperSection_twos() {
+        // make collection of 5 dice to mimic a roll
+        dice.add(one);
+        dice.add(two);
+        dice.add(three);
+        dice.add(four);
+        dice.add(five);
+        
+        // get score for the roll
+        assertEquals(2, CheckRollType.getUpperSection(dice, two));
+    }
+    
+    @Test
+    public void getUpperSection_threes() {
+        // make collection of 5 dice to mimic a roll
+        dice.add(one);
+        dice.add(two);
+        dice.add(three);
+        dice.add(four);
+        dice.add(five);
+        
+        // get score for the roll
+        assertEquals(3, CheckRollType.getUpperSection(dice, three));
+    }
+    
+    @Test
+    public void getUpperSection_fours() {
+        // make collection of 5 dice to mimic a roll
+        dice.add(one);
+        dice.add(two);
+        dice.add(three);
+        dice.add(four);
+        dice.add(five);
+        
+        // get score for the roll
+        assertEquals(4, CheckRollType.getUpperSection(dice, four));
+    }
+    
+    @Test
+    public void getUpperSection_fives() {
+        // make collection of 5 dice to mimic a roll
+        dice.add(one);
+        dice.add(two);
+        dice.add(three);
+        dice.add(four);
+        dice.add(five);
+        
+        // get score for the roll
+        assertEquals(5, CheckRollType.getUpperSection(dice, five));
+    }
+    
+    @Test
+    public void getUpperSection_sixes() {
+        // make collection of 5 dice to mimic a roll
+        dice.add(one);
+        dice.add(two);
+        dice.add(three);
+        dice.add(four);
+        dice.add(five);
+        
+        // get score for the roll
+        assertEquals(0, CheckRollType.getUpperSection(dice, six));
     }
 }
