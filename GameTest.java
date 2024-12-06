@@ -10,95 +10,106 @@ import org.junit.Test;
 
 public class GameTest {
 
-    // instance of a Game
-    private Game game = new Game();
+	// instance of a Game
+	private Game game = new Game();
 
-    // put a player and CPU into the game
-    public void createGame() {
-        game.addPlayer("player1");
-        game.addPlayer(new CPU("CPU", CpuMode.EASY));
-    }
+	// put a player and CPU into the game
+	public void createGame() {
+		game.addPlayer("player1");
+		game.addPlayer("player2");
+		game.addPlayer("player3");
+		game.addPlayer("player4");
+	}
+
+	/*
+	 * Moves to next player
+	 */
+	private void nextPlayer(Game aGame) {
+		aGame.currRollDice();
+		String[] catNames = aGame.getCurPlayerCategories();
+		assert catNames.length > 0;
+		Category cat = Category.valueOf(catNames[0]);
+		aGame.submitHand(cat);
+	}
 
 	@Test
-	final void testGetRollCount() {
+	public void testGetRollCount() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	final void testGetPlayerAmount() {
+	public void testGetPlayerAmount() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	final void testSubmitHand() {
+	public void testSubmitHand() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	final void testAddPlayerString() {
+	public void testAddPlayerString() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	final void testAddPlayerCPU() {
+	public void testAddPlayerCPU() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	final void testGetCurName() {
+	public void testGetCurName() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	final void testGetCurPlayerCategories() {
+	public void testGetCurPlayerCategories() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	final void testGetCategoryScore() {
+	public void testGetCategoryScore() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	final void testCurrRollDice() {
+	public void testCurrRollDice() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	final void testCurSetHold() {
+	public void testCurSetHold() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	final void testCurRemoveHold() {
+	public void testCurRemoveHold() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	final void testSetCurrIdx() {
+	public void testSetCurrIdx() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	final void testGetTotalScore() {
+	public void testGetTotalScore() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	final void testGetCPUBestCat() {
+	public void testGetCPUBestCat() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	final void testCurGradTotal() {
+	public void testCurGradTotal() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	final void testGetEasyCPUCat() {
+	public void testGetEasyCPUCat() {
 		fail("Not yet implemented"); // TODO
 	}
-    
-    
-    
+
 }
