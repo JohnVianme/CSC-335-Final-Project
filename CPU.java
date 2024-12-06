@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /*
- * 
+ * CPU class to player against
  * @authors Garret W., John I., Dylan C. Jason B.
  */
 
