@@ -199,7 +199,6 @@ public class GameTest {
 		}
 
 	}
-	
 
 	@Test
 	public void testGetEasyCPUCat() {
