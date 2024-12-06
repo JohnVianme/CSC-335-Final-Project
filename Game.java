@@ -1,7 +1,7 @@
 import java.util.*;
 
 /*
- * 
+ * Game model that will be used in the GUI to Play the Game
  * @authors Garret W., John I., Dylan C. Jason B.
  */
 

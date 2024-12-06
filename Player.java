@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /*
- * 
+ * Class for representing a player
  * @authors Garret W., John I., Dylan C. Jason B.
  */
 
