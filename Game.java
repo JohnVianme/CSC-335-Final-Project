@@ -222,16 +222,6 @@ public class Game {
 	}
 
 	/*
-	 * Method for return the current players grand total points
-	 * 
-	 * @return the grad total for current player
-	 */
-	public int curGradTotal() {
-		Player curPlayer = players.get(currentPlayerIdx);
-		return curPlayer.getTotalScore();
-	}
-
-	/*
 	 * Method for return a CPU's open cat to fill
 	 * 
 	 * @pre curPlayer most be a CPU player
