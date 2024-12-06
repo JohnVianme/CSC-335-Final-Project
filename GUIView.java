@@ -11,7 +11,7 @@ import javax.swing.*;
  *
  * @authors: Garret W., John I., Dylan C., Jason B.
  */
-public class GUIView extends JFrame {
+public final class GUIView extends JFrame {
 	private JButton easyModebutton;
 	private JButton hardModebutton;
 
@@ -629,7 +629,7 @@ public class GUIView extends JFrame {
 				Category selectedCategory = Category.valueOf(selected);
 				// make the current player submit their Hand
 				boolean result = myGame.submitHand(selectedCategory);
-				// If the user was able to submit, continue game with next turn.
+				// If the game should be continued, iterate to the next player.
 				if (result == true) {
 					nextTurn();
 				}
@@ -730,7 +730,7 @@ public class GUIView extends JFrame {
 			result += myGame.getCategoryScore(cat) + "\n";
 		}
 		// add the current players grade total
-		result += "---------------\n" + myGame.getCurName() + "'s Total: " + myGame.curGradTotal();
+		result += "---------------\n" + myGame.getCurName() + "'s Total: " + myGame.getTotalScore();
 
 		return result;
 

@@ -12,7 +12,7 @@ import java.util.HashMap;
  * @authors Garret W., John I., Dylan C. Jason B.
  */
 
-public class CheckRollType {
+public final class CheckRollType {
 
 	/*
 	 * checks if a collection of DiceEnums contains 3 of a kind that is, 3 dice with
