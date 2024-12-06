@@ -2,8 +2,13 @@
  * a suite of tests for the Game class
  *
  * @authors Garret W., John I., Dylan C., Jason B.
+/*
+ * a suite of tests for the Game class
+ *
+ * @authors Garret W., John I., Dylan C., Jason B.
  */
 
+import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.Test;
@@ -13,92 +18,169 @@ public class GameTest {
     // instance of a Game
     private Game game = new Game();
 
-    // put a player and CPU into the game
+    // put a players into the game
     public void createGame() {
         game.addPlayer("player1");
-        game.addPlayer(new CPU("CPU", CpuMode.EASY));
+        game.addPlayer("player2");
     }
 
-	@Test
-	final void testGetRollCount() {
-		fail("Not yet implemented"); // TODO
-	}
+    @Test
+    public void testGetRollCount() {
+        // add 2 players to game
+        createGame();
 
-	@Test
-	final void testGetPlayerAmount() {
-		fail("Not yet implemented"); // TODO
-	}
+        // ensure roll counts are working correctly
+        for (int i=3; i>0; i--) {
+            assertEquals(i, game.getRollCount());
+            game.currRollDice();
+            game.setCurrIdx(1);
+            assertEquals(i, game.getRollCount());
+            game.currRollDice();
+            game.setCurrIdx(0);
+        }
+    }
 
-	@Test
-	final void testSubmitHand() {
-		fail("Not yet implemented"); // TODO
-	}
+    @Test
+    public void testGetPlayerAmount() {
+        // add 2 players to game
+        createGame();
 
-	@Test
-	final void testAddPlayerString() {
-		fail("Not yet implemented"); // TODO
-	}
+        // ensure the two players are being tracked
+        assertEquals(2, game.getPlayerAmount());
+    }
 
-	@Test
-	final void testAddPlayerCPU() {
-		fail("Not yet implemented"); // TODO
-	}
+    @Test
+    public void testSubmitHand() {
+        // add 2 players to game
+        createGame();
 
-	@Test
-	final void testGetCurName() {
-		fail("Not yet implemented"); // TODO
-	}
+        // ensure players can submit hands for all their categories
+        for (int i=0; i < 26; i++) {
+            game.currRollDice();
+            String[] catNames = game.getCurPlayerCategories();
+            assert catNames.length > 0;
+            Category cat = Category.valueOf(catNames[0]);
 
-	@Test
-	final void testGetCurPlayerCategories() {
-		fail("Not yet implemented"); // TODO
-	}
+            if (i == 25) {
+                assertFalse(game.submitHand(cat));
+            } else {
+                assertTrue(game.submitHand(cat));
+            }
+        }
 
-	@Test
-	final void testGetCategoryScore() {
-		fail("Not yet implemented"); // TODO
-	}
+        // ensure no more categories are left to be filled in player 1
+        assertEquals(0, game.getCurPlayerCategories().length);
 
-	@Test
-	final void testCurrRollDice() {
-		fail("Not yet implemented"); // TODO
-	}
+        // go to next player
+        game.setCurrIdx(0);
 
-	@Test
-	final void testCurSetHold() {
-		fail("Not yet implemented"); // TODO
-	}
+        // ensure no more categories are left to be filled in player 2
+        assertEquals(0, game.getCurPlayerCategories().length);
+    }
 
-	@Test
-	final void testCurRemoveHold() {
-		fail("Not yet implemented"); // TODO
-	}
+    @Test
+    public void testAddPlayerString() {
+        // add 2 players to game
+        createGame();
 
-	@Test
-	final void testSetCurrIdx() {
-		fail("Not yet implemented"); // TODO
-	}
+        // add a player
+        game.addPlayer("player3");
 
-	@Test
-	final void testGetTotalScore() {
-		fail("Not yet implemented"); // TODO
-	}
+        // ensure there are now 3 players
+        assertEquals(3, game.getPlayerAmount());
+    }
 
-	@Test
-	final void testGetCPUBestCat() {
-		fail("Not yet implemented"); // TODO
-	}
+    @Test
+    public void testAddPlayerCPU() {
+        // add 2 players to game
+        createGame();
 
-	@Test
-	final void testCurGradTotal() {
-		fail("Not yet implemented"); // TODO
-	}
+        // add a CPU
+        game.addPlayer(new CPU("CPU1", CpuMode.EASY));
 
-	@Test
-	final void testGetEasyCPUCat() {
-		fail("Not yet implemented"); // TODO
-	}
-    
-    
-    
+        // ensure there is another player in the game
+        assertEquals(3, game.getPlayerAmount());
+    }
+
+    @Test
+    public void testGetCurName() {
+        fail("Not yet implemented"); // TODO
+    }
+
+    @Test
+    public void testGetCurPlayerCategories() {
+        fail("Not yet implemented"); // TODO
+    }
+
+    @Test
+    public void testGetCategoryScore() {
+        fail("Not yet implemented"); // TODO
+    }
+
+    @Test
+    public void testCurrRollDice() {
+        fail("Not yet implemented"); // TODO
+    }
+
+    @Test
+    public void testCurSetHold() {
+        fail("Not yet implemented"); // TODO
+    }
+
+    @Test
+    public void testCurRemoveHold() {
+        fail("Not yet implemented"); // TODO
+    }
+
+    @Test
+    public void testSetCurrIdx() {
+        fail("Not yet implemented"); // TODO
+    }
+
+    @Test
+    public void testGetTotalScore() {
+        fail("Not yet implemented"); // TODO
+    }
+
+    @Test
+    public void testGetCPUBestCat() {
+        // add 2 players to game
+        createGame();
+
+        // add a hard CPU to the game
+        game.addPlayer(new CPU("CPU1", CpuMode.HARD));
+
+        // set current player index to CPU
+        game.setCurrIdx(2);
+
+        // CPU roll dice
+        game.currRollDice();
+
+        // get CPU best category
+        Category bestCat = game.getCPUBestCat();
+
+        // submit
+        game.submitHand(bestCat);
+
+        // ensure the CPUs best category is not null (null is place holder in scorecard hashmap)
+        assertNotNull(game.getCategoryScore(bestCat));
+    }
+
+    @Test
+    public void testGetEasyCPUCat() {
+        // add 2 players to game
+        createGame();
+
+        // add an easy CPU to the game
+        game.addPlayer(new CPU("CPU1", CpuMode.EASY));
+
+        // set the player index to CPU
+        game.setCurrIdx(2);
+
+        // CPU roll dice
+        game.currRollDice();
+
+        // get the first unfilled category from the CPU and ensure its the same one picked by getEasyCPUCat()
+        assertEquals(game.getCurPlayerCategories()[0], game.getEasyCPUCat().toString());
+    }
 }
