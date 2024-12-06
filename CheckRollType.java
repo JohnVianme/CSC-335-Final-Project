@@ -20,7 +20,7 @@ public final class CheckRollType {
 	 *
 	 * @param dices - an array of DiceEnums
 	 */
-	public static boolean threeOfAKind(ArrayList<DiceEnum> dices) {
+	private static boolean threeOfAKind(ArrayList<DiceEnum> dices) {
 		HashMap<Integer, Integer> counts = new HashMap<>();
 
 		// count the occurrences
@@ -58,7 +58,7 @@ public final class CheckRollType {
 	 *
 	 * @param dices - an array of DiceEnums
 	 */
-	public static boolean fourOfAKind(ArrayList<DiceEnum> dices) {
+	private static boolean fourOfAKind(ArrayList<DiceEnum> dices) {
 		HashMap<Integer, Integer> counts = new HashMap<>();
 
 		for (DiceEnum dice : dices) {
@@ -92,7 +92,7 @@ public final class CheckRollType {
 	 *
 	 * @param dices - an array of DiceEnums
 	 */
-	public static boolean fullHouse(ArrayList<DiceEnum> dices) {
+	private static boolean fullHouse(ArrayList<DiceEnum> dices) {
 		HashMap<Integer, Integer> counts = new HashMap<>();
 
 		for (DiceEnum dice : dices) {
@@ -122,7 +122,7 @@ public final class CheckRollType {
 	 *
 	 * @param dices - an array of DiceEnums
 	 */
-	public static boolean smallStraight(ArrayList<DiceEnum> dices) {
+	private static boolean smallStraight(ArrayList<DiceEnum> dices) {
 		// sort array of dice
 		Collections.sort(dices);
 
@@ -166,7 +166,7 @@ public final class CheckRollType {
 	 *
 	 * @param dices - an array of DiceEnums
 	 */
-	public static boolean largeStraight(ArrayList<DiceEnum> dices) {
+	private static boolean largeStraight(ArrayList<DiceEnum> dices) {
 		// sort array of dice
 		Collections.sort(dices);
 
@@ -195,7 +195,7 @@ public final class CheckRollType {
 	 *
 	 * @param dices - an array of DiceEnums
 	 */
-	public static boolean yahtzee(ArrayList<DiceEnum> dices) {
+	private static boolean yahtzee(ArrayList<DiceEnum> dices) {
 		// value to check against
 		int diceValue = dices.get(0).getValue();
 
