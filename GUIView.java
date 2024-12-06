@@ -11,7 +11,7 @@ import javax.swing.*;
  *
  * @authors: Garret W., John I., Dylan C., Jason B.
  */
-public class GUIView extends JFrame {
+public final class GUIView extends JFrame {
 	private JButton easyModebutton;
 	private JButton hardModebutton;
 
