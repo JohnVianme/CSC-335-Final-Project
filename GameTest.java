@@ -118,6 +118,7 @@ public class GameTest {
 
 	}
 
+	
 	@Test
 	public void testGetCurPlayerCategories() {
 		createGame();
