@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 /*
- * 
+ * Class for representing a players hand
  * @authors Garret W., John I., Dylan C. Jason B.
  */
 

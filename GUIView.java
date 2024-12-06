@@ -7,8 +7,7 @@ import java.util.*;
 import javax.swing.*;
 
 /*
- * 
- *
+ * View for the Game Overall
  * @authors: Garret W., John I., Dylan C., Jason B.
  */
 public final class GUIView extends JFrame {
