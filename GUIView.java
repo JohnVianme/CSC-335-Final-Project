@@ -731,7 +731,7 @@ public class GUIView extends JFrame {
 			result += myGame.getCategoryScore(cat) + "\n";
 		}
 		// add the current players grade total
-		result += "---------------\n" + myGame.getCurName() + "'s Total: " + myGame.curGradTotal();
+		result += "---------------\n" + myGame.getCurName() + "'s Total: " + myGame.getTotalScore();
 
 		return result;
 
