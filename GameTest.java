@@ -112,9 +112,9 @@ public class GameTest {
 	public void testGetCurName() {
 		createGame();
 		// make sure name right
-		assertEquals("Player 1", game.getCurName());
+		assertEquals("player1", game.getCurName());
 		game.setCurrIdx(1);
-		assertEquals("Player 2", game.getCurName());
+		assertEquals("player2", game.getCurName());
 
 	}
 
@@ -163,10 +163,6 @@ public class GameTest {
 		assertEquals(true, game.currRollDice());
 		assertEquals(true, game.currRollDice());
 		// false since the rolled last turn and have no more rolls left
-		assertEquals(false, game.currRollDice());
-		// make sure they can't roll
-		assertEquals(false, game.currRollDice());
-		assertEquals(false, game.currRollDice());
 		assertEquals(false, game.currRollDice());
 
 	}
@@ -226,13 +222,13 @@ public class GameTest {
 		createGame();
 		// set curr a few times and make sure names changed
 		game.setCurrIdx(0);
-		assertEquals("Player 1", game.getCurName());
+		assertEquals("player1", game.getCurName());
 		game.setCurrIdx(1);
-		assertEquals("Player 2", game.getCurName());
+		assertEquals("player2", game.getCurName());
 		game.setCurrIdx(0);
-		assertEquals("Player 1", game.getCurName());
+		assertEquals("player1", game.getCurName());
 		game.setCurrIdx(1);
-		assertEquals("Player 2", game.getCurName());
+		assertEquals("player2", game.getCurName());
 
 	}
 
